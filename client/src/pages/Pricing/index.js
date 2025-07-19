@@ -124,7 +124,7 @@ const PricingPage = () => {
 
                             <div className="features-section">
                                 <h3 className="features-title">
-                                    What's included:
+                                    Whats included:
                                 </h3>
                                 <ul className="features-list">
                                     {plan.features.map((feature, index) => (

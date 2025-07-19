@@ -1,7 +1,7 @@
 import Image from "next/image";
 import "./index.scss";
 
-export const Header = () => {
+const Header = () => {
     return (
         <div className="header-container">
             <div className="header-wrapper">
@@ -64,3 +64,5 @@ export const Logo = () => {
         </div>
     );
 };
+
+export default Header;

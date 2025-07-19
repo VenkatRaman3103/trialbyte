@@ -1,6 +1,5 @@
-import { Homepage } from "@/pages/Homepage";
+import Header from "@/components/Header";
 import RootLayout from "./layout";
-import { Header } from "@/components/Header";
 import PricingPage from "@/pages/Pricing";
 
 export default function Home() {

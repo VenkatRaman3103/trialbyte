@@ -2,7 +2,7 @@ import { Header } from "@/components/Header";
 import "./index.scss";
 import { FeatureCard } from "@/components/FeatureCard";
 
-export const Homepage = () => {
+const Homepage = () => {
     return (
         <div className="homepage page-cotainer">
             <div className="homepage-feature-card-container">
@@ -27,3 +27,5 @@ export const Homepage = () => {
         </div>
     );
 };
+
+export default Homepage;

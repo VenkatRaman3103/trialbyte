@@ -58,7 +58,7 @@ export const FeatureCard = ({
                                 To accommodate two types of FeatureCard:
                                 illustration and content, we can refactor your
                                 React component to support conditional rendering
-                                based on a type prop. Here's how to do it:
+                                based on a type prop.
                             </div>
                         </div>
                     </div>
