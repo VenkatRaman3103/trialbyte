@@ -1,5 +1,6 @@
 :root {
     --blue-gradient: linear-gradient(337deg, #0669c0 1.07%, #19bdf9 97.81%);
+    --border-color: #e2e8f0;
 }
 
 html,
