@@ -8,7 +8,7 @@ export default function Home() {
         <>
             <RootLayout>
                 <Header />
-                <Homepage />
+                <PricingPage />
             </RootLayout>
         </>
     );
