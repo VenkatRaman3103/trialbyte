@@ -1,0 +1,58 @@
+$background-color: white;
+$border-radius: 10px;
+$light-font: #646464;
+$dark-font: #000000;
+$card-shadow: 0px 2px 20px 0px rgba(0, 0, 0, 0.05);
+
+.card-container {
+    width: 230px;
+    height: 120px;
+
+    background-color: $background-color;
+    border-radius: $border-radius;
+    padding: 10px;
+
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: 1fr 2fr 1fr;
+
+    grid-template-areas:
+        "heading heading image"
+        "count count image"
+        "info info info"
+    ;
+
+    box-shadow: $card-shadow;
+
+    .card-heading {
+        width: 100%;
+        grid-area: heading;
+        color: $light-font;
+        font-size: 14px;
+    }
+
+    .card-count {
+        grid-area: count;
+        color: $dark-font;
+        font-weight: 600;
+        font-size: 20px;
+    }
+
+    .card-image {
+        height: 40px;
+        width: 40px;
+
+        background-color: red;
+        grid-area: image;
+        transform: translateX(15px);
+
+        border-radius: 10px;
+    }
+
+    .card-info {
+        grid-area: info;
+        color: $light-font;
+        font-size: 14px;
+    }
+
+}
