@@ -7,17 +7,25 @@
     "scripts": {
         "dev": "nodemon src/server.js",
         "lint": "eslint . --ext .js",
-        "format": "prettier --write ."
+        "format": "prettier --write .",
+        "db:migrate": "drizzle-kit migrate --config drizzle.config.cjs",
+        "db:generate": "drizzle-kit generate --config drizzle.config.cjs",
+        "db:drop": "drizzle-kit drop --config drizzle.config.cjs",
+        "db:push": "drizzle-kit push --config drizzle.config.cjs",
+        "db:studio": "drizzle-kit studio",
+        "db:seed": "node ./src/db/seed.js"
     },
     "keywords": [],
     "author": "",
     "license": "ISC",
     "dependencies": {
+        "dotenv": "^17.2.0",
         "drizzle-orm": "^0.44.3",
         "express": "^5.1.0",
         "pg": "^8.16.3"
     },
     "devDependencies": {
+        "drizzle-kit": "^0.31.4",
         "eslint": "^9.31.0",
         "eslint-config-prettier": "^10.1.8",
         "eslint-plugin-import": "^2.32.0",

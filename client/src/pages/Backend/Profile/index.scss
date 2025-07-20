@@ -1,0 +1,266 @@
+$primary-color: #4a6f8a;
+$base-color: #f4faff;
+$text-primary: #2c3e50;
+$text-secondary: #7f8c8d;
+$border-color: #e9ecef;
+$background-light: #f8f9fa;
+$button-bg: #4a6f8a;
+$button-hover: #3a5a75;
+
+@mixin flex-between {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+@mixin button-style {
+    padding: 8px 16px;
+    border: none;
+    border-radius: 4px;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+
+    &:hover {
+        transform: translateY(-1px);
+    }
+}
+
+.profile-container {
+    min-width: 800px;
+    width: 100%;
+    margin: 0 auto;
+    padding: 40px 80px 40px 80px;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    color: $text-primary;
+    background: $base-color;
+    min-height: 100vh;
+}
+
+.profile-info-section {
+    border: 1px solid var(--border-color);
+    padding: 30px;
+    border-radius: 15px;
+    margin-bottom: 64px;
+
+    background-color: white;
+
+    .profile-header {
+        @include flex-between;
+        margin-bottom: 40px;
+        padding-bottom: 40px;
+        border-bottom: 1px solid $border-color;
+
+        .profile-title {
+            font-size: 36px;
+            font-weight: 700;
+            margin: 0;
+            color: $text-primary;
+        }
+
+        .sign-out-btn {
+            @include button-style;
+            background: $button-bg;
+            color: white;
+
+            &:hover {
+                background: $button-hover;
+            }
+        }
+    }
+
+    .user-info {
+        margin-bottom: 40px;
+        padding-bottom: 40px;
+        border-bottom: 1px solid #e9ecef;
+
+        .profile-name {
+            font-size: 24px;
+            font-weight: 600;
+            margin: 0 0 8px 0;
+            color: $text-primary;
+        }
+
+        .profile-email {
+            font-size: 16px;
+            color: $text-secondary;
+            margin: 0;
+        }
+    }
+
+    .profile-details {
+        .detail-row {
+            @include flex-between;
+            padding: 20px 0;
+
+            &:first-child {
+                padding-top: 0;
+            }
+
+            .detail-label {
+                font-size: 16px;
+                font-weight: 500;
+                color: $text-primary;
+                flex: 0.2;
+            }
+
+            .detail-value {
+                font-size: 16px;
+                color: $text-primary;
+                font-weight: 600;
+                flex: 1;
+                text-align: left;
+            }
+        }
+    }
+}
+
+.password-change-section {
+    background-color: white;
+    border: 1px solid var(--border-color);
+    padding: 30px;
+    border-radius: 15px;
+
+    .password-section {
+        .section-title {
+            font-size: 28px;
+            font-weight: 700;
+            margin: 0 0 32px 0;
+
+            margin-bottom: 20px;
+            padding-bottom: 40px;
+            border-bottom: 1px solid $border-color;
+            color: $text-primary;
+        }
+
+        .password-details {
+            .password-row {
+                @include flex-between;
+                padding: 24px 0;
+                border-bottom: 1px solid $border-color;
+
+                &:last-child {
+                    border-bottom: none;
+                }
+
+                .password-info {
+                    display: flex;
+                    flex-direction: column;
+                    gap: 8px;
+                    flex: 1;
+
+                    .password-label {
+                        font-size: 16px;
+                        font-weight: 500;
+                        color: $text-primary;
+                    }
+
+                    .password-email {
+                        font-size: 14px;
+                        color: $text-secondary;
+                    }
+
+                    .password-dots {
+                        font-size: 14px;
+                        color: $text-secondary;
+                        letter-spacing: 2px;
+                    }
+                }
+
+                .change-btn {
+                    @include button-style;
+                    background: $button-bg;
+                    color: white;
+                    margin-left: 16px;
+
+                    &:hover {
+                        background: $button-hover;
+                    }
+                }
+            }
+        }
+    }
+}
+
+@media (max-width: 768px) {
+    .profile-container {
+        padding: 16px;
+    }
+
+    .profile-info-section {
+        .profile-header {
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 16px;
+
+            .profile-title {
+                font-size: 28px;
+            }
+
+            .sign-out-btn {
+                align-self: flex-end;
+            }
+        }
+
+        .detail-row {
+            flex-direction: column;
+            align-items: flex-start !important;
+            gap: 8px;
+
+            .detail-value {
+                text-align: left !important;
+            }
+        }
+    }
+
+    .password-change-section {
+        .section-title {
+            font-size: 24px !important;
+        }
+
+        .password-row {
+            flex-direction: column;
+            align-items: flex-start !important;
+            gap: 16px;
+
+            .change-btn {
+                margin-left: 0 !important;
+                align-self: flex-end;
+            }
+        }
+    }
+}
+
+button:focus {
+    outline: 2px solid $primary-color;
+    outline-offset: 2px;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+@keyframes buttonPress {
+    0% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(0.98);
+    }
+
+    100% {
+        transform: scale(1);
+    }
+}
+
+.sign-out-btn:active,
+.change-btn:active {
+    animation: buttonPress 0.1s ease;
+}
+
+.sign-out-btn:active,
+.change-btn:active {
+    animation: buttonPress 0.1s ease;
+}
