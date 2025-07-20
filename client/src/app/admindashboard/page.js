@@ -1,4 +1,4 @@
-import AdminDashboard from "@/pages/AdminDashboard";
+import AdminDashboard from "@/_pages/AdminDashboard";
 import RootLayout from "./layout";
 
 export default function Home() {

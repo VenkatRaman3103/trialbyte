@@ -1,4 +1,3 @@
-import { Header } from "@/components/Header";
 import "./index.scss";
 import { FeatureCard } from "@/components/FeatureCard";
 

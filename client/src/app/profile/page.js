@@ -1,4 +1,4 @@
-import Profile from "@/pages/Backend/Profile";
+import Profile from "@/_pages/Backend/Profile";
 import RootLayout from "./layout";
 
 export default function Home() {
