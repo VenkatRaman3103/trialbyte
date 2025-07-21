@@ -48,3 +48,14 @@ userRouter.get('/users/:id', async (req, res) => {
 // NOTE: update users
 
 // NOTE: delete users
+// delete user
+userRouter.delete('/users/:id', async (req, res) => {
+    const { id } = req.params;
+    try {
+        const response = await db.delete(users).where(eq(users.id, id));
+        res.json(response);
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({ message: 'Internal server error' });
+    }
+});
