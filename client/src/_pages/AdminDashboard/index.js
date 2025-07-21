@@ -4,6 +4,8 @@ import "./index.scss";
 import DashboardCharts from "@/components/DashboardCharts";
 import UsersTable from "@/components/UsersTable";
 import { useSelector } from "react-redux";
+import { useQuery } from "@tanstack/react-query";
+import { getAllUsers } from "@/api/users/getAllUsers";
 
 const cardsDummyData = [
     {
@@ -49,8 +51,13 @@ const cardsDummyData = [
 ];
 
 const AdminDashboard = () => {
-    const count = useSelector((state) => state.counter.value);
-    console.log(count, "count");
+    const { data: allUsers } = useQuery({
+        queryFn: getAllUsers,
+        queryKey: ["all-users"],
+    });
+
+    console.log(allUsers, "allUsers");
+
     return (
         <div className="admin-dashboard-container">
             <div className="admin-dashboard-cards-container">
@@ -62,7 +69,7 @@ const AdminDashboard = () => {
                 <DashboardCharts />
             </div>
             <div className="adim-user-table-container">
-                <UsersTable />
+                <UsersTable data={allUsers} />
             </div>
         </div>
     );
