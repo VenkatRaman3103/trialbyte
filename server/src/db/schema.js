@@ -10,5 +10,5 @@ export const users = pgTable('users', {
     region: text('region').notNull(),
     sex: text('sex').notNull(),
     age: text('age').notNull(),
-    plan: text('plan').notNull(), // TODO: change to enum
+    plan: text('plan').notNull(),
 });
