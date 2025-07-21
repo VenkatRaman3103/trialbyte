@@ -1,0 +1,155 @@
+$primary-blue: #2c5282;
+$dark-blue: #2a4365;
+$light-gray: #f7fafc;
+$border-color: #e2e8f0;
+$text-color: #4a5568;
+$white: #ffffff;
+
+.app-container {
+  width: 100%;
+  max-width: 900px;
+  display: flex;
+  justify-content: center;
+}
+
+.user-table-container {
+  background-color: $white;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  width: 100%;
+}
+
+.user-table {
+  width: 100%;
+  border-collapse: collapse;
+
+  thead {
+    background-color: $primary-blue;
+    color: $white;
+    text-align: left;
+
+    th {
+      padding: 12px 15px;
+      font-weight: 600;
+      border-bottom: 1px solid $dark-blue;
+      white-space: nowrap;
+    }
+  }
+
+  tbody {
+    tr {
+      border-bottom: 1px solid $border-color;
+
+      &:last-child {
+        border-bottom: none;
+      }
+
+      &:nth-of-type(even) {
+        background-color: $light-gray;
+      }
+    }
+
+    td {
+      padding: 10px 15px;
+      color: $text-color;
+      white-space: nowrap;
+    }
+  }
+
+  // Styling for checkboxes
+  input[type="checkbox"] {
+    appearance: none;
+    width: 18px;
+    height: 18px;
+    border: 2px solid $primary-blue;
+    border-radius: 4px;
+    position: relative;
+    cursor: pointer;
+    display: inline-block;
+    vertical-align: middle;
+
+    &:checked {
+      background-color: $primary-blue;
+      border-color: $primary-blue;
+
+      &::after {
+        content: '\2713';
+        font-size: 14px;
+        color: $white;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+      }
+    }
+
+    &:focus {
+      outline: none;
+      box-shadow: 0 0 0 2px rgba($primary-blue, 0.5); // Custom focus style
+    }
+  }
+}
+
+.user-table-buttons {
+  display: flex;
+  justify-content: flex-end;
+  padding: 20px;
+  gap: 15px;
+  background-color: $white;
+
+  button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 6px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    white-space: nowrap;
+
+    &:hover {
+      transform: translateY(-2px);
+    }
+
+    &:active {
+      transform: translateY(0);
+    }
+  }
+
+  .add-button {
+    background-color: $primary-blue;
+    color: $white;
+
+    &:hover {
+      background-color: darken($primary-blue, 5%);
+    }
+  }
+
+  .remove-button {
+    background-color: $dark-blue;
+    color: $white;
+
+    &:hover {
+      background-color: darken($dark-blue, 5%);
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .user-table-container {
+    overflow-x: auto;
+  }
+
+  .user-table {
+    min-width: 600px;
+  }
+
+  .user-table-buttons {
+    flex-direction: column;
+    align-items: stretch;
+
+    button {
+      width: 100%;
+    }
+  }
+}
