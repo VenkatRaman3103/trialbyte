@@ -1,7 +1,9 @@
+"use client";
 import { Cards } from "@/components/Cards";
 import "./index.scss";
 import DashboardCharts from "@/components/DashboardCharts";
 import UsersTable from "@/components/UsersTable";
+import { useSelector } from "react-redux";
 
 const cardsDummyData = [
     {
@@ -47,6 +49,8 @@ const cardsDummyData = [
 ];
 
 const AdminDashboard = () => {
+    const count = useSelector((state) => state.counter.value);
+    console.log(count, "count");
     return (
         <div className="admin-dashboard-container">
             <div className="admin-dashboard-cards-container">
