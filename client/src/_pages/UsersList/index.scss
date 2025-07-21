@@ -7,13 +7,8 @@ $white: #ffffff;
 $red-error: #e53e3e;
 $gray-button: #cbd5e0;
 $dark-gray-text: #2d3748;
-
-.app-container {
-  width: 100%;
-  max-width: 900px;
-  display: flex;
-  justify-content: center;
-}
+$input-border: #a0aec0;
+$required-red: #e53e3e;
 
 .user-table-container {
   background-color: $white;
@@ -116,6 +111,12 @@ $dark-gray-text: #2d3748;
     &:active {
       transform: translateY(0);
     }
+
+    &:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+      transform: translateY(0);
+    }
   }
 
   .add-button {
@@ -174,7 +175,6 @@ $dark-gray-text: #2d3748;
   border-radius: 8px;
   box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
   width: 90%;
-  max-width: 450px;
   overflow: hidden;
   display: flex;
   flex-direction: column;
@@ -212,17 +212,6 @@ $dark-gray-text: #2d3748;
   }
 }
 
-.modal-body {
-  padding: 30px 20px;
-  text-align: center;
-  color: $dark-gray-text;
-  font-size: 1.1em;
-  flex-grow: 1;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
 .modal-footer {
   padding: 20px;
   display: flex;
@@ -248,6 +237,21 @@ $dark-gray-text: #2d3748;
       transform: translateY(0);
     }
   }
+}
+
+.confirmation-modal {
+  max-width: 450px;
+
+  .modal-body {
+    padding: 30px 20px;
+    text-align: center;
+    color: $dark-gray-text;
+    font-size: 1.1em;
+    flex-grow: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
 
   .modal-button-yes {
     background-color: $dark-blue;
@@ -268,6 +272,80 @@ $dark-gray-text: #2d3748;
   }
 }
 
+
+.add-user-modal {
+  max-width: 700px;
+
+  .modal-form {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    padding: 20px;
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+
+      &.full-width {
+        grid-column: 1 / -1;
+      }
+
+      label {
+        font-weight: 600;
+        color: $dark-gray-text;
+        font-size: 0.95em;
+
+        .required {
+          color: $required-red;
+          margin-left: 4px;
+        }
+      }
+
+      input[type="text"],
+      input[type="number"],
+      select {
+        padding: 10px 12px;
+        border: 1px solid $input-border;
+        border-radius: 6px;
+        font-size: 1em;
+        color: $text-color;
+        background-color: $white;
+        appearance: none;
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        background-image: url('data:image/svg+xml;utf8,<svg fill="%234A5568" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M7 10l5 5 5-5z"/><path d="M0 0h24v24H0z" fill="none"/></svg>'); // Custom arrow
+        background-repeat: no-repeat;
+        background-position: right 10px center;
+        background-size: 20px;
+
+        &:focus {
+          outline: none;
+          border-color: $primary-blue;
+          box-shadow: 0 0 0 2px rgba($primary-blue, 0.2);
+        }
+      }
+    }
+
+    .form-footer {
+      grid-column: 1 / -1;
+      display: flex;
+      justify-content: flex-end;
+      padding-top: 0;
+    }
+
+    .add-user-button {
+      background-color: $dark-blue;
+      color: $white;
+
+      &:hover {
+        background-color: darken($dark-blue, 5%);
+      }
+    }
+  }
+}
+
+
 @media (max-width: 500px) {
   .modal-content {
     margin: 0 15px;
@@ -279,5 +357,9 @@ $dark-gray-text: #2d3748;
     .modal-button {
       width: 100%;
     }
+  }
+
+  .add-user-modal .modal-form {
+    grid-template-columns: 1fr;
   }
 }
