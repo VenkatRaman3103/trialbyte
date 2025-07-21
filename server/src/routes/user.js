@@ -46,6 +46,21 @@ userRouter.get('/users/:id', async (req, res) => {
 });
 
 // NOTE: update users
+userRouter.patch('/users/:id', async (req, res) => {
+    const { id } = req.params;
+    const { name, company, designation, contact, country, region, sex, age, plan } = req.body;
+    try {
+        const response = await db
+            .update(users)
+            .set({ name, company, designation, contact, country, region, sex, age, plan })
+            .where(eq(users.id, id))
+            .returning();
+        res.json(response);
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({ message: 'Internal server error' });
+    }
+});
 
 // NOTE: delete users
 // delete user
