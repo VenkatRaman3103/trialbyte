@@ -1,6 +1,14 @@
-import { pgTable, serial, text } from 'drizzle-orm/pg-core';
+import { pgTable, text, uuid } from 'drizzle-orm/pg-core';
 
 export const users = pgTable('users', {
-    id: serial('id').primaryKey(),
+    id: uuid('id').defaultRandom().primaryKey(),
     name: text('name').notNull(),
+    company: text('company').notNull(),
+    designation: text('designation').notNull(),
+    contact: text('contact').notNull(),
+    country: text('country').notNull(),
+    region: text('region').notNull(),
+    sex: text('sex').notNull(),
+    age: text('age').notNull(),
+    plan: text('plan').notNull(), // TODO: change to enum
 });
