@@ -1,7 +1,7 @@
 import { Router } from 'express';
 import { db } from '../db/index.js';
 import { users } from '../db/schema.js';
-import { eq } from 'drizzle-orm';
+import { eq, inArray } from 'drizzle-orm';
 
 export const userRouter = Router();
 
@@ -78,10 +78,9 @@ userRouter.delete('/users/:id', async (req, res) => {
 // delete multiple users
 userRouter.delete('/users', async (req, res) => {
     const { ids } = req.body;
+    console.log('ids');
     try {
-        for (const id of ids) {
-            await db.delete(users).where(eq(users.id, id));
-        }
+        await db.delete(users).where(inArray(users.id, ids));
         res.json({ message: 'Users deleted successfully' });
     } catch (error) {
         console.log(error);

@@ -4,6 +4,9 @@ $light-gray: #f7fafc;
 $border-color: #e2e8f0;
 $text-color: #4a5568;
 $white: #ffffff;
+$red-error: #e53e3e;
+$gray-button: #cbd5e0;
+$dark-gray-text: #2d3748;
 
 .app-container {
   width: 100%;
@@ -57,7 +60,6 @@ $white: #ffffff;
     }
   }
 
-  // Styling for checkboxes
   input[type="checkbox"] {
     appearance: none;
     width: 18px;
@@ -149,6 +151,132 @@ $white: #ffffff;
     align-items: stretch;
 
     button {
+      width: 100%;
+    }
+  }
+}
+
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.6);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modal-content {
+  background-color: $white;
+  border-radius: 8px;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+  width: 90%;
+  max-width: 450px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.modal-header {
+  background-color: $primary-blue;
+  color: $white;
+  padding: 15px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-weight: 600;
+  border-top-left-radius: 8px;
+  border-top-right-radius: 8px;
+
+  h3 {
+    margin: 0;
+    font-size: 1.1em;
+  }
+}
+
+.modal-close-button {
+  background: none;
+  border: none;
+  color: $white;
+  font-size: 1.5em;
+  cursor: pointer;
+  padding: 0;
+  line-height: 1;
+  transition: transform 0.2s ease;
+
+  &:hover {
+    transform: rotate(90deg);
+  }
+}
+
+.modal-body {
+  padding: 30px 20px;
+  text-align: center;
+  color: $dark-gray-text;
+  font-size: 1.1em;
+  flex-grow: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.modal-footer {
+  padding: 20px;
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  background-color: $white;
+  border-bottom-left-radius: 8px;
+  border-bottom-right-radius: 8px;
+
+  .modal-button {
+    padding: 10px 25px;
+    border: none;
+    border-radius: 6px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+
+    &:hover {
+      transform: translateY(-2px);
+    }
+
+    &:active {
+      transform: translateY(0);
+    }
+  }
+
+  .modal-button-yes {
+    background-color: $dark-blue;
+    color: $white;
+
+    &:hover {
+      background-color: darken($dark-blue, 5%);
+    }
+  }
+
+  .modal-button-no {
+    background-color: $gray-button;
+    color: $dark-gray-text;
+
+    &:hover {
+      background-color: darken($gray-button, 5%);
+    }
+  }
+}
+
+@media (max-width: 500px) {
+  .modal-content {
+    margin: 0 15px;
+  }
+
+  .modal-footer {
+    flex-direction: column;
+
+    .modal-button {
       width: 100%;
     }
   }
