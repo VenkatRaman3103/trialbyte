@@ -4,8 +4,9 @@ import "./index.scss";
 import DashboardCharts from "@/components/DashboardCharts";
 import UsersTable from "@/components/UsersTable";
 import { useSelector } from "react-redux";
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { getAllUsers } from "@/api/users/getAllUsers";
+import { deleteUserById } from "@/api/users/deleteUserById";
 
 const cardsDummyData = [
     {
@@ -51,12 +52,25 @@ const cardsDummyData = [
 ];
 
 const AdminDashboard = () => {
+    const queryClient = useQueryClient();
+
     const { data: allUsers } = useQuery({
         queryFn: getAllUsers,
         queryKey: ["all-users"],
     });
 
-    console.log(allUsers, "allUsers");
+    const deleteUserMutation = useMutation({
+        mutationFn: (id) => {
+            return deleteUserById(id);
+        },
+        onSuccess: () => {
+            queryClient.invalidateQueries(["all-users"]);
+        },
+    });
+
+    function handleDeleteUser(id) {
+        deleteUserMutation.mutate(id);
+    }
 
     return (
         <div className="admin-dashboard-container">
@@ -69,7 +83,10 @@ const AdminDashboard = () => {
                 <DashboardCharts />
             </div>
             <div className="adim-user-table-container">
-                <UsersTable data={allUsers} />
+                <UsersTable
+                    data={allUsers}
+                    handleDeleteUser={handleDeleteUser}
+                />
             </div>
         </div>
     );

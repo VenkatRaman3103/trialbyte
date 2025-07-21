@@ -1,7 +1,7 @@
 import React from "react";
 import "./index.scss";
 
-const UsersTable = ({ data }) => {
+const UsersTable = ({ data, handleDeleteUser }) => {
     return (
         <div className="users-table-container">
             <div className="table-header">
@@ -22,7 +22,7 @@ const UsersTable = ({ data }) => {
                         </tr>
                     </thead>
                     <tbody>
-                        {data.map((user, index) => (
+                        {data?.map((user, index) => (
                             <tr key={index}>
                                 <td>
                                     <div className="user-info">
@@ -37,7 +37,12 @@ const UsersTable = ({ data }) => {
                                 <td>{user.plan}</td>
                                 <td>expiry date</td>
                                 <td>
-                                    <button className="remove-button">
+                                    <button
+                                        className="remove-button"
+                                        onClick={() =>
+                                            handleDeleteUser(user.id)
+                                        }
+                                    >
                                         Remove
                                     </button>
                                 </td>
