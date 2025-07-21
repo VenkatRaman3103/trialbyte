@@ -1,45 +1,14 @@
 "use client";
 import { useState } from "react";
 import "./index.scss";
+import { useQuery } from "@tanstack/react-query";
+import { getAllUsers } from "@/api/users/getAllUsers";
 
 export const UsersList = () => {
-    const [users, setUsers] = useState([
-        {
-            id: "CT123",
-            name: "John Doe",
-            designation: "Clinical Researcher",
-            ipAuthority: true,
-            status: "Active",
-        },
-        {
-            id: "CT124",
-            name: "Jane Smith",
-            designation: "Clinical Trial Manager",
-            ipAuthority: false,
-            status: "Inactive",
-        },
-        {
-            id: "CT125",
-            name: "Alex Brown",
-            designation: "Clinical Data Analyst",
-            ipAuthority: true,
-            status: "Active",
-        },
-        {
-            id: "CT126",
-            name: "Emily Davis",
-            designation: "Clinical Trial Monitor",
-            ipAuthority: true,
-            status: "Active",
-        },
-        {
-            id: "CT127",
-            name: "Michael Lee",
-            designation: "Clinical Research Associate",
-            ipAuthority: false,
-            status: "Inactive",
-        },
-    ]);
+    const { data: allUsers } = useQuery({
+        queryKey: ["all-users"],
+        queryFn: getAllUsers,
+    });
 
     const [selectedUsers, setSelectedUsers] = useState([]);
 
@@ -53,7 +22,7 @@ export const UsersList = () => {
 
     const handleSelectAllChange = (event) => {
         if (event.target.checked) {
-            const allUserIds = users.map((user) => user.id);
+            const allUserIds = allUsers.map((user) => user.id);
             setSelectedUsers(allUserIds);
         } else {
             setSelectedUsers([]);
@@ -61,7 +30,7 @@ export const UsersList = () => {
     };
 
     const allUsersSelected =
-        selectedUsers.length === users.length && users.length > 0;
+        selectedUsers.length === allUsers.length && allUsers.length > 0;
 
     console.log(selectedUsers, "selectedUsers");
 
@@ -85,7 +54,7 @@ export const UsersList = () => {
                     </tr>
                 </thead>
                 <tbody>
-                    {users.map((user) => (
+                    {allUsers.map((user) => (
                         <tr key={user.id}>
                             <td>
                                 <input
@@ -98,8 +67,8 @@ export const UsersList = () => {
                             </td>
                             <td>{user.name}</td>
                             <td>{user.designation}</td>
-                            <td>{user.ipAuthority ? "Yes" : "No"}</td>
-                            <td>{user.status}</td>
+                            <td>not set</td>
+                            <td>not set</td>
                             <td>{user.id}</td>
                         </tr>
                     ))}
