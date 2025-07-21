@@ -6,11 +6,7 @@ import { getAllUsers } from "@/api/users/getAllUsers";
 import { deleteMultipleUsers } from "@/api/users/deleteMultipleUsers";
 import axios from "axios";
 import { backendUrl } from "@/config";
-
-const addUser = async (userData) => {
-    const response = await axios.post(`${backendUrl}/users`, userData);
-    console.log(response.data);
-};
+import { addUser } from "@/api/users/addUser";
 
 const ConfirmationModal = ({ isOpen, onClose, onConfirm }) => {
     if (!isOpen) return null;
