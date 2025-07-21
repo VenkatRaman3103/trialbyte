@@ -1,6 +1,7 @@
 import { Router } from 'express';
 import { db } from '../db/index.js';
 import { users } from '../db/schema.js';
+import { eq } from 'drizzle-orm';
 
 export const userRouter = Router();
 
@@ -25,6 +26,18 @@ userRouter.post('/users', async (req, res) => {
 userRouter.get('/users', async (req, res) => {
     try {
         const response = await db.select().from(users);
+        res.json(response);
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({ message: 'Internal server error' });
+    }
+});
+
+// read single user
+userRouter.get('/users/:id', async (req, res) => {
+    const { id } = req.params;
+    try {
+        const response = await db.select().from(users).where(eq(users.id, id));
         res.json(response);
     } catch (error) {
         console.log(error);
