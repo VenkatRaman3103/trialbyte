@@ -74,3 +74,17 @@ userRouter.delete('/users/:id', async (req, res) => {
         res.status(500).json({ message: 'Internal server error' });
     }
 });
+
+// delete multiple users
+userRouter.delete('/users', async (req, res) => {
+    const { ids } = req.body;
+    try {
+        for (const id of ids) {
+            await db.delete(users).where(eq(users.id, id));
+        }
+        res.json({ message: 'Users deleted successfully' });
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({ message: 'Internal server error' });
+    }
+});
