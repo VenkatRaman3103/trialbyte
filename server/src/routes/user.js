@@ -78,7 +78,6 @@ userRouter.delete('/users/:id', async (req, res) => {
 // delete multiple users
 userRouter.delete('/users', async (req, res) => {
     const { ids } = req.body;
-    console.log('ids');
     try {
         await db.delete(users).where(inArray(users.id, ids));
         res.json({ message: 'Users deleted successfully' });
