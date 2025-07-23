@@ -11,18 +11,19 @@ export const trials = pgTable('trials', {
     otherDrugs: text('otherDrugs'),
     title: text('title'),
     diseaseType: text('diseaseType'),
-    patientsegment: text('patientsegment'),
-    lineofTheraphy: text('lineof'),
+    patientSegment: text('patientSegment'), // Corrected typo: patientsegment -> patientSegment
+    lineOfTherapy: text('lineOfTherapy'), // Corrected typo: lineofTheraphy -> lineOfTherapy
     referenceLinks: text('referenceLinks'),
-    trialtags: text('trialtags'),
+    trialTags: text('trialTags'), // Corrected typo: trialtags -> trialTags
     sponsorCollaborators: text('sponsorCollaborators'),
+    sponsorFieldOfActivity: text('sponsorFieldOfActivity'), // Added missing field
     associatedCRO: text('associatedCRO'),
     countries: text('countries'),
     region: text('region'),
     trialRecordStatus: text('trialRecordStatus'),
 
     // outcome measured
-    purposeofthetrial: text('purposeofthetrial'),
+    purposeOfTheTrial: text('purposeOfTheTrial'), // Corrected typo: purposeofthetrial -> purposeOfTheTrial
     summary: text('summary'),
     primaryOutcomeMeasure: text('primaryOutcomeMeasure'),
     otherOutcomeMeasure: text('otherOutcomeMeasure'),
@@ -41,4 +42,30 @@ export const trials = pgTable('trials', {
     sex: text('sex'),
     healthyVolunteers: text('healthyVolunteers'),
     actualEnrolledVolunteers: text('actualEnrolledVolunteers'),
+
+    // timing
+    startDateActual: text('startDateActual'),
+    inclusionPeriodActual: text('inclusionPeriodActual'),
+    enrollmentClosedDateActual: text('enrollmentClosedDateActual'),
+    primaryOutcomeDurationActual: text('primaryOutcomeDurationActual'),
+    trialEndDateActual: text('trialEndDateActual'),
+    resultPublishedDateActual: text('resultPublishedDateActual'),
+
+    startDateBenchmark: text('startDateBenchmark'),
+    inclusionPeriodBenchmark: text('inclusionPeriodBenchmark'),
+    enrollmentClosedDateBenchmark: text('enrollmentClosedDateBenchmark'),
+    primaryOutcomeDurationBenchmark: text('primaryOutcomeDurationBenchmark'),
+    trialEndDateBenchmark: text('trialEndDateBenchmark'),
+    resultPublishedDateBenchmark: text('resultPublishedDateBenchmark'),
+
+    startDateEstimated: text('startDateEstimated'),
+    inclusionPeriodEstimated: text('inclusionPeriodEstimated'),
+    enrollmentClosedDateEstimated: text('enrollmentClosedDateEstimated'),
+    primaryOutcomeDurationEstimated: text('primaryOutcomeDurationEstimated'),
+    trialEndDateEstimated: text('trialEndDateEstimated'),
+    resultPublishedDateEstimated: text('resultPublishedDateEstimated'),
+
+    overallDurationToComplete: text('overallDurationToComplete'),
+    overallDurationToPublishResult: text('overallDurationToPublishResult'),
+    timingReference: text('timingReference'),
 });
