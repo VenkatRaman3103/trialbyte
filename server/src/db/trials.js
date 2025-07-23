@@ -68,4 +68,17 @@ export const trials = pgTable('trials', {
     overallDurationToComplete: text('overallDurationToComplete'),
     overallDurationToPublishResult: text('overallDurationToPublishResult'),
     timingReference: text('timingReference'),
+
+    // results
+    resultsAvailable: text('resultsAvailable'),
+    endpointsMet: text('endpointsMet'),
+    adverseEventsReported: text('adverseEventsReported'),
+    trialOutcome: text('trialOutcome'),
+    trialOutcomeReference: text('trialOutcomeReference'),
+    trialOutcomeReferenceLink: text('trialOutcomeReferenceLink'),
+    trialOutcomeReferenceAttachments: text('trialOutcomeReferenceAttachments'),
+    trialResults: text('trialResults'),
+    adverseEventReported: text('adverseEventReported'),
+    adverseEventType: text('adverseEventType'),
+    treatmentForAdverseEvents: text('treatmentForAdverseEvents'),
 });
