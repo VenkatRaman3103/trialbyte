@@ -92,5 +92,16 @@ trialsRouter.post('/trials', async (req, res) => {
 });
 
 // NOTE: read trials
+// reall all trials
+trialsRouter.get('/trials', async (req, res) => {
+    try {
+        const response = await db.select().from(trials);
+        res.json(response);
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({ message: 'Internal server error at trialsRouter GET' });
+    }
+});
+
 // NOTE: update trials
 // NOTE: delete trials
