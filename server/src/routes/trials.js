@@ -116,4 +116,90 @@ trialsRouter.get('/trials/:id', async (req, res) => {
 });
 
 // NOTE: update trials
+trialsRouter.patch('/trials/:id', async (req, res) => {
+    const { id } = req.params;
+    const {
+        therapeuticArea,
+        trialIdentifier,
+        trialPhase,
+        status,
+        primaryDrugs,
+        otherDrugs,
+        title,
+        diseaseType,
+        patientsegment,
+        lineofTheraphy,
+        referenceLinks,
+        trialtags,
+        sponsorCollaborators,
+        associatedCRO,
+        countries,
+        region,
+        trialRecordStatus,
+        purposeofthetrial,
+        summary,
+        primaryOutcomeMeasure,
+        otherOutcomeMeasure,
+        studyDesignKeywords,
+        studyDesign,
+        treatmentRegimen,
+        numberOfArms,
+        inclusionCriteria,
+        exclusionCriteria,
+        ageFrom,
+        ageTo,
+        subjectType,
+        targetNoOfVolunteers,
+        sex,
+        healthyVolunteers,
+        actualEnrolledVolunteers,
+    } = req.body;
+    try {
+        const response = await db
+            .update(trials)
+            .set({
+                therapeuticArea,
+                trialIdentifier,
+                trialPhase,
+                status,
+                primaryDrugs,
+                otherDrugs,
+                title,
+                diseaseType,
+                patientsegment,
+                lineofTheraphy,
+                referenceLinks,
+                trialtags,
+                sponsorCollaborators,
+                associatedCRO,
+                countries,
+                region,
+                trialRecordStatus,
+                purposeofthetrial,
+                summary,
+                primaryOutcomeMeasure,
+                otherOutcomeMeasure,
+                studyDesignKeywords,
+                studyDesign,
+                treatmentRegimen,
+                numberOfArms,
+                inclusionCriteria,
+                exclusionCriteria,
+                ageFrom,
+                ageTo,
+                subjectType,
+                targetNoOfVolunteers,
+                sex,
+                healthyVolunteers,
+                actualEnrolledVolunteers,
+            })
+            .where(eq(trials.id, id))
+            .returning();
+        res.json(response);
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({ message: 'Internal server error' });
+    }
+});
+
 // NOTE: delete trials
