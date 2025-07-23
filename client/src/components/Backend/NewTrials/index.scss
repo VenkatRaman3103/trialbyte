@@ -11,7 +11,7 @@ $card-background: #fff;
 $shadow-light: rgba(0, 0, 0, 0.1);
 $shadow-medium: rgba(0, 0, 0, 0.2);
 
-.new-trial-container {
+.trial-container {
     border-radius: 12px;
     overflow: hidden;
     width: 100%;
@@ -49,9 +49,9 @@ $shadow-medium: rgba(0, 0, 0, 0.2);
     font-weight: 600;
     color: $dark-blue;
     transition: all 0.3s ease;
-    border-radius: 8px; // Rounded corners for tab buttons
-    margin-right: 5px; // Space between tabs
-    margin-bottom: 5px; // For wrapping
+    border-radius: 8px;
+    margin-right: 5px;
+    margin-bottom: 5px;
 
     &:hover {
         background-color: lighten($light-blue, 5%);
@@ -72,7 +72,7 @@ $shadow-medium: rgba(0, 0, 0, 0.2);
     }
 
     @media (max-width: 480px) {
-        flex-grow: 1; // Make tabs take full width if needed
+        flex-grow: 1;
         text-align: center;
         margin-right: 0;
     }
@@ -82,6 +82,7 @@ $shadow-medium: rgba(0, 0, 0, 0.2);
     background-color: white;
     border-radius: 12px;
     border: 1px solid $border-color;
+    padding-bottom: 20px;
 
     @media (max-width: 768px) {
         padding: 15px;
@@ -92,14 +93,17 @@ $shadow-medium: rgba(0, 0, 0, 0.2);
     font-size: 1.5rem;
     font-weight: 600;
     color: $text-color;
-    padding: 10px;
-    background-color: #204b73;
+    padding: 10px 20px;
+    background-color: $primary-blue;
     color: white;
-    border-radius: 10px;
+    border-top-left-radius: 12px;
+    border-top-right-radius: 12px;
+    margin-bottom: 20px;
 
     @media (max-width: 768px) {
         font-size: 1.3rem;
         margin-bottom: 15px;
+        padding: 10px 15px;
     }
 }
 
@@ -107,15 +111,15 @@ $shadow-medium: rgba(0, 0, 0, 0.2);
     display: grid;
     padding: 20px;
 
-    grid-template-columns: repeat(3, 1fr); // 3 columns
-    gap: 20px; // Gap between grid items
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
 
     @media (max-width: 1024px) {
-        grid-template-columns: repeat(2, 1fr); // 2 columns on medium screens
+        grid-template-columns: repeat(2, 1fr);
     }
 
     @media (max-width: 768px) {
-        grid-template-columns: 1fr; // 1 column on small screens
+        grid-template-columns: 1fr;
         gap: 15px;
     }
 }
@@ -124,16 +128,8 @@ $shadow-medium: rgba(0, 0, 0, 0.2);
     display: flex;
     flex-direction: column;
 
-    &.col-span-3 {
-        grid-column: span 3; // Span 3 columns for full-width elements
-
-        @media (max-width: 1024px) {
-            grid-column: span 2; // Span 2 columns on medium screens
-        }
-
-        @media (max-width: 768px) {
-            grid-column: span 1; // Span 1 column on small screens
-        }
+    &.col-span-full {
+        grid-column: 1 / -1;
     }
 }
 
@@ -145,11 +141,12 @@ $shadow-medium: rgba(0, 0, 0, 0.2);
 }
 
 .form-input,
-.form-select {
+.form-select,
+.form-textarea {
     width: 100%;
     padding: 10px 12px;
     border: 1px solid $border-color;
-    border-radius: 8px; // Rounded corners for inputs/selects
+    border-radius: 8px;
     font-size: 1rem;
     color: $text-color;
     box-sizing: border-box;
@@ -163,13 +160,19 @@ $shadow-medium: rgba(0, 0, 0, 0.2);
     }
 }
 
+.form-textarea {
+    min-height: 80px;
+    resize: vertical;
+}
+
 .input-with-icon {
     position: relative;
     display: flex;
     align-items: center;
 
-    .form-input {
-        padding-right: 40px; // Make space for the icon
+    .form-input,
+    .form-textarea {
+        padding-right: 40px;
     }
 
     .input-icon {
@@ -178,8 +181,8 @@ $shadow-medium: rgba(0, 0, 0, 0.2);
         font-size: 1.2rem;
         color: $primary-blue;
         cursor: pointer;
-        background-color: transparent; // Ensure icon background is transparent
-        border-radius: 50%; // Make it round
+        background-color: transparent;
+        border-radius: 50%;
         width: 24px;
         height: 24px;
         display: flex;
@@ -201,7 +204,7 @@ $shadow-medium: rgba(0, 0, 0, 0.2);
     border-top: 1px solid $border-color;
 
     @media (max-width: 768px) {
-        justify-content: center; // Center button on small screens
+        justify-content: center;
         margin-top: 20px;
     }
 }
@@ -231,4 +234,115 @@ $shadow-medium: rgba(0, 0, 0, 0.2);
         padding: 10px 20px;
         font-size: 1rem;
     }
+}
+
+.timing-tab-content {
+    padding: 0 20px 20px;
+}
+
+.timing-grid {
+    display: grid;
+    grid-template-columns: 100px repeat(5, 1fr) 120px 1fr;
+    gap: 15px;
+    margin-bottom: 30px;
+    overflow-x: auto;
+    padding-bottom: 10px;
+
+    @media (max-width: 1024px) {
+        grid-template-columns: 80px repeat(5, 1fr) 100px 1fr;
+    }
+
+    @media (max-width: 768px) {
+        grid-template-columns: 70px repeat(7, minmax(100px, 1fr));
+    }
+}
+
+.timing-label-row {
+    display: contents;
+
+    .timing-header {
+        font-size: 0.9rem;
+        font-weight: 600;
+        color: $text-color;
+        text-align: center;
+        padding-bottom: 10px;
+        white-space: nowrap;
+
+        &:first-child {
+            text-align: left;
+        }
+
+        @media (max-width: 768px) {
+            font-size: 0.8rem;
+        }
+    }
+}
+
+.timing-row {
+    display: contents;
+
+    .row-label {
+        font-weight: 600;
+        color: $text-color;
+        padding-top: 10px;
+        align-self: center;
+        white-space: nowrap;
+
+
+        @media (max-width: 768px) {
+            font-size: 0.9rem;
+        }
+    }
+
+    .timing-input {
+        min-width: 100px;
+
+        @media (max-width: 768px) {
+            padding: 8px 10px;
+            font-size: 0.9rem;
+        }
+    }
+}
+
+.overall-duration-section {
+    display: flex;
+    gap: 30px;
+    margin-bottom: 30px;
+    padding: 0 20px 20px;
+    border-bottom: 1px solid $border-color;
+
+    @media (max-width: 768px) {
+        flex-direction: column;
+        gap: 20px;
+    }
+}
+
+.overall-duration-group {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+
+    .form-label {
+        text-align: center;
+        margin-bottom: 5px;
+        line-height: 1.3;
+        white-space: nowrap;
+    }
+
+    .form-input {
+        max-width: 150px;
+        text-align: center;
+    }
+
+    .duration-unit {
+        font-size: 0.8rem;
+        color: $text-color;
+        margin-top: 5px;
+    }
+}
+
+.reference-section {
+    padding: 0 20px;
 }

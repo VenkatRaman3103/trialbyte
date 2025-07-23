@@ -11,19 +11,19 @@ export const trials = pgTable('trials', {
     otherDrugs: text('otherDrugs'),
     title: text('title'),
     diseaseType: text('diseaseType'),
-    patientSegment: text('patientSegment'), // Corrected typo: patientsegment -> patientSegment
-    lineOfTherapy: text('lineOfTherapy'), // Corrected typo: lineofTheraphy -> lineOfTherapy
+    patientSegment: text('patientSegment'),
+    lineOfTherapy: text('lineOfTherapy'),
     referenceLinks: text('referenceLinks'),
-    trialTags: text('trialTags'), // Corrected typo: trialtags -> trialTags
+    trialTags: text('trialTags'),
     sponsorCollaborators: text('sponsorCollaborators'),
-    sponsorFieldOfActivity: text('sponsorFieldOfActivity'), // Added missing field
+    sponsorFieldOfActivity: text('sponsorFieldOfActivity'),
     associatedCRO: text('associatedCRO'),
     countries: text('countries'),
     region: text('region'),
     trialRecordStatus: text('trialRecordStatus'),
 
     // outcome measured
-    purposeOfTheTrial: text('purposeOfTheTrial'), // Corrected typo: purposeofthetrial -> purposeOfTheTrial
+    purposeOfTheTrial: text('purposeOfTheTrial'),
     summary: text('summary'),
     primaryOutcomeMeasure: text('primaryOutcomeMeasure'),
     otherOutcomeMeasure: text('otherOutcomeMeasure'),

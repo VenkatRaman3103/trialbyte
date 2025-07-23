@@ -19,6 +19,7 @@ export const NewTrial = () => {
     const [activeTab, setActiveTab] = useState("Trial Overview");
 
     const [formData, setFormData] = useState({
+        // trial overview
         therapeuticArea: "",
         trialIdentifier: "",
         trialPhase: "",
@@ -37,6 +38,8 @@ export const NewTrial = () => {
         countries: "",
         region: "",
         trialRecordStatus: "",
+
+        // outcome measured
         purposeOfTheTrial: "",
         summary: "",
         primaryOutcomeMeasure: "",
@@ -45,15 +48,43 @@ export const NewTrial = () => {
         studyDesign: "",
         treatmentRegimen: "",
         numberOfArms: "",
+
+        // participation criteria
         inclusionCriteria: "",
         exclusionCriteria: "",
         ageFrom: "",
         ageTo: "",
         subjectType: "",
+        targetNoOfVolunteers: "",
         sex: "",
         healthyVolunteers: "",
-        targetNoOfVolunteers: "",
         actualEnrolledVolunteers: "",
+
+        // timing
+        startDateActual: "",
+        inclusionPeriodActual: "",
+        enrollmentClosedDateActual: "",
+        primaryOutcomeDurationActual: "",
+        trialEndDateActual: "",
+        resultPublishedDateActual: "",
+
+        startDateBenchmark: "",
+        inclusionPeriodBenchmark: "",
+        enrollmentClosedDateBenchmark: "",
+        primaryOutcomeDurationBenchmark: "",
+        trialEndDateBenchmark: "",
+        resultPublishedDateBenchmark: "",
+
+        startDateEstimated: "",
+        inclusionPeriodEstimated: "",
+        enrollmentClosedDateEstimated: "",
+        primaryOutcomeDurationEstimated: "",
+        trialEndDateEstimated: "",
+        resultPublishedDateEstimated: "",
+
+        overallDurationToComplete: "",
+        overallDurationToPublishResult: "",
+        timingReference: "",
     });
 
     /// --- MUTATIONS ---
@@ -61,7 +92,7 @@ export const NewTrial = () => {
         mutationFn: () => createNewTrial(formData),
     });
 
-    // --- HANDERS ---
+    // --- HANDLERS ---
     // handle input changes
     const handleChange = (e) => {
         const { id, value } = e.target;
@@ -109,6 +140,13 @@ export const NewTrial = () => {
                         handleChange={handleChange}
                     />
                 );
+            case "Timing":
+                return (
+                    <TimingTab
+                        formData={formData}
+                        handleChange={handleChange}
+                    />
+                );
             default:
                 return (
                     <div className="p-4 text-gray-600">
@@ -123,7 +161,7 @@ export const NewTrial = () => {
     }
 
     return (
-        <div className="new-trial-container">
+        <div className="trial-container">
             {/* top navigation tabs */}
             <div className="tabs-container">
                 {tabs.map((tab) => (
@@ -690,6 +728,243 @@ const ParticipationCriteriaTab = ({ formData, handleChange }) => {
                     value={formData.actualEnrolledVolunteers}
                     onChange={handleChange}
                 />
+            </div>
+        </div>
+    );
+};
+
+const TimingTab = ({ formData, handleChange }) => {
+    return (
+        <div className="timing-tab-content">
+            <div className="timing-grid">
+                <div className="timing-label-row">
+                    <div></div> {/* Empty div for the row label column */}
+                    <div className="timing-header">Start Date</div>
+                    <div className="timing-header">Inclusion Period</div>
+                    <div className="timing-header">Enrollment Closed Date</div>
+                    <div className="timing-header">
+                        Primary Outcome Duration
+                    </div>
+                    <div className="timing-header">Trial End Date</div>
+                    <div className="timing-header">Result Duration</div>{" "}
+                    {/* Added missing column */}
+                    <div className="timing-header">Result Published Date</div>
+                </div>
+
+                {/* Actual Row */}
+                <div className="timing-row">
+                    <div className="row-label">Actual</div>
+                    <input
+                        type="date"
+                        id="startDateActual"
+                        className="form-input timing-input"
+                        value={formData.startDateActual || ""}
+                        onChange={handleChange}
+                    />
+                    <input
+                        type="text"
+                        id="inclusionPeriodActual"
+                        className="form-input timing-input"
+                        value={formData.inclusionPeriodActual || ""}
+                        onChange={handleChange}
+                    />
+                    <input
+                        type="date"
+                        id="enrollmentClosedDateActual"
+                        className="form-input timing-input"
+                        value={formData.enrollmentClosedDateActual || ""}
+                        onChange={handleChange}
+                    />
+                    <input
+                        type="text"
+                        id="primaryOutcomeDurationActual"
+                        className="form-input timing-input"
+                        value={formData.primaryOutcomeDurationActual || ""}
+                        onChange={handleChange}
+                    />
+                    <input
+                        type="date"
+                        id="trialEndDateActual"
+                        className="form-input timing-input"
+                        value={formData.trialEndDateActual || ""}
+                        onChange={handleChange}
+                    />
+                    <input
+                        type="text"
+                        id="resultDurationActual" /* Added missing input */
+                        className="form-input timing-input"
+                        value={formData.resultDurationActual || ""}
+                        onChange={handleChange}
+                    />
+                    <input
+                        type="date"
+                        id="resultPublishedDateActual"
+                        className="form-input timing-input"
+                        value={formData.resultPublishedDateActual || ""}
+                        onChange={handleChange}
+                    />
+                </div>
+
+                {/* Benchmark Row */}
+                <div className="timing-row">
+                    <div className="row-label">Benchmark</div>
+                    <input
+                        type="date"
+                        id="startDateBenchmark"
+                        className="form-input timing-input"
+                        value={formData.startDateBenchmark || ""}
+                        onChange={handleChange}
+                    />
+                    <input
+                        type="text"
+                        id="inclusionPeriodBenchmark"
+                        className="form-input timing-input"
+                        value={formData.inclusionPeriodBenchmark || ""}
+                        onChange={handleChange}
+                    />
+                    <input
+                        type="date"
+                        id="enrollmentClosedDateBenchmark"
+                        className="form-input timing-input"
+                        value={formData.enrollmentClosedDateBenchmark || ""}
+                        onChange={handleChange}
+                    />
+                    <input
+                        type="text"
+                        id="primaryOutcomeDurationBenchmark"
+                        className="form-input timing-input"
+                        value={formData.primaryOutcomeDurationBenchmark || ""}
+                        onChange={handleChange}
+                    />
+                    <input
+                        type="date"
+                        id="trialEndDateBenchmark"
+                        className="form-input timing-input"
+                        value={formData.trialEndDateBenchmark || ""}
+                        onChange={handleChange}
+                    />
+                    <input
+                        type="text"
+                        id="resultDurationBenchmark" /* Added missing input */
+                        className="form-input timing-input"
+                        value={formData.resultDurationBenchmark || ""}
+                        onChange={handleChange}
+                    />
+                    <input
+                        type="date"
+                        id="resultPublishedDateBenchmark"
+                        className="form-input timing-input"
+                        value={formData.resultPublishedDateBenchmark || ""}
+                        onChange={handleChange}
+                    />
+                </div>
+
+                {/* Estimated Row */}
+                <div className="timing-row">
+                    <div className="row-label">Estimated</div>
+                    <input
+                        type="date"
+                        id="startDateEstimated"
+                        className="form-input timing-input"
+                        value={formData.startDateEstimated || ""}
+                        onChange={handleChange}
+                    />
+                    <input
+                        type="text"
+                        id="inclusionPeriodEstimated"
+                        className="form-input timing-input"
+                        value={formData.inclusionPeriodEstimated || ""}
+                        onChange={handleChange}
+                    />
+                    <input
+                        type="date"
+                        id="enrollmentClosedDateEstimated"
+                        className="form-input timing-input"
+                        value={formData.enrollmentClosedDateEstimated || ""}
+                        onChange={handleChange}
+                    />
+                    <input
+                        type="text"
+                        id="primaryOutcomeDurationEstimated"
+                        className="form-input timing-input"
+                        value={formData.primaryOutcomeDurationEstimated || ""}
+                        onChange={handleChange}
+                    />
+                    <input
+                        type="date"
+                        id="trialEndDateEstimated"
+                        className="form-input timing-input"
+                        value={formData.trialEndDateEstimated || ""}
+                        onChange={handleChange}
+                    />
+                    <input
+                        type="text"
+                        id="resultDurationEstimated" /* Added missing input */
+                        className="form-input timing-input"
+                        value={formData.resultDurationEstimated || ""}
+                        onChange={handleChange}
+                    />
+                    <input
+                        type="date"
+                        id="resultPublishedDateEstimated"
+                        className="form-input timing-input"
+                        value={formData.resultPublishedDateEstimated || ""}
+                        onChange={handleChange}
+                    />
+                </div>
+            </div>
+
+            <div className="overall-duration-section">
+                <div className="overall-duration-group">
+                    <label
+                        htmlFor="overallDurationToComplete"
+                        className="form-label"
+                    >
+                        Overall Duration to Complete
+                    </label>
+                    <input
+                        type="text"
+                        id="overallDurationToComplete"
+                        className="form-input"
+                        value={formData.overallDurationToComplete || ""}
+                        onChange={handleChange}
+                    />
+                    <div className="duration-unit">(months)</div>
+                </div>
+
+                <div className="overall-duration-group">
+                    <label
+                        htmlFor="overallDurationToPublishResult"
+                        className="form-label"
+                    >
+                        Overall Duration to Publish Result
+                    </label>
+                    <input
+                        type="text"
+                        id="overallDurationToPublishResult"
+                        className="form-input"
+                        value={formData.overallDurationToPublishResult || ""}
+                        onChange={handleChange}
+                    />
+                    <div className="duration-unit">(months)</div>
+                </div>
+            </div>
+
+            <div className="reference-section">
+                <div className="form-group">
+                    <label htmlFor="timingReference" className="form-label">
+                        Reference
+                    </label>
+                    <div className="input-with-icon">
+                        <textarea
+                            id="timingReference"
+                            className="form-textarea" /* Changed to form-textarea */
+                            value={formData.timingReference || ""}
+                            onChange={handleChange}
+                        ></textarea>
+                        <span className="input-icon">+</span>{" "}
+                    </div>
+                </div>
             </div>
         </div>
     );
