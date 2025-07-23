@@ -103,5 +103,17 @@ trialsRouter.get('/trials', async (req, res) => {
     }
 });
 
+// read specific trial based on id
+trialsRouter.get('/trials/:id', async (req, res) => {
+    const { id } = req.params;
+    try {
+        const response = await db.select().from(trials).where(eq(trials.id, id));
+        res.json(response);
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({ message: 'Internal server error at trialsRouter GET' });
+    }
+});
+
 // NOTE: update trials
 // NOTE: delete trials
