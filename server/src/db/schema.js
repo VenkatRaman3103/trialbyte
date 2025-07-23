@@ -12,3 +12,5 @@ export const users = pgTable('users', {
     age: text('age').notNull(),
     plan: text('plan').notNull(),
 });
+
+export * from './trials.js';
