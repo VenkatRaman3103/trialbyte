@@ -1,6 +1,8 @@
 "use client";
 import React, { useState } from "react";
 import "./index.scss";
+import { useMutation } from "@tanstack/react-query";
+import { createNewTrial } from "@/api/trials/createNewTrial";
 
 export const NewTrial = () => {
     const tabs = [
@@ -52,6 +54,11 @@ export const NewTrial = () => {
         healthyVolunteers: "",
         targetNoOfVolunteers: "",
         actualEnrolledVolunteers: "",
+    });
+
+    /// --- MUTATIONS ---
+    const createMutation = useMutation({
+        mutationFn: () => createNewTrial(formData),
     });
 
     // --- HANDERS ---
@@ -111,6 +118,10 @@ export const NewTrial = () => {
         }
     };
 
+    function handleCreateTrial() {
+        createMutation.mutate();
+    }
+
     return (
         <div className="app-container">
             {/* top navigation tabs */}
@@ -125,6 +136,10 @@ export const NewTrial = () => {
                     </button>
                 ))}
             </div>
+
+            <button className="create-trial-button" onClick={handleCreateTrial}>
+                Create Trial
+            </button>
 
             {/* content area */}
             <div className="content-area">
