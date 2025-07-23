@@ -85,4 +85,14 @@ export const trials = pgTable('trials', {
     // sites
     totalNoOfSites: text('totalNoOfSites'),
     sitesNotes: text('sitesNotes'),
+
+    // logs
+    trialChangesLog: text('trialChangesLog'),
+    trialAddedDate: text('trialAddedDate'),
+    lastModifiedDate: text('lastModifiedDate'),
+    lastModifiedUser: text('lastModifiedUser'),
+    fullReviewUser: text('fullReviewUser'),
+    fullReview: text('fullReview'),
+    nextReviewDate: text('nextReviewDate'),
+    logsNotes: text('logsNotes'),
 });

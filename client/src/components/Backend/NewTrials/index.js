@@ -99,9 +99,19 @@ export const NewTrial = () => {
         adverseEventType: "",
         treatmentForAdverseEvents: "",
 
-        // Sites tab new fields
+        // Sites tab fields
         totalNoOfSites: "",
         sitesNotes: "",
+
+        // Logs tab new fields
+        trialChangesLog: "",
+        trialAddedDate: "",
+        lastModifiedDate: "",
+        lastModifiedUser: "",
+        fullReviewUser: "",
+        fullReview: false,
+        nextReviewDate: "",
+        logsNotes: "",
     });
 
     /// --- MUTATIONS ---
@@ -174,6 +184,10 @@ export const NewTrial = () => {
             case "Sites":
                 return (
                     <SitesTab formData={formData} handleChange={handleChange} />
+                );
+            case "Logs":
+                return (
+                    <LogsTab formData={formData} handleChange={handleChange} />
                 );
             default:
                 return (
@@ -1232,6 +1246,111 @@ const SitesTab = ({ formData, handleChange }) => {
                     ></textarea>
                     <span className="input-icon">+</span>
                 </div>
+            </div>
+        </div>
+    );
+};
+
+const LogsTab = ({ formData, handleChange }) => {
+    return (
+        <div className="tab-content-grid">
+            <div className="form-group col-span-full">
+                <label htmlFor="trialChangesLog" className="form-label">
+                    Trial Changes Log
+                </label>
+                <input
+                    type="text"
+                    id="trialChangesLog"
+                    className="form-input"
+                    value={formData.trialChangesLog}
+                    onChange={handleChange}
+                />
+            </div>
+            <div className="form-group">
+                <label htmlFor="trialAddedDate" className="form-label">
+                    Trial added Date
+                </label>
+                <input
+                    type="date"
+                    id="trialAddedDate"
+                    className="form-input"
+                    value={formData.trialAddedDate}
+                    onChange={handleChange}
+                />
+            </div>
+            <div className="form-group">
+                <label htmlFor="lastModifiedDate" className="form-label">
+                    Last Modified Date
+                </label>
+                <input
+                    type="date"
+                    id="lastModifiedDate"
+                    className="form-input"
+                    value={formData.lastModifiedDate}
+                    onChange={handleChange}
+                />
+            </div>
+            <div className="form-group">
+                <label htmlFor="lastModifiedUser" className="form-label">
+                    Last Modified User
+                </label>
+                <input
+                    type="text"
+                    id="lastModifiedUser"
+                    className="form-input"
+                    value={formData.lastModifiedUser}
+                    onChange={handleChange}
+                />
+            </div>
+            <div className="form-group">
+                <label htmlFor="fullReviewUser" className="form-label">
+                    Full Review User
+                </label>
+                <input
+                    type="text"
+                    id="fullReviewUser"
+                    className="form-input"
+                    value={formData.fullReviewUser}
+                    onChange={handleChange}
+                />
+            </div>
+            <div className="form-group flex items-center mt-6">
+                {" "}
+                {/* Added flex and items-center for alignment */}
+                <input
+                    type="checkbox"
+                    id="fullReview"
+                    className="mr-2" // Added margin-right for spacing
+                    checked={formData.fullReview}
+                    onChange={handleChange}
+                />
+                <label htmlFor="fullReview" className="form-label mb-0">
+                    Full Review
+                </label>{" "}
+                {/* Removed margin-bottom */}
+            </div>
+            <div className="form-group">
+                <label htmlFor="nextReviewDate" className="form-label">
+                    Next Review Date
+                </label>
+                <input
+                    type="date"
+                    id="nextReviewDate"
+                    className="form-input"
+                    value={formData.nextReviewDate}
+                    onChange={handleChange}
+                />
+            </div>
+            <div className="form-group col-span-full">
+                <label htmlFor="logsNotes" className="form-label">
+                    Notes
+                </label>
+                <textarea
+                    id="logsNotes"
+                    className="form-textarea"
+                    value={formData.logsNotes}
+                    onChange={handleChange}
+                ></textarea>
             </div>
         </div>
     );
