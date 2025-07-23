@@ -95,4 +95,11 @@ export const trials = pgTable('trials', {
     fullReview: text('fullReview'),
     nextReviewDate: text('nextReviewDate'),
     logsNotes: text('logsNotes'),
+
+    // other sources
+    pipelineData: text('pipelineData'),
+    pressRelease: text('pressRelease'),
+    publications: text('publications'),
+    trialRegistries: text('trialRegistries'),
+    associatedStudies: text('associatedStudies'),
 });

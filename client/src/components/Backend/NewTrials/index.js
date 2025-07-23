@@ -103,7 +103,7 @@ export const NewTrial = () => {
         totalNoOfSites: "",
         sitesNotes: "",
 
-        // Logs tab new fields
+        // Logs tab fields
         trialChangesLog: "",
         trialAddedDate: "",
         lastModifiedDate: "",
@@ -112,6 +112,13 @@ export const NewTrial = () => {
         fullReview: false,
         nextReviewDate: "",
         logsNotes: "",
+
+        // Other Sources tab fields
+        pipelineData: "",
+        pressRelease: "",
+        publications: "",
+        trialRegistries: "",
+        associatedStudies: "",
     });
 
     /// --- MUTATIONS ---
@@ -184,6 +191,13 @@ export const NewTrial = () => {
             case "Sites":
                 return (
                     <SitesTab formData={formData} handleChange={handleChange} />
+                );
+            case "Other Sources":
+                return (
+                    <OtherSourcesTab
+                        formData={formData}
+                        handleChange={handleChange}
+                    />
                 );
             case "Logs":
                 return (
@@ -1352,6 +1366,155 @@ const LogsTab = ({ formData, handleChange }) => {
                     onChange={handleChange}
                 ></textarea>
             </div>
+        </div>
+    );
+};
+
+const OtherSourcesTab = ({ formData, handleChange }) => {
+    const subTabs = [
+        "Pipeline Data",
+        "Press Releases",
+        "Publications",
+        "Trial Registries",
+        "Associated Studies",
+    ];
+    const [activeSubTab, setActiveSubTab] = useState("Pipeline Data");
+
+    const handleSubTabClick = (tab) => {
+        setActiveSubTab(tab);
+    };
+
+    const renderSubTabContent = () => {
+        switch (activeSubTab) {
+            case "Pipeline Data":
+                return (
+                    <div className="sub-tab-content">
+                        <div className="form-group col-span-full">
+                            <label
+                                htmlFor="pipelineData"
+                                className="form-label"
+                            >
+                                Pipeline Data
+                            </label>
+                            <div className="input-with-icon">
+                                <textarea
+                                    id="pipelineData"
+                                    className="form-textarea"
+                                    value={formData.pipelineData}
+                                    onChange={handleChange}
+                                ></textarea>
+                                <span className="input-icon">+</span>
+                            </div>
+                        </div>
+                    </div>
+                );
+            case "Press Releases":
+                return (
+                    <div className="sub-tab-content">
+                        <div className="form-group col-span-full">
+                            <label
+                                htmlFor="pressRelease"
+                                className="form-label"
+                            >
+                                Press Release
+                            </label>
+                            <div className="input-with-icon">
+                                <textarea
+                                    id="pressRelease"
+                                    className="form-textarea"
+                                    value={formData.pressRelease}
+                                    onChange={handleChange}
+                                ></textarea>
+                                <span className="input-icon">+</span>
+                            </div>
+                        </div>
+                    </div>
+                );
+            case "Publications":
+                return (
+                    <div className="sub-tab-content">
+                        <div className="form-group col-span-full">
+                            <label
+                                htmlFor="publications"
+                                className="form-label"
+                            >
+                                Publications
+                            </label>
+                            <div className="input-with-icon">
+                                <textarea
+                                    id="publications"
+                                    className="form-textarea"
+                                    value={formData.publications}
+                                    onChange={handleChange}
+                                ></textarea>
+                                <span className="input-icon">+</span>
+                            </div>
+                        </div>
+                    </div>
+                );
+            case "Trial Registries":
+                return (
+                    <div className="sub-tab-content">
+                        <div className="form-group col-span-full">
+                            <label
+                                htmlFor="trialRegistries"
+                                className="form-label"
+                            >
+                                Trial Registries
+                            </label>
+                            <div className="input-with-icon">
+                                <textarea
+                                    id="trialRegistries"
+                                    className="form-textarea"
+                                    value={formData.trialRegistries}
+                                    onChange={handleChange}
+                                ></textarea>
+                                <span className="input-icon">+</span>
+                            </div>
+                        </div>
+                    </div>
+                );
+            case "Associated Studies":
+                return (
+                    <div className="sub-tab-content">
+                        <div className="form-group col-span-full">
+                            <label
+                                htmlFor="associatedStudies"
+                                className="form-label"
+                            >
+                                Associated Studies
+                            </label>
+                            <div className="input-with-icon">
+                                <textarea
+                                    id="associatedStudies"
+                                    className="form-textarea"
+                                    value={formData.associatedStudies}
+                                    onChange={handleChange}
+                                ></textarea>
+                                <span className="input-icon">+</span>
+                            </div>
+                        </div>
+                    </div>
+                );
+            default:
+                return null;
+        }
+    };
+
+    return (
+        <div className="other-sources-tab-content">
+            <div className="sub-tabs-container">
+                {subTabs.map((tab) => (
+                    <button
+                        key={tab}
+                        className={`sub-tab-button ${activeSubTab === tab ? "active" : ""}`}
+                        onClick={() => handleSubTabClick(tab)}
+                    >
+                        {tab}
+                    </button>
+                ))}
+            </div>
+            {renderSubTabContent()}
         </div>
     );
 };

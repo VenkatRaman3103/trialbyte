@@ -464,3 +464,54 @@ input:checked+.slider:before {
         flex-grow: 1;
     }
 }
+
+.other-sources-tab-content {
+    padding: 0 20px 20px;
+
+    .sub-tabs-container {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        margin-bottom: 20px;
+        padding-bottom: 10px;
+        border-bottom: 1px solid $border-color;
+
+        @media (max-width: 768px) {
+            gap: 5px;
+            margin-bottom: 15px;
+        }
+    }
+
+    .sub-tab-button {
+        background-color: $light-blue;
+        border: none;
+        padding: 8px 15px;
+        cursor: pointer;
+        font-size: 0.9rem;
+        font-weight: 500;
+        color: $dark-blue;
+        transition: all 0.3s ease;
+        border-radius: 6px;
+
+        &:hover {
+            background-color: lighten($light-blue, 5%);
+            color: $primary-blue;
+        }
+
+        &.active {
+            background-color: $primary-blue;
+            color: white;
+            box-shadow: 0 1px 4px $shadow-light;
+            font-weight: 600;
+        }
+
+        @media (max-width: 768px) {
+            padding: 6px 10px;
+            font-size: 0.8rem;
+        }
+    }
+
+    .sub-tab-content {
+        padding-top: 10px;
+    }
+}
