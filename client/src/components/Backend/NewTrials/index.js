@@ -123,7 +123,7 @@ export const NewTrial = () => {
     }
 
     return (
-        <div className="app-container">
+        <div className="new-trial-container">
             {/* top navigation tabs */}
             <div className="tabs-container">
                 {tabs.map((tab) => (
