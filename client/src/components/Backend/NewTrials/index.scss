@@ -1,0 +1,233 @@
+/* index.scss */
+
+// Variables for colors, fonts, etc.
+$primary-blue: #007bff;
+$light-blue: #e0f2ff;
+$dark-blue: #0056b3;
+$text-color: #333;
+$border-color: #ccc;
+$background-color: #f8f9fa;
+$card-background: #fff;
+$shadow-light: rgba(0, 0, 0, 0.1);
+$shadow-medium: rgba(0, 0, 0, 0.2);
+
+.app-container {
+    background-color: $card-background;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px $shadow-light;
+    overflow: hidden;
+    width: 100%;
+    max-width: 1200px; // Max width for the entire component
+    margin-top: 20px;
+    margin-bottom: 20px;
+
+    @media (max-width: 768px) {
+        margin-top: 10px;
+        margin-bottom: 10px;
+        border-radius: 8px;
+    }
+}
+
+.tabs-container {
+    display: flex;
+    flex-wrap: wrap; // Allow tabs to wrap on smaller screens
+    background-color: $light-blue;
+    padding: 10px 20px;
+    border-bottom: 1px solid lighten($primary-blue, 20%);
+    border-top-left-radius: 12px;
+    border-top-right-radius: 12px;
+
+    @media (max-width: 768px) {
+        padding: 8px 10px;
+        border-top-left-radius: 8px;
+        border-top-right-radius: 8px;
+    }
+}
+
+.tab-button {
+    background-color: transparent;
+    border: none;
+    padding: 12px 20px;
+    cursor: pointer;
+    font-size: 1rem;
+    font-weight: 500;
+    color: $dark-blue;
+    transition: all 0.3s ease;
+    border-radius: 8px; // Rounded corners for tab buttons
+    margin-right: 5px; // Space between tabs
+    margin-bottom: 5px; // For wrapping
+
+    &:hover {
+        background-color: lighten($light-blue, 5%);
+        color: $primary-blue;
+    }
+
+    &.active {
+        background-color: $primary-blue;
+        color: white;
+        box-shadow: 0 2px 8px $shadow-light;
+        font-weight: 600;
+    }
+
+    @media (max-width: 768px) {
+        padding: 10px 15px;
+        font-size: 0.9rem;
+        margin-right: 3px;
+    }
+
+    @media (max-width: 480px) {
+        flex-grow: 1; // Make tabs take full width if needed
+        text-align: center;
+        margin-right: 0;
+    }
+}
+
+.content-area {
+    padding: 20px;
+
+    @media (max-width: 768px) {
+        padding: 15px;
+    }
+}
+
+.content-title {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: $text-color;
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid $border-color;
+
+    @media (max-width: 768px) {
+        font-size: 1.3rem;
+        margin-bottom: 15px;
+    }
+}
+
+.tab-content-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); // 3 columns
+    gap: 20px; // Gap between grid items
+
+    @media (max-width: 1024px) {
+        grid-template-columns: repeat(2, 1fr); // 2 columns on medium screens
+    }
+
+    @media (max-width: 768px) {
+        grid-template-columns: 1fr; // 1 column on small screens
+        gap: 15px;
+    }
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+
+    &.col-span-3 {
+        grid-column: span 3; // Span 3 columns for full-width elements
+
+        @media (max-width: 1024px) {
+            grid-column: span 2; // Span 2 columns on medium screens
+        }
+
+        @media (max-width: 768px) {
+            grid-column: span 1; // Span 1 column on small screens
+        }
+    }
+}
+
+.form-label {
+    font-size: 0.9rem;
+    color: $text-color;
+    margin-bottom: 6px;
+    font-weight: 500;
+}
+
+.form-input,
+.form-select {
+    width: 100%;
+    padding: 10px 12px;
+    border: 1px solid $border-color;
+    border-radius: 8px; // Rounded corners for inputs/selects
+    font-size: 1rem;
+    color: $text-color;
+    box-sizing: border-box;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    background-color: $card-background;
+
+    &:focus {
+        outline: none;
+        border-color: $primary-blue;
+        box-shadow: 0 0 0 3px rgba($primary-blue, 0.2);
+    }
+}
+
+.input-with-icon {
+    position: relative;
+    display: flex;
+    align-items: center;
+
+    .form-input {
+        padding-right: 40px; // Make space for the icon
+    }
+
+    .input-icon {
+        position: absolute;
+        right: 12px;
+        font-size: 1.2rem;
+        color: $primary-blue;
+        cursor: pointer;
+        background-color: transparent; // Ensure icon background is transparent
+        border-radius: 50%; // Make it round
+        width: 24px;
+        height: 24px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-weight: bold;
+
+        &:hover {
+            background-color: lighten($primary-blue, 40%);
+        }
+    }
+}
+
+.next-button-container {
+    display: flex;
+    justify-content: flex-end; // Align button to the right
+    margin-top: 30px;
+    padding-top: 20px;
+    border-top: 1px solid $border-color;
+
+    @media (max-width: 768px) {
+        justify-content: center; // Center button on small screens
+        margin-top: 20px;
+    }
+}
+
+.next-button {
+    background-color: $primary-blue;
+    color: white;
+    padding: 12px 25px;
+    border: none;
+    border-radius: 8px;
+    font-size: 1.1rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+    box-shadow: 0 4px 10px $shadow-light;
+
+    &:hover {
+        background-color: $dark-blue;
+        box-shadow: 0 6px 12px $shadow-medium;
+    }
+
+    &:active {
+        background-color: darken($dark-blue, 10%);
+        box-shadow: 0 2px 5px $shadow-light inset;
+    }
+
+    @media (max-width: 768px) {
+        padding: 10px 20px;
+        font-size: 1rem;
+    }
+}
