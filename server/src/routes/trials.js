@@ -203,3 +203,13 @@ trialsRouter.patch('/trials/:id', async (req, res) => {
 });
 
 // NOTE: delete trials
+trialsRouter.delete('/trials/:id', async (req, res) => {
+    const { id } = req.params;
+    try {
+        const response = await db.delete(trials).where(eq(trials.id, id)).returning();
+        res.json(response);
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({ message: 'Internal server error' });
+    }
+});
