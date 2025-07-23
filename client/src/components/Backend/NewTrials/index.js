@@ -98,6 +98,10 @@ export const NewTrial = () => {
         adverseEventReported: "",
         adverseEventType: "",
         treatmentForAdverseEvents: "",
+
+        // Sites tab new fields
+        totalNoOfSites: "",
+        sitesNotes: "",
     });
 
     /// --- MUTATIONS ---
@@ -119,7 +123,7 @@ export const NewTrial = () => {
         setActiveTab(tab);
     };
 
-    // hande "next" button click
+    // handle "next" button click
     const handleNextClick = () => {
         const currentIndex = tabs.indexOf(activeTab);
         const nextIndex = (currentIndex + 1) % tabs.length;
@@ -166,6 +170,10 @@ export const NewTrial = () => {
                         formData={formData}
                         handleChange={handleChange}
                     />
+                );
+            case "Sites":
+                return (
+                    <SitesTab formData={formData} handleChange={handleChange} />
                 );
             default:
                 return (
@@ -1190,6 +1198,39 @@ export const ResultTab = ({ formData, handleChange }) => {
                         onChange={handleChange}
                         placeholder=""
                     ></textarea>
+                </div>
+            </div>
+        </div>
+    );
+};
+
+const SitesTab = ({ formData, handleChange }) => {
+    return (
+        <div className="tab-content-grid">
+            <div className="form-group">
+                <label htmlFor="totalNoOfSites" className="form-label">
+                    Total No of Sites
+                </label>
+                <input
+                    type="number"
+                    id="totalNoOfSites"
+                    className="form-input"
+                    value={formData.totalNoOfSites}
+                    onChange={handleChange}
+                />
+            </div>
+            <div className="form-group col-span-full">
+                <label htmlFor="sitesNotes" className="form-label">
+                    Notes
+                </label>
+                <div className="input-with-icon">
+                    <textarea
+                        id="sitesNotes"
+                        className="form-textarea"
+                        value={formData.sitesNotes}
+                        onChange={handleChange}
+                    ></textarea>
+                    <span className="input-icon">+</span>
                 </div>
             </div>
         </div>

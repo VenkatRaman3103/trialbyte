@@ -81,4 +81,8 @@ export const trials = pgTable('trials', {
     adverseEventReported: text('adverseEventReported'),
     adverseEventType: text('adverseEventType'),
     treatmentForAdverseEvents: text('treatmentForAdverseEvents'),
+
+    // sites
+    totalNoOfSites: text('totalNoOfSites'),
+    sitesNotes: text('sitesNotes'),
 });
