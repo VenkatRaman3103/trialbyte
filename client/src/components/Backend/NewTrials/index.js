@@ -85,6 +85,19 @@ export const NewTrial = () => {
         overallDurationToComplete: "",
         overallDurationToPublishResult: "",
         timingReference: "",
+
+        // results
+        resultsAvailable: false,
+        endpointsMet: false,
+        adverseEventsReported: false,
+        trialOutcome: "",
+        trialOutcomeReference: "",
+        trialOutcomeReferenceLink: "",
+        trialOutcomeReferenceAttachments: "",
+        trialResults: "",
+        adverseEventReported: "",
+        adverseEventType: "",
+        treatmentForAdverseEvents: "",
     });
 
     /// --- MUTATIONS ---
@@ -95,10 +108,10 @@ export const NewTrial = () => {
     // --- HANDLERS ---
     // handle input changes
     const handleChange = (e) => {
-        const { id, value } = e.target;
+        const { id, value, type, checked } = e.target;
         setFormData((prevData) => ({
             ...prevData,
-            [id]: value,
+            [id]: type === "checkbox" ? checked : value,
         }));
     };
 
@@ -143,6 +156,13 @@ export const NewTrial = () => {
             case "Timing":
                 return (
                     <TimingTab
+                        formData={formData}
+                        handleChange={handleChange}
+                    />
+                );
+            case "Results":
+                return (
+                    <ResultTab
                         formData={formData}
                         handleChange={handleChange}
                     />
@@ -964,6 +984,212 @@ const TimingTab = ({ formData, handleChange }) => {
                         ></textarea>
                         <span className="input-icon">+</span>{" "}
                     </div>
+                </div>
+            </div>
+        </div>
+    );
+};
+
+export const ResultTab = ({ formData, handleChange }) => {
+    return (
+        <div className="result-tab-content">
+            <div className="result-toggles">
+                <div className="toggle-group">
+                    <label htmlFor="resultsAvailable" className="toggle-label">
+                        Results Available
+                    </label>
+                    <label className="switch">
+                        <input
+                            type="checkbox"
+                            id="resultsAvailable"
+                            checked={formData.resultsAvailable}
+                            onChange={handleChange}
+                        />
+                        <span className="slider round"></span>
+                    </label>
+                </div>
+                <div className="toggle-group">
+                    <label htmlFor="endpointsMet" className="toggle-label">
+                        Endpoints met
+                    </label>
+                    <label className="switch">
+                        <input
+                            type="checkbox"
+                            id="endpointsMet"
+                            checked={formData.endpointsMet}
+                            onChange={handleChange}
+                        />
+                        <span className="slider round"></span>
+                    </label>
+                </div>
+                <div className="toggle-group">
+                    <label
+                        htmlFor="adverseEventsReported"
+                        className="toggle-label"
+                    >
+                        Adverse Events Reported
+                    </label>
+                    <label className="switch">
+                        <input
+                            type="checkbox"
+                            id="adverseEventsReported"
+                            checked={formData.adverseEventsReported}
+                            onChange={handleChange}
+                        />
+                        <span className="slider round"></span>
+                    </label>
+                </div>
+            </div>
+
+            <div className="tab-content-grid">
+                <div className="form-group">
+                    <label htmlFor="trialOutcome" className="form-label">
+                        Trial Outcome
+                    </label>
+                    <select
+                        id="trialOutcome"
+                        className="form-select"
+                        value={formData.trialOutcome}
+                        onChange={handleChange}
+                    >
+                        <option value="">Select Outcome</option>
+                        <option value="positive">Positive</option>
+                        <option value="negative">Negative</option>
+                        <option value="inconclusive">Inconclusive</option>
+                    </select>
+                </div>
+
+                <div className="form-group col-span-2">
+                    <label
+                        htmlFor="trialOutcomeReference"
+                        className="form-label"
+                    >
+                        Trial Outcome Reference
+                    </label>
+                    <div className="input-with-icon">
+                        <textarea
+                            id="trialOutcomeReference"
+                            className="form-textarea"
+                            value={formData.trialOutcomeReference}
+                            onChange={handleChange}
+                            placeholder=""
+                        ></textarea>
+                        <span className="input-icon">🗓️</span>
+                    </div>
+                </div>
+
+                <div className="form-group col-span-3">
+                    <label
+                        htmlFor="trialOutcomeReferenceLink"
+                        className="form-label"
+                    >
+                        Link
+                    </label>
+                    <div className="input-row-with-icons">
+                        <div className="input-with-icon">
+                            <input
+                                type="text"
+                                id="trialOutcomeReferenceLink"
+                                className="form-input"
+                                value={formData.trialOutcomeReferenceLink}
+                                onChange={handleChange}
+                                placeholder=""
+                            />
+                            <span className="input-icon">+</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div className="form-group col-span-3">
+                    <label
+                        htmlFor="trialOutcomeReferenceAttachments"
+                        className="form-label"
+                    >
+                        Attachments
+                    </label>
+                    <div className="input-row-with-icons">
+                        <div className="input-with-icon">
+                            <input
+                                type="text"
+                                id="trialOutcomeReferenceAttachments"
+                                className="form-input"
+                                value={
+                                    formData.trialOutcomeReferenceAttachments
+                                }
+                                onChange={handleChange}
+                                placeholder=""
+                            />
+                            <span className="input-icon">+</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div className="form-group col-span-full">
+                    <label htmlFor="trialResults" className="form-label">
+                        Trial Results
+                    </label>
+                    <div className="input-with-icon">
+                        <textarea
+                            id="trialResults"
+                            className="form-textarea"
+                            value={formData.trialResults}
+                            onChange={handleChange}
+                            placeholder=""
+                        ></textarea>
+                        <span className="input-icon">+</span>
+                    </div>
+                </div>
+
+                <div className="form-group">
+                    <label
+                        htmlFor="adverseEventReported"
+                        className="form-label"
+                    >
+                        Adverse Event Reported
+                    </label>
+                    <select
+                        id="adverseEventReported"
+                        className="form-select"
+                        value={formData.adverseEventReported}
+                        onChange={handleChange}
+                    >
+                        <option value="">Select Option</option>
+                        <option value="yes">Yes</option>
+                        <option value="no">No</option>
+                    </select>
+                </div>
+
+                <div className="form-group">
+                    <label htmlFor="adverseEventType" className="form-label">
+                        Adverse Event Type
+                    </label>
+                    <select
+                        id="adverseEventType"
+                        className="form-select"
+                        value={formData.adverseEventType}
+                        onChange={handleChange}
+                    >
+                        <option value="">Select Type</option>
+                        <option value="mild">Mild</option>
+                        <option value="moderate">Moderate</option>
+                        <option value="severe">Severe</option>
+                    </select>
+                </div>
+
+                <div className="form-group col-span-full">
+                    <label
+                        htmlFor="treatmentForAdverseEvents"
+                        className="form-label"
+                    >
+                        Treatment For Adverse Events
+                    </label>
+                    <textarea
+                        id="treatmentForAdverseEvents"
+                        className="form-textarea"
+                        value={formData.treatmentForAdverseEvents}
+                        onChange={handleChange}
+                        placeholder=""
+                    ></textarea>
                 </div>
             </div>
         </div>
