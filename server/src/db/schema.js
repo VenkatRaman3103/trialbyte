@@ -14,3 +14,4 @@ export const users = pgTable('users', {
 });
 
 export * from './trials.js';
+export * from './savedQueries.js';
