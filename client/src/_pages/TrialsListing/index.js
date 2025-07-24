@@ -28,9 +28,8 @@ import { FaSortAlphaDownAlt } from "react-icons/fa";
 import { FaRegSquare } from "react-icons/fa6";
 
 export const TrialsListing = () => {
-    // State for sorting
     const [sortBy, setSortBy] = useState("");
-    const [sortOrder, setSortOrder] = useState("asc"); // 'asc' or 'desc'
+    const [sortOrder, setSortOrder] = useState("asc");
 
     /// --- QUERY ---
     const { data: allTrials } = useQuery({
@@ -38,7 +37,7 @@ export const TrialsListing = () => {
         queryKey: ["all-trials"],
     });
 
-    // Memoized sorted trials
+    // memoized sorted trials
     const sortedTrials = useMemo(() => {
         if (!allTrials || !sortBy) return allTrials;
 
@@ -78,7 +77,6 @@ export const TrialsListing = () => {
                     return 0;
             }
 
-            // Convert to strings for comparison
             aValue = aValue.toString().toLowerCase();
             bValue = bValue.toString().toLowerCase();
 
@@ -90,19 +88,17 @@ export const TrialsListing = () => {
         return sorted;
     }, [allTrials, sortBy, sortOrder]);
 
-    // Handle sort option change
+    // handle sort option change
     const handleSortChange = (sortField) => {
         if (sortBy === sortField) {
-            // Toggle sort order if same field is clicked
             setSortOrder(sortOrder === "asc" ? "desc" : "asc");
         } else {
-            // Set new sort field and default to ascending
             setSortBy(sortField);
             setSortOrder("asc");
         }
     };
 
-    // Handle header column click for sorting
+    // handle header column click for sorting
     const handleHeaderSort = (sortField) => {
         handleSortChange(sortField);
     };
