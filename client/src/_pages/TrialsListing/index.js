@@ -14,7 +14,7 @@ export const TrialsListing = () => {
     return (
         <div className="trial-listing-container">
             <div className="listing-container">
-                <div className="listing-header-container">header</div>
+                <div className="listing-header-container"></div>
                 {allTrials?.map((trial) => (
                     <ListView data={trial} key={trial.id} />
                 ))}
