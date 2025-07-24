@@ -1,7 +1,7 @@
 $border-color: #e0e0e0;
 $text-color-dark: #333;
 $text-color-light: #666;
-$padding-base: 26px;
+$padding-base: 25px 10px;
 
 $status-planned: #FFD166;
 $status-terminated: #dc3545;
@@ -27,8 +27,7 @@ $status-active: #007bff;
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
-        padding: 0 10px;
-        flex-basis: 120px;
+        text-align: center;
     }
 
     .list-view-checkbox-wrapper {
@@ -36,7 +35,6 @@ $status-active: #007bff;
         display: flex;
         justify-content: center;
         align-items: center;
-        padding: 0;
     }
 
     .list-view-checkbox {
@@ -46,21 +44,18 @@ $status-active: #007bff;
     }
 
     .list-view-id {
-        flex-basis: 90px;
+        width: 100px;
         font-weight: bold;
         color: $text-color-dark;
     }
 
     .list-view-icon-text {
+        width: 100px;
         display: flex;
         align-items: center;
-        flex-basis: 120px;
 
         .list-view-icon {
             display: inline-block;
-            width: 20px;
-            height: 20px;
-            margin-right: 8px;
             background-size: contain;
             background-repeat: no-repeat;
             background-position: center;
@@ -69,7 +64,8 @@ $status-active: #007bff;
     }
 
     .list-view-text {
-        flex-basis: 120px;
+        width: 100px;
+        text-align: center;
         color: $text-color-light;
     }
 
