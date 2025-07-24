@@ -36,6 +36,12 @@ import { IoIosArrowDown } from "react-icons/io";
 import { FaSortAlphaDownAlt } from "react-icons/fa";
 import { FaRegSquare } from "react-icons/fa6";
 import { MdDelete, MdEdit } from "react-icons/md";
+import { FilterModal } from "@/components/TrialsModal/FilterModal";
+import { AdvancedSearchModal } from "@/components/TrialsModal/AdvancedSearchModal";
+import { FavoriteQueriesModal } from "@/components/TrialsModal/FavoriteQueriesModal";
+import { SavedQueriesModal } from "@/components/TrialsModal/SavedQueriesModal";
+import { QueryHistoryModal } from "@/components/TrialsModal/QueryHistroyModal";
+import { SaveCurrentQueryModal } from "@/components/TrialsModal/SaveCurrentQueryModal";
 
 export const TrialsListing = () => {
     const [activeModal, setActiveModal] = useState(null);
@@ -45,6 +51,25 @@ export const TrialsListing = () => {
     const [advancedSearchCriteria, setAdvancedSearchCriteria] = useState([]);
     const [saveQueryName, setSaveQueryName] = useState("");
     const [saveQueryDescription, setSaveQueryDescription] = useState("");
+
+    // Add filter criteria state
+    const [filterCriteria, setFilterCriteria] = useState({
+        therapeuticArea: [],
+        status: [],
+        diseaseType: [],
+        patientSegment: [],
+        lineOfTherapy: [],
+        primaryDrug: [],
+        secondaryDrug: [],
+        trialPhase: [],
+        countries: [],
+        sponsorsCollaborators: [],
+        sponsorFieldOfActivity: [],
+        associatedCRO: [],
+        trialTags: [],
+        sex: [],
+        healthyVolunteers: [],
+    });
 
     const queryClient = useQueryClient();
 
@@ -115,7 +140,7 @@ export const TrialsListing = () => {
         },
     });
 
-    // Search and filtering logic (same as before)
+    // Search and filtering logic
     const matchesSearchCriteria = (trial, criteria) => {
         if (!criteria || criteria.length === 0) return true;
 
@@ -153,6 +178,36 @@ export const TrialsListing = () => {
         }
 
         return result;
+    };
+
+    // Add filter criteria matching function
+    const matchesFilterCriteria = (trial, filters) => {
+        // Helper function to check if trial matches filter category
+        const matchesCategory = (trialValue, filterValues) => {
+            if (!filterValues || filterValues.length === 0) return true;
+            if (!trialValue) return false;
+
+            const trialValueLower = trialValue.toLowerCase();
+            return filterValues.some((filterValue) =>
+                trialValueLower.includes(filterValue.toLowerCase()),
+            );
+        };
+
+        // Check each filter category
+        return (
+            matchesCategory(trial.therapeuticArea, filters.therapeuticArea) &&
+            matchesCategory(trial.status, filters.status) &&
+            matchesCategory(trial.diseaseType, filters.diseaseType) &&
+            matchesCategory(trial.trialPhase, filters.trialPhase) &&
+            matchesCategory(trial.primaryDrugs, filters.primaryDrug) &&
+            matchesCategory(
+                trial.sponsorCollaborators,
+                filters.sponsorsCollaborators,
+            ) &&
+            matchesCategory(trial.countries, filters.countries) &&
+            matchesCategory(trial.otherDrugs, filters.secondaryDrug)
+            // Add more filter checks as needed for other fields
+        );
     };
 
     const getFieldValue = (trial, field) => {
@@ -249,6 +304,7 @@ export const TrialsListing = () => {
         );
     };
 
+    // Updated processedTrials to include filter criteria
     const processedTrials = useMemo(() => {
         if (!allTrials) return [];
 
@@ -258,7 +314,8 @@ export const TrialsListing = () => {
                 trial,
                 advancedSearchCriteria,
             );
-            return matchesSimple && matchesAdvanced;
+            const matchesFilters = matchesFilterCriteria(trial, filterCriteria);
+            return matchesSimple && matchesAdvanced && matchesFilters;
         });
 
         if (sortBy) {
@@ -308,7 +365,24 @@ export const TrialsListing = () => {
         }
 
         return filtered;
-    }, [allTrials, sortBy, sortOrder, searchQuery, advancedSearchCriteria]);
+    }, [
+        allTrials,
+        sortBy,
+        sortOrder,
+        searchQuery,
+        advancedSearchCriteria,
+        filterCriteria,
+    ]);
+
+    // Get total active filters count
+    const getActiveFiltersCount = () => {
+        return Object.values(filterCriteria).reduce(
+            (total, categoryFilters) => {
+                return total + categoryFilters.length;
+            },
+            0,
+        );
+    };
 
     // Event handlers
     const handleSortChange = (sortField) => {
@@ -339,11 +413,40 @@ export const TrialsListing = () => {
         }
     };
 
+    // Handle filter application
+    const handleApplyFilters = (newFilters) => {
+        setFilterCriteria(newFilters);
+        setActiveModal(null);
+    };
+
+    // Clear all filters function
+    const clearAllFilters = () => {
+        setFilterCriteria({
+            therapeuticArea: [],
+            status: [],
+            diseaseType: [],
+            patientSegment: [],
+            lineOfTherapy: [],
+            primaryDrug: [],
+            secondaryDrug: [],
+            trialPhase: [],
+            countries: [],
+            sponsorsCollaborators: [],
+            sponsorFieldOfActivity: [],
+            associatedCRO: [],
+            trialTags: [],
+            sex: [],
+            healthyVolunteers: [],
+        });
+    };
+
+    // Updated clearAllSearches to include filters
     const clearAllSearches = () => {
         setSearchQuery("");
         setAdvancedSearchCriteria([]);
         setSortBy("");
         setSortOrder("asc");
+        clearAllFilters();
     };
 
     // Save current query
@@ -360,6 +463,7 @@ export const TrialsListing = () => {
             simpleSearch: searchQuery,
             sortBy: sortBy,
             sortOrder: sortOrder,
+            filterCriteria: filterCriteria, // Include filter criteria
         };
 
         createQueryMutation.mutate(queryData);
@@ -383,6 +487,7 @@ export const TrialsListing = () => {
             simpleSearch: searchQuery,
             sortBy: sortBy,
             sortOrder: sortOrder,
+            filterCriteria: filterCriteria, // Include filter criteria
         };
 
         createQueryMutation.mutate(queryData);
@@ -394,6 +499,14 @@ export const TrialsListing = () => {
         setAdvancedSearchCriteria(query.searchCriteria || []);
         setSortBy(query.sortBy || "");
         setSortOrder(query.sortOrder || "asc");
+
+        // Load filter criteria if available
+        if (query.filterCriteria) {
+            setFilterCriteria(query.filterCriteria);
+        } else {
+            clearAllFilters();
+        }
+
         setActiveModal(null);
 
         // Execute query tracking
@@ -421,7 +534,12 @@ export const TrialsListing = () => {
     };
 
     const getCurrentQueryHasChanges = () => {
-        return searchQuery || advancedSearchCriteria.length > 0 || sortBy;
+        return (
+            searchQuery ||
+            advancedSearchCriteria.length > 0 ||
+            sortBy ||
+            getActiveFiltersCount() > 0
+        );
     };
 
     return (
@@ -434,8 +552,10 @@ export const TrialsListing = () => {
                     </div>
                 </div>
 
-                {/* Search Status Bar */}
-                {(searchQuery || advancedSearchCriteria.length > 0) && (
+                {/* Updated Search Status Bar to include filter information */}
+                {(searchQuery ||
+                    advancedSearchCriteria.length > 0 ||
+                    getActiveFiltersCount() > 0) && (
                     <div className="search-status-bar">
                         <span>
                             Showing {processedTrials.length} of{" "}
@@ -443,6 +563,8 @@ export const TrialsListing = () => {
                             {searchQuery && ` matching "${searchQuery}"`}
                             {advancedSearchCriteria.length > 0 &&
                                 ` with ${advancedSearchCriteria.length} advanced criteria`}
+                            {getActiveFiltersCount() > 0 &&
+                                ` and ${getActiveFiltersCount()} active filters`}
                         </span>
                         <button
                             onClick={clearAllSearches}
@@ -466,12 +588,18 @@ export const TrialsListing = () => {
                             </span>
                         )}
                     </div>
+                    {/* Updated Filter Button to show active filters count */}
                     <div
                         className="listing-cta-button-container filter-button"
                         onClick={() => openRespectiveModal("filter")}
                     >
                         <IoFilterOutline className="cta-icon" />
                         Filter
+                        {getActiveFiltersCount() > 0 && (
+                            <span className="search-indicator">
+                                ({getActiveFiltersCount()})
+                            </span>
+                        )}
                     </div>
                     <div
                         className="listing-cta-button-container query-button"
@@ -721,54 +849,6 @@ export const TrialsListing = () => {
                             <FaRegSquare className="checkbox-icon" />
                         </div>
                         <div
-                            className={`header-column sortable ${sortBy === "trialId" ? "active-sort" : ""}`}
-                            onClick={() => handleHeaderSort("trialId")}
-                        >
-                            Trial ID
-                            {sortBy === "trialId" &&
-                                (sortOrder === "asc" ? "↑" : "↓")}
-                            <div className="filter-text">
-                                Filter
-                                <IoIosArrowDown className="filter-arrow" />
-                            </div>
-                        </div>
-                        <div
-                            className={`header-column sortable ${sortBy === "therapeuticArea" ? "active-sort" : ""}`}
-                            onClick={() => handleHeaderSort("therapeuticArea")}
-                        >
-                            Therapeutic Area
-                            {sortBy === "therapeuticArea" &&
-                                (sortOrder === "asc" ? "↑" : "↓")}
-                            <div className="filter-text">
-                                Filter
-                                <IoIosArrowDown className="filter-arrow" />
-                            </div>
-                        </div>
-                        <div
-                            className={`header-column sortable ${sortBy === "diseaseType" ? "active-sort" : ""}`}
-                            onClick={() => handleHeaderSort("diseaseType")}
-                        >
-                            Disease Type
-                            {sortBy === "diseaseType" &&
-                                (sortOrder === "asc" ? "↑" : "↓")}
-                            <div className="filter-text">
-                                Filter
-                                <IoIosArrowDown className="filter-arrow" />
-                            </div>
-                        </div>
-                        <div
-                            className={`header-column sortable ${sortBy === "primaryDrug" ? "active-sort" : ""}`}
-                            onClick={() => handleHeaderSort("primaryDrug")}
-                        >
-                            Primary Drug
-                            {sortBy === "primaryDrug" &&
-                                (sortOrder === "asc" ? "↑" : "↓")}
-                            <div className="filter-text">
-                                Filter
-                                <IoIosArrowDown className="filter-arrow" />
-                            </div>
-                        </div>
-                        <div
                             className={`header-column sortable ${sortBy === "trialStatus" ? "active-sort" : ""}`}
                             onClick={() => handleHeaderSort("trialStatus")}
                         >
@@ -832,8 +912,17 @@ export const TrialsListing = () => {
                 </div>
             </div>
 
+            {activeModal === "filter" && (
+                <FilterModal
+                    isOpen={activeModal === "filter"}
+                    onClose={() => setActiveModal(null)}
+                    onApplyFilters={handleApplyFilters}
+                    initialFilters={filterCriteria}
+                />
+            )}
+
             {/* Modals */}
-            {activeModal && (
+            {activeModal && activeModal !== "filter" && (
                 <div
                     className="modal-container"
                     onClick={() => setActiveModal(null)}
@@ -881,11 +970,6 @@ export const TrialsListing = () => {
                                     isSaving={createQueryMutation.isPending}
                                 />
                             )}
-                            {activeModal === "filter" && (
-                                <div>
-                                    <p>Filter options will go here</p>
-                                </div>
-                            )}
                             {activeModal === "query" && (
                                 <SavedQueriesModal
                                     queries={savedQueriesData?.data || []}
@@ -910,6 +994,7 @@ export const TrialsListing = () => {
                                         advancedSearchCriteria,
                                         sortBy,
                                         sortOrder,
+                                        filterCriteria,
                                     }}
                                 />
                             )}
@@ -936,735 +1021,6 @@ export const TrialsListing = () => {
                     </div>
                 </div>
             )}
-        </div>
-    );
-};
-
-// Advanced Search Modal Component
-const AdvancedSearchModal = ({
-    isOpen,
-    onClose,
-    onSearch,
-    initialCriteria = [],
-    onSaveQuery,
-    onOpenSavedQueries,
-    savedQueries,
-    isLoading,
-    onLoadQuery,
-    searchQuery,
-    sortBy,
-    sortOrder,
-    isSaving,
-}) => {
-    const [searchCriteria, setSearchCriteria] = useState(() => {
-        if (initialCriteria.length > 0) {
-            return initialCriteria;
-        }
-        return [
-            {
-                id: 1,
-                field: "Choose Field",
-                operator: "Operator",
-                value: "",
-                boolean: "AND",
-            },
-        ];
-    });
-
-    const [showSaveForm, setShowSaveForm] = useState(false);
-    const [queryName, setQueryName] = useState("");
-    const [queryDescription, setQueryDescription] = useState("");
-    const [showSavedQueries, setShowSavedQueries] = useState(false);
-
-    // ... existing field options, operator options, and utility functions ...
-
-    const fieldOptions = [
-        "Disease Type",
-        "Therapeutic Area",
-        "Trial ID",
-        "Primary Drug",
-        "Trial Status",
-        "Sponsor",
-        "Phase",
-        "Title",
-        "Other Drugs",
-        "Countries",
-        "Region",
-        "Target Enrollment",
-        "Actual Enrollment",
-        "Age From",
-        "Age To",
-    ];
-
-    const operatorOptions = {
-        "Disease Type": ["Contains", "Equals", "Does not contain"],
-        "Therapeutic Area": ["Contains", "Equals", "Does not contain"],
-        "Trial ID": ["Equals", "Contains", "Starts with"],
-        "Primary Drug": ["Contains", "Equals", "Does not contain"],
-        "Trial Status": ["Contains", "Equals", "Does not contain"],
-        Sponsor: ["Contains", "Equals", "Does not contain"],
-        Phase: ["Contains", "Equals", "Does not contain"],
-        Title: ["Contains", "Equals", "Does not contain"],
-        "Other Drugs": ["Contains", "Equals", "Does not contain"],
-        Countries: ["Contains", "Equals", "Does not contain"],
-        Region: ["Contains", "Equals", "Does not contain"],
-        "Target Enrollment": [">=", "<=", "=", ">", "<"],
-        "Actual Enrollment": [">=", "<=", "=", ">", "<"],
-        "Age From": [">=", "<=", "=", ">", "<"],
-        "Age To": [">=", "<=", "=", ">", "<"],
-    };
-
-    const booleanOptions = ["AND", "OR"];
-
-    const updateCriteria = (id, field, value) => {
-        setSearchCriteria((prev) =>
-            prev.map((criteria) => {
-                if (criteria.id === id) {
-                    const updated = { ...criteria, [field]: value };
-                    if (field === "field") {
-                        updated.operator = "Operator";
-                    }
-                    return updated;
-                }
-                return criteria;
-            }),
-        );
-    };
-
-    const addCriteria = () => {
-        const newId = Math.max(...searchCriteria.map((c) => c.id)) + 1;
-        setSearchCriteria((prev) => [
-            ...prev,
-            {
-                id: newId,
-                field: "Choose Field",
-                operator: "Operator",
-                value: "",
-                boolean: "AND",
-            },
-        ]);
-    };
-
-    const removeCriteria = (id) => {
-        if (searchCriteria.length > 1) {
-            setSearchCriteria((prev) =>
-                prev.filter((criteria) => criteria.id !== id),
-            );
-        }
-    };
-
-    const handleSearch = () => {
-        onSearch(searchCriteria);
-    };
-
-    const clearAllCriteria = () => {
-        setSearchCriteria([
-            {
-                id: 1,
-                field: "Choose Field",
-                operator: "Operator",
-                value: "",
-                boolean: "AND",
-            },
-        ]);
-    };
-
-    const handleSaveQuery = () => {
-        if (!queryName.trim()) {
-            alert("Please enter a query name");
-            return;
-        }
-
-        onSaveQuery(searchCriteria, queryName, queryDescription);
-        setQueryName("");
-        setQueryDescription("");
-        setShowSaveForm(false);
-    };
-
-    const handleLoadSavedQuery = (query) => {
-        onLoadQuery(query);
-        setShowSavedQueries(false);
-    };
-
-    // Create current query object for the save modal
-    const getCurrentQuery = () => ({
-        searchQuery,
-        advancedSearchCriteria: searchCriteria.filter(
-            (c) =>
-                c.field !== "Choose Field" &&
-                c.operator !== "Operator" &&
-                c.value.trim() !== "",
-        ),
-        sortBy,
-        sortOrder,
-    });
-
-    if (!isOpen) return null;
-
-    return (
-        <div className="advanced-search-container">
-            {showSaveForm ? (
-                // Use the SaveCurrentQueryModal component
-                <div className="save-form-section">
-                    <div className="section-header">
-                        <h3>Save Current Search</h3>
-                        <button
-                            onClick={() => setShowSaveForm(false)}
-                            className="back-btn"
-                        >
-                            ← Back to Search
-                        </button>
-                    </div>
-                    <SaveCurrentQueryModal
-                        queryName={queryName}
-                        setQueryName={setQueryName}
-                        queryDescription={queryDescription}
-                        setQueryDescription={setQueryDescription}
-                        onSave={handleSaveQuery}
-                        isLoading={isSaving}
-                        currentQuery={getCurrentQuery()}
-                        onClose={() => setShowSaveForm(false)}
-                    />
-                </div>
-            ) : showSavedQueries ? (
-                <div className="saved-queries-section">
-                    <div className="section-header">
-                        <h3>Saved Queries</h3>
-                        <button
-                            onClick={() => setShowSavedQueries(false)}
-                            className="back-btn"
-                        >
-                            ← Back to Search
-                        </button>
-                    </div>
-                    {isLoading ? (
-                        <div className="loading-state">
-                            Loading saved queries...
-                        </div>
-                    ) : savedQueries.length === 0 ? (
-                        <div className="empty-state">
-                            <p>No saved queries found.</p>
-                        </div>
-                    ) : (
-                        <div className="queries-list">
-                            {savedQueries.map((query) => (
-                                <div key={query.id} className="query-item">
-                                    <div className="query-info">
-                                        <h4>{query.name}</h4>
-                                        {query.description && (
-                                            <p className="query-description">
-                                                {query.description}
-                                            </p>
-                                        )}
-                                        <div className="query-details">
-                                            {query.simpleSearch && (
-                                                <span className="detail-tag">
-                                                    Search: "
-                                                    {query.simpleSearch}"
-                                                </span>
-                                            )}
-                                            {query.searchCriteria &&
-                                                query.searchCriteria.length >
-                                                    0 && (
-                                                    <span className="detail-tag">
-                                                        {
-                                                            query.searchCriteria
-                                                                .length
-                                                        }{" "}
-                                                        advanced criteria
-                                                    </span>
-                                                )}
-                                        </div>
-                                    </div>
-                                    <button
-                                        onClick={() =>
-                                            handleLoadSavedQuery(query)
-                                        }
-                                        className="load-btn"
-                                    >
-                                        Load
-                                    </button>
-                                </div>
-                            ))}
-                        </div>
-                    )}
-                </div>
-            ) : (
-                <div className="search-criteria-section">
-                    <div className="search-criteria-container">
-                        {searchCriteria.map((criteria, index) => (
-                            <div
-                                key={criteria.id}
-                                className="search-criteria-row"
-                            >
-                                <div className="criteria-controls">
-                                    <div className="field-selector">
-                                        <select
-                                            value={criteria.field}
-                                            onChange={(e) =>
-                                                updateCriteria(
-                                                    criteria.id,
-                                                    "field",
-                                                    e.target.value,
-                                                )
-                                            }
-                                            className="dropdown-select"
-                                        >
-                                            <option value="Choose Field">
-                                                Choose Field
-                                            </option>
-                                            {fieldOptions.map((option) => (
-                                                <option
-                                                    key={option}
-                                                    value={option}
-                                                >
-                                                    {option}
-                                                </option>
-                                            ))}
-                                        </select>
-                                        <IoIosArrowDown className="dropdown-arrow" />
-                                    </div>
-
-                                    <div className="operator-selector">
-                                        <select
-                                            value={criteria.operator}
-                                            onChange={(e) =>
-                                                updateCriteria(
-                                                    criteria.id,
-                                                    "operator",
-                                                    e.target.value,
-                                                )
-                                            }
-                                            className="dropdown-select operator-dropdown"
-                                            disabled={
-                                                criteria.field ===
-                                                "Choose Field"
-                                            }
-                                        >
-                                            <option value="Operator">
-                                                Operator
-                                            </option>
-                                            {criteria.field !==
-                                                "Choose Field" &&
-                                                operatorOptions[
-                                                    criteria.field
-                                                ]?.map((option) => (
-                                                    <option
-                                                        key={option}
-                                                        value={option}
-                                                    >
-                                                        {option}
-                                                    </option>
-                                                ))}
-                                        </select>
-                                        <IoIosArrowDown className="dropdown-arrow" />
-                                    </div>
-
-                                    <div className="value-input">
-                                        <input
-                                            type="text"
-                                            value={criteria.value}
-                                            onChange={(e) =>
-                                                updateCriteria(
-                                                    criteria.id,
-                                                    "value",
-                                                    e.target.value,
-                                                )
-                                            }
-                                            placeholder="Enter search term..."
-                                            className="search-input"
-                                            disabled={
-                                                criteria.operator === "Operator"
-                                            }
-                                        />
-                                    </div>
-
-                                    {index < searchCriteria.length - 1 && (
-                                        <div className="boolean-selector">
-                                            <select
-                                                value={criteria.boolean}
-                                                onChange={(e) =>
-                                                    updateCriteria(
-                                                        criteria.id,
-                                                        "boolean",
-                                                        e.target.value,
-                                                    )
-                                                }
-                                                className="dropdown-select boolean-dropdown"
-                                            >
-                                                <option value="Boolean">
-                                                    Boolean
-                                                </option>
-                                                {booleanOptions.map(
-                                                    (option) => (
-                                                        <option
-                                                            key={option}
-                                                            value={option}
-                                                        >
-                                                            {option}
-                                                        </option>
-                                                    ),
-                                                )}
-                                            </select>
-                                            <IoIosArrowDown className="dropdown-arrow" />
-                                        </div>
-                                    )}
-                                </div>
-
-                                <div className="criteria-actions">
-                                    <button
-                                        className="add-criteria-btn"
-                                        onClick={addCriteria}
-                                        title="Add criteria"
-                                    >
-                                        <FaPlus />
-                                    </button>
-                                    {searchCriteria.length > 1 && (
-                                        <button
-                                            className="remove-criteria-btn"
-                                            onClick={() =>
-                                                removeCriteria(criteria.id)
-                                            }
-                                            title="Remove criteria"
-                                        >
-                                            <FaMinus />
-                                        </button>
-                                    )}
-                                </div>
-                            </div>
-                        ))}
-                    </div>
-
-                    <div className="modal-footer">
-                        <div className="footer-left">
-                            <button
-                                className="secondary-btn"
-                                onClick={() => setShowSavedQueries(true)}
-                            >
-                                Open saved queries
-                            </button>
-                            <button
-                                className="secondary-btn"
-                                onClick={() => setShowSaveForm(true)}
-                            >
-                                Save this Query
-                            </button>
-                        </div>
-                        <div className="footer-right">
-                            <button
-                                className="secondary-btn"
-                                onClick={clearAllCriteria}
-                            >
-                                Clear All
-                            </button>
-                            <button
-                                className="primary-btn"
-                                onClick={handleSearch}
-                            >
-                                Run Search
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            )}
-        </div>
-    );
-};
-
-// Saved Queries Modal Component
-const SavedQueriesModal = ({
-    queries,
-    isLoading,
-    onLoadQuery,
-    onDeleteQuery,
-    onToggleFavorite,
-}) => {
-    if (isLoading) {
-        return <div className="loading-state">Loading saved queries...</div>;
-    }
-
-    if (!queries || queries.length === 0) {
-        return (
-            <div className="empty-state">
-                <p>No saved queries found.</p>
-                <p>Save your current search to get started!</p>
-            </div>
-        );
-    }
-
-    return (
-        <div className="saved-queries-list">
-            {queries.map((query) => (
-                <div key={query.id} className="saved-query-item">
-                    <div className="query-info">
-                        <div className="query-header">
-                            <h4>{query.name}</h4>
-                            <div className="query-actions">
-                                <button
-                                    onClick={() => onToggleFavorite(query.id)}
-                                    className="favorite-btn"
-                                    title={
-                                        query.isFavorite
-                                            ? "Remove from favorites"
-                                            : "Add to favorites"
-                                    }
-                                >
-                                    {query.isFavorite ? (
-                                        <FaStar />
-                                    ) : (
-                                        <FaRegStar />
-                                    )}
-                                </button>
-                                <button
-                                    onClick={() => onDeleteQuery(query.id)}
-                                    className="delete-btn"
-                                    title="Delete query"
-                                >
-                                    <MdDelete />
-                                </button>
-                            </div>
-                        </div>
-                        {query.description && (
-                            <p className="query-description">
-                                {query.description}
-                            </p>
-                        )}
-                        <div className="query-details">
-                            {query.simpleSearch && (
-                                <span className="detail-tag">
-                                    Search: "{query.simpleSearch}"
-                                </span>
-                            )}
-                            {query.searchCriteria &&
-                                query.searchCriteria.length > 0 && (
-                                    <span className="detail-tag">
-                                        {query.searchCriteria.length} advanced
-                                        criteria
-                                    </span>
-                                )}
-                            {query.sortBy && (
-                                <span className="detail-tag">
-                                    Sort: {query.sortBy} ({query.sortOrder})
-                                </span>
-                            )}
-                        </div>
-                        <div className="query-meta">
-                            <span>Used {query.usageCount || 0} times</span>
-                            {query.lastUsedAt && (
-                                <span>
-                                    Last used:{" "}
-                                    {new Date(
-                                        query.lastUsedAt,
-                                    ).toLocaleDateString()}
-                                </span>
-                            )}
-                        </div>
-                    </div>
-                    <button
-                        onClick={() => onLoadQuery(query)}
-                        className="load-query-btn"
-                    >
-                        Load Query
-                    </button>
-                </div>
-            ))}
-        </div>
-    );
-};
-
-// Save Current Query Modal Component
-const SaveCurrentQueryModal = ({
-    queryName,
-    setQueryName,
-    queryDescription,
-    setQueryDescription,
-    onSave,
-    isLoading,
-    currentQuery,
-    onClose,
-}) => {
-    return (
-        <div className="save-query-modal">
-            <div className="save-query-form">
-                <div className="form-group">
-                    <label htmlFor="queryName" className="form-label">
-                        Enter the query Title<span className="required">*</span>
-                    </label>
-                    <input
-                        id="queryName"
-                        type="text"
-                        value={queryName}
-                        onChange={(e) => setQueryName(e.target.value)}
-                        placeholder="Enter query title..."
-                        className="form-input"
-                    />
-                </div>
-
-                <div className="form-group">
-                    <label htmlFor="queryDescription" className="form-label">
-                        Description (optional)
-                    </label>
-                    <textarea
-                        id="queryDescription"
-                        value={queryDescription}
-                        onChange={(e) => setQueryDescription(e.target.value)}
-                        placeholder="Enter description..."
-                        className="form-textarea"
-                        rows={4}
-                    />
-                </div>
-
-                <div className="form-actions">
-                    <button
-                        type="button"
-                        className="action-btn alert-btn"
-                        onClick={() => {
-                            // Handle get alert functionality
-                            console.log("Get Alert clicked");
-                        }}
-                    >
-                        Get Alert
-                    </button>
-                    <button
-                        type="button"
-                        className="action-btn save-btn"
-                        onClick={onSave}
-                        disabled={!queryName.trim() || isLoading}
-                    >
-                        {isLoading ? "Saving..." : "Save"}
-                    </button>
-                </div>
-            </div>
-        </div>
-    );
-};
-
-// Query History Modal Component
-const QueryHistoryModal = ({ history, onLoadQuery }) => {
-    if (!history || history.length === 0) {
-        return (
-            <div className="empty-state">
-                <p>No query history found.</p>
-            </div>
-        );
-    }
-
-    return (
-        <div className="query-history-list">
-            {history.map((item) => (
-                <div key={item.id} className="history-item">
-                    <div className="history-info">
-                        <div className="history-header">
-                            <h4>{item.queryName || "Ad-hoc Query"}</h4>
-                            <span className="history-date">
-                                {new Date(item.executedAt).toLocaleString()}
-                            </span>
-                        </div>
-                        <div className="history-details">
-                            {item.simpleSearch && (
-                                <span className="detail-tag">
-                                    Search: "{item.simpleSearch}"
-                                </span>
-                            )}
-                            {item.searchCriteria &&
-                                item.searchCriteria.length > 0 && (
-                                    <span className="detail-tag">
-                                        {item.searchCriteria.length} advanced
-                                        criteria
-                                    </span>
-                                )}
-                            <span className="detail-tag">
-                                {item.resultsCount} results
-                            </span>
-                            <span className="detail-tag">
-                                {item.executionTime}ms
-                            </span>
-                        </div>
-                    </div>
-                    <button
-                        onClick={() =>
-                            onLoadQuery({
-                                simpleSearch: item.simpleSearch,
-                                searchCriteria: item.searchCriteria,
-                                sortBy: item.sortBy,
-                                sortOrder: item.sortOrder,
-                            })
-                        }
-                        className="load-query-btn"
-                    >
-                        Load Query
-                    </button>
-                </div>
-            ))}
-        </div>
-    );
-};
-
-// Favorite Queries Modal Component
-const FavoriteQueriesModal = ({
-    favorites,
-    onLoadQuery,
-    onDeleteQuery,
-    onToggleFavorite,
-}) => {
-    if (!favorites || favorites.length === 0) {
-        return (
-            <div className="empty-state">
-                <p>No favorite queries found.</p>
-                <p>Mark queries as favorites to see them here!</p>
-            </div>
-        );
-    }
-
-    return (
-        <div className="favorite-queries-list">
-            {favorites.map((query) => (
-                <div key={query.id} className="favorite-query-item">
-                    <div className="query-info">
-                        <div className="query-header">
-                            <h4>{query.name}</h4>
-                            <div className="query-actions">
-                                <button
-                                    onClick={() => onToggleFavorite(query.id)}
-                                    className="favorite-btn active"
-                                    title="Remove from favorites"
-                                >
-                                    <FaStar />
-                                </button>
-                                <button
-                                    onClick={() => onDeleteQuery(query.id)}
-                                    className="delete-btn"
-                                    title="Delete query"
-                                >
-                                    <MdDelete />
-                                </button>
-                            </div>
-                        </div>
-                        {query.description && (
-                            <p className="query-description">
-                                {query.description}
-                            </p>
-                        )}
-                        <div className="query-meta">
-                            <span>Used {query.usageCount || 0} times</span>
-                            {query.lastUsedAt && (
-                                <span>
-                                    Last used:{" "}
-                                    {new Date(
-                                        query.lastUsedAt,
-                                    ).toLocaleDateString()}
-                                </span>
-                            )}
-                        </div>
-                    </div>
-                    <button
-                        onClick={() => onLoadQuery(query)}
-                        className="load-query-btn"
-                    >
-                        Load Query
-                    </button>
-                </div>
-            ))}
         </div>
     );
 };
