@@ -976,6 +976,8 @@ const AdvancedSearchModal = ({
     const [queryDescription, setQueryDescription] = useState("");
     const [showSavedQueries, setShowSavedQueries] = useState(false);
 
+    // ... existing field options, operator options, and utility functions ...
+
     const fieldOptions = [
         "Disease Type",
         "Therapeutic Area",
@@ -1084,11 +1086,47 @@ const AdvancedSearchModal = ({
         setShowSavedQueries(false);
     };
 
+    // Create current query object for the save modal
+    const getCurrentQuery = () => ({
+        searchQuery,
+        advancedSearchCriteria: searchCriteria.filter(
+            (c) =>
+                c.field !== "Choose Field" &&
+                c.operator !== "Operator" &&
+                c.value.trim() !== "",
+        ),
+        sortBy,
+        sortOrder,
+    });
+
     if (!isOpen) return null;
 
     return (
         <div className="advanced-search-container">
-            {showSavedQueries ? (
+            {showSaveForm ? (
+                // Use the SaveCurrentQueryModal component
+                <div className="save-form-section">
+                    <div className="section-header">
+                        <h3>Save Current Search</h3>
+                        <button
+                            onClick={() => setShowSaveForm(false)}
+                            className="back-btn"
+                        >
+                            ← Back to Search
+                        </button>
+                    </div>
+                    <SaveCurrentQueryModal
+                        queryName={queryName}
+                        setQueryName={setQueryName}
+                        queryDescription={queryDescription}
+                        setQueryDescription={setQueryDescription}
+                        onSave={handleSaveQuery}
+                        isLoading={isSaving}
+                        currentQuery={getCurrentQuery()}
+                        onClose={() => setShowSaveForm(false)}
+                    />
+                </div>
+            ) : showSavedQueries ? (
                 <div className="saved-queries-section">
                     <div className="section-header">
                         <h3>Saved Queries</h3>
@@ -1150,91 +1188,6 @@ const AdvancedSearchModal = ({
                             ))}
                         </div>
                     )}
-                </div>
-            ) : showSaveForm ? (
-                <div className="save-form-section">
-                    <div className="section-header">
-                        <h3>Save Current Search</h3>
-                        <button
-                            onClick={() => setShowSaveForm(false)}
-                            className="back-btn"
-                        >
-                            ← Back to Search
-                        </button>
-                    </div>
-                    <div className="save-form">
-                        <div className="current-query-summary">
-                            <h4>Query Summary:</h4>
-                            <div className="summary-details">
-                                {searchQuery && (
-                                    <p>Simple Search: "{searchQuery}"</p>
-                                )}
-                                {searchCriteria.filter(
-                                    (c) =>
-                                        c.field !== "Choose Field" &&
-                                        c.operator !== "Operator" &&
-                                        c.value.trim() !== "",
-                                ).length > 0 && (
-                                    <p>
-                                        Advanced Criteria:{" "}
-                                        {
-                                            searchCriteria.filter(
-                                                (c) =>
-                                                    c.field !==
-                                                        "Choose Field" &&
-                                                    c.operator !== "Operator" &&
-                                                    c.value.trim() !== "",
-                                            ).length
-                                        }{" "}
-                                        conditions
-                                    </p>
-                                )}
-                                {sortBy && (
-                                    <p>
-                                        Sort: {sortBy} ({sortOrder})
-                                    </p>
-                                )}
-                            </div>
-                        </div>
-
-                        <div className="form-group">
-                            <label htmlFor="queryName">Query Name *</label>
-                            <input
-                                id="queryName"
-                                type="text"
-                                value={queryName}
-                                onChange={(e) => setQueryName(e.target.value)}
-                                placeholder="Enter a name for this query..."
-                                className="form-input"
-                            />
-                        </div>
-
-                        <div className="form-group">
-                            <label htmlFor="queryDescription">
-                                Description (Optional)
-                            </label>
-                            <textarea
-                                id="queryDescription"
-                                value={queryDescription}
-                                onChange={(e) =>
-                                    setQueryDescription(e.target.value)
-                                }
-                                placeholder="Describe what this query is for..."
-                                className="form-textarea"
-                                rows={3}
-                            />
-                        </div>
-
-                        <div className="form-actions">
-                            <button
-                                onClick={handleSaveQuery}
-                                disabled={!queryName.trim() || isSaving}
-                                className="primary-btn"
-                            >
-                                {isSaving ? "Saving..." : "Save Query"}
-                            </button>
-                        </div>
-                    </div>
                 </div>
             ) : (
                 <div className="search-criteria-section">
@@ -1528,63 +1481,59 @@ const SaveCurrentQueryModal = ({
     onSave,
     isLoading,
     currentQuery,
+    onClose,
 }) => {
     return (
-        <div className="save-query-form">
-            <div className="current-query-summary">
-                <h4>Current Query Summary:</h4>
-                <div className="query-summary-details">
-                    {currentQuery.searchQuery && (
-                        <p>Simple Search: "{currentQuery.searchQuery}"</p>
-                    )}
-                    {currentQuery.advancedSearchCriteria.length > 0 && (
-                        <p>
-                            Advanced Criteria:{" "}
-                            {currentQuery.advancedSearchCriteria.length}{" "}
-                            conditions
-                        </p>
-                    )}
-                    {currentQuery.sortBy && (
-                        <p>
-                            Sort: {currentQuery.sortBy} (
-                            {currentQuery.sortOrder})
-                        </p>
-                    )}
+        <div className="save-query-modal">
+            <div className="save-query-form">
+                <div className="form-group">
+                    <label htmlFor="queryName" className="form-label">
+                        Enter the query Title<span className="required">*</span>
+                    </label>
+                    <input
+                        id="queryName"
+                        type="text"
+                        value={queryName}
+                        onChange={(e) => setQueryName(e.target.value)}
+                        placeholder="Enter query title..."
+                        className="form-input"
+                    />
                 </div>
-            </div>
 
-            <div className="form-group">
-                <label htmlFor="queryName">Query Name *</label>
-                <input
-                    id="queryName"
-                    type="text"
-                    value={queryName}
-                    onChange={(e) => setQueryName(e.target.value)}
-                    placeholder="Enter a name for this query..."
-                    className="form-input"
-                />
-            </div>
+                <div className="form-group">
+                    <label htmlFor="queryDescription" className="form-label">
+                        Description (optional)
+                    </label>
+                    <textarea
+                        id="queryDescription"
+                        value={queryDescription}
+                        onChange={(e) => setQueryDescription(e.target.value)}
+                        placeholder="Enter description..."
+                        className="form-textarea"
+                        rows={4}
+                    />
+                </div>
 
-            <div className="form-group">
-                <label htmlFor="queryDescription">Description (Optional)</label>
-                <textarea
-                    id="queryDescription"
-                    value={queryDescription}
-                    onChange={(e) => setQueryDescription(e.target.value)}
-                    placeholder="Describe what this query is for..."
-                    className="form-textarea"
-                    rows={3}
-                />
-            </div>
-
-            <div className="form-actions">
-                <button
-                    onClick={onSave}
-                    disabled={!queryName.trim() || isLoading}
-                    className="primary-btn"
-                >
-                    {isLoading ? "Saving..." : "Save Query"}
-                </button>
+                <div className="form-actions">
+                    <button
+                        type="button"
+                        className="action-btn alert-btn"
+                        onClick={() => {
+                            // Handle get alert functionality
+                            console.log("Get Alert clicked");
+                        }}
+                    >
+                        Get Alert
+                    </button>
+                    <button
+                        type="button"
+                        className="action-btn save-btn"
+                        onClick={onSave}
+                        disabled={!queryName.trim() || isLoading}
+                    >
+                        {isLoading ? "Saving..." : "Save"}
+                    </button>
+                </div>
             </div>
         </div>
     );
