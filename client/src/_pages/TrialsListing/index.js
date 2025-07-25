@@ -112,6 +112,7 @@ export const TrialsListing = () => {
     });
 
     const deleteQueryMutation = useMutation({
+        //
         mutationFn: deleteSavedQuery,
         onSuccess: () => {
             queryClient.invalidateQueries({ queryKey: ["saved-queries"] });
