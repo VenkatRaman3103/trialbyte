@@ -523,9 +523,7 @@ export const TrialsListing = () => {
 
     // Delete query
     const handleDeleteQuery = (queryId) => {
-        if (window.confirm("Are you sure you want to delete this query?")) {
-            deleteQueryMutation.mutate(queryId);
-        }
+        deleteQueryMutation.mutate(queryId);
     };
 
     // Toggle favorite

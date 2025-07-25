@@ -1,138 +1,161 @@
-import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-import { useState, useMemo } from "react";
 import "./index.scss";
-import { ListView } from "@/components/TrialsPreviews/ListView";
-import { getAllTrials } from "@/api/trials/getAllTrials";
-import {
-    getAllSavedQueries,
-    createSavedQuery,
-    deleteSavedQuery,
-    executeSavedQuery,
-    toggleFavorite,
-    getQueryHistory,
-    getFavoriteQueries,
-} from "@/api/trials/searchQuery";
-
-import { IoSearch } from "react-icons/io5";
-import { FaRegFolder, FaTimes, FaStar, FaRegStar } from "react-icons/fa";
-import { RiListCheck } from "react-icons/ri";
-import { BsCardText } from "react-icons/bs";
-import { TbArrowsSort } from "react-icons/tb";
-import { CiSaveDown2 } from "react-icons/ci";
-import { GoHistory } from "react-icons/go";
-import { CiBookmark } from "react-icons/ci";
-import { SlList } from "react-icons/sl";
-
-import { LuArrowLeft } from "react-icons/lu";
-import { IoSearchOutline } from "react-icons/io5";
-import { IoFilterOutline } from "react-icons/io5";
-import { TfiSave } from "react-icons/tfi";
-import { LuUpload } from "react-icons/lu";
-import { FaMinus } from "react-icons/fa6";
-import { FaPlus } from "react-icons/fa6";
-
-import { IoIosArrowDown } from "react-icons/io";
-import { FaSortAlphaDownAlt } from "react-icons/fa";
-import { FaRegSquare } from "react-icons/fa6";
-import { MdDelete, MdEdit } from "react-icons/md";
-import { FilterModal } from "@/components/TrialsModal/FilterModal";
+import { useState } from "react";
+import { MdEdit } from "react-icons/md";
 
 export const SavedQueriesModal = ({
     queries,
     isLoading,
     onLoadQuery,
     onDeleteQuery,
-    onToggleFavorite,
+    onClose,
 }) => {
-    if (isLoading) {
-        return <div className="loading-state">Loading saved queries...</div>;
-    }
+    const [selectedQueries, setSelectedQueries] = useState([]);
 
-    if (!queries || queries.length === 0) {
+    const handleSelectAll = (checked) => {
+        if (checked) {
+            setSelectedQueries(queries.map((query) => query.id));
+        } else {
+            setSelectedQueries([]);
+        }
+    };
+
+    const handleSelectQuery = (queryId, checked) => {
+        if (checked) {
+            setSelectedQueries((prev) => [...prev, queryId]);
+        } else {
+            setSelectedQueries((prev) => prev.filter((id) => id !== queryId));
+        }
+    };
+
+    const handleRemoveSelected = () => {
+        selectedQueries.forEach((queryId) => {
+            onDeleteQuery(queryId);
+        });
+        setSelectedQueries([]);
+    };
+
+    if (isLoading) {
         return (
-            <div className="empty-state">
-                <p>No saved queries found.</p>
-                <p>Save your current search to get started!</p>
+            <div className="saved-queries-modal">
+                <div className="modal-header">
+                    <h2>Saved Queries</h2>
+                    <button className="close-btn" onClick={onClose}>
+                        ×
+                    </button>
+                </div>
+                <div className="loading-state">Loading saved queries...</div>
             </div>
         );
     }
 
-    return (
-        <div className="saved-queries-list">
-            {queries.map((query) => (
-                <div key={query.id} className="saved-query-item">
-                    <div className="query-info">
-                        <div className="query-header">
-                            <h4>{query.name}</h4>
-                            <div className="query-actions">
-                                <button
-                                    onClick={() => onToggleFavorite(query.id)}
-                                    className="favorite-btn"
-                                    title={
-                                        query.isFavorite
-                                            ? "Remove from favorites"
-                                            : "Add to favorites"
-                                    }
-                                >
-                                    {query.isFavorite ? (
-                                        <FaStar />
-                                    ) : (
-                                        <FaRegStar />
-                                    )}
-                                </button>
-                                <button
-                                    onClick={() => onDeleteQuery(query.id)}
-                                    className="delete-btn"
-                                    title="Delete query"
-                                >
-                                    <MdDelete />
-                                </button>
-                            </div>
-                        </div>
-                        {query.description && (
-                            <p className="query-description">
-                                {query.description}
-                            </p>
-                        )}
-                        <div className="query-details">
-                            {query.simpleSearch && (
-                                <span className="detail-tag">
-                                    Search: "{query.simpleSearch}"
-                                </span>
-                            )}
-                            {query.searchCriteria &&
-                                query.searchCriteria.length > 0 && (
-                                    <span className="detail-tag">
-                                        {query.searchCriteria.length} advanced
-                                        criteria
-                                    </span>
-                                )}
-                            {query.sortBy && (
-                                <span className="detail-tag">
-                                    Sort: {query.sortBy} ({query.sortOrder})
-                                </span>
-                            )}
-                        </div>
-                        <div className="query-meta">
-                            <span>Used {query.usageCount || 0} times</span>
-                            {query.lastUsedAt && (
-                                <span>
-                                    Last used:{" "}
-                                    {new Date(
-                                        query.lastUsedAt,
-                                    ).toLocaleDateString()}
-                                </span>
-                            )}
-                        </div>
-                    </div>
-                    <button
-                        onClick={() => onLoadQuery(query)}
-                        className="load-query-btn"
-                    >
-                        Load Query
+    if (!queries || queries.length === 0) {
+        return (
+            <div className="saved-queries-modal">
+                <div className="modal-header">
+                    <h2>Saved Queries</h2>
+                    <button className="close-btn" onClick={onClose}>
+                        ×
                     </button>
                 </div>
-            ))}
+                <div className="empty-state">
+                    <p>No saved queries found.</p>
+                    <p>Save your current search to get started!</p>
+                </div>
+            </div>
+        );
+    }
+
+    const isAllSelected = selectedQueries.length === queries.length;
+    const isIndeterminate =
+        selectedQueries.length > 0 && selectedQueries.length < queries.length;
+
+    return (
+        <div className="saved-queries-modal">
+            <div className="saved-queries-container">
+                <table className="saved-queries-table">
+                    <thead>
+                        <tr>
+                            <th className="checkbox-col">
+                                <input
+                                    type="checkbox"
+                                    checked={isAllSelected}
+                                    ref={(input) => {
+                                        if (input)
+                                            input.indeterminate =
+                                                isIndeterminate;
+                                    }}
+                                    onChange={(e) =>
+                                        handleSelectAll(e.target.checked)
+                                    }
+                                />
+                            </th>
+                            <th className="sno-col">S.no</th>
+                            <th className="title-col">Query Title</th>
+                            <th className="description-col">Description</th>
+                            <th className="render-col">Render</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {queries.map((query, index) => (
+                            <tr key={query.id} className="saved-query-row">
+                                <td className="checkbox-col">
+                                    <input
+                                        type="checkbox"
+                                        checked={selectedQueries.includes(
+                                            query.id,
+                                        )}
+                                        onChange={(e) =>
+                                            handleSelectQuery(
+                                                query.id,
+                                                e.target.checked,
+                                            )
+                                        }
+                                    />
+                                </td>
+                                <td className="sno-col">{index + 1}</td>
+                                <td className="title-col">
+                                    <span className="query-title">
+                                        {query.name}
+                                    </span>
+                                </td>
+                                <td className="description-col">
+                                    <span className="query-description">
+                                        {query.description ||
+                                            "No description available"}
+                                    </span>
+                                </td>
+                                <td className="render-col">
+                                    <div className="action-buttons">
+                                        <button
+                                            onClick={() => onLoadQuery(query)}
+                                            className="run-btn"
+                                        >
+                                            Run
+                                        </button>
+                                        <button
+                                            className="edit-btn"
+                                            title="Edit query"
+                                        >
+                                            <MdEdit />
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+                        ))}
+                    </tbody>
+                </table>
+
+                {selectedQueries.length > 0 && (
+                    <div className="bulk-actions">
+                        <button
+                            onClick={handleRemoveSelected}
+                            className="remove-selected-btn"
+                        >
+                            Remove Selected Queries
+                        </button>
+                    </div>
+                )}
+            </div>
         </div>
     );
 };

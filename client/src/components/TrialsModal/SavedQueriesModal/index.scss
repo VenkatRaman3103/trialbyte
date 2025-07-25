@@ -1,0 +1,273 @@
+.saved-queries-modal {
+    background: #f0f4f8;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-height: 80vh;
+    display: flex;
+    flex-direction: column;
+
+    .modal-header {
+        background: #4a90a4;
+        color: white;
+        padding: 16px 24px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+        h2 {
+            margin: 0;
+            font-size: 18px;
+            font-weight: 600;
+        }
+
+        .close-btn {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 24px;
+            cursor: pointer;
+            padding: 0;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background-color 0.2s;
+
+            &:hover {
+                background-color: rgba(255, 255, 255, 0.1);
+            }
+        }
+    }
+
+    .loading-state,
+    .empty-state {
+        padding: 40px 24px;
+        text-align: center;
+        color: #666;
+
+        p {
+            margin: 8px 0;
+        }
+    }
+
+    .saved-queries-container {
+        flex: 1;
+        overflow: auto;
+        background: white;
+    }
+
+    .saved-queries-table {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: 14px;
+
+        thead {
+            background: #2c5f75;
+            color: white;
+            position: sticky;
+            top: 0;
+            z-index: 10;
+
+            th {
+                padding: 16px 12px;
+                text-align: left;
+                font-weight: 600;
+                border-right: 1px solid rgba(255, 255, 255, 0.1);
+                background-color: #204b73;
+
+                &:last-child {
+                    border-right: none;
+                }
+
+                &.checkbox-col {
+                    width: 50px;
+                    text-align: center;
+                }
+
+                &.sno-col {
+                    width: 80px;
+                    text-align: center;
+                }
+
+                &.title-col {
+                    width: 200px;
+                }
+
+                &.description-col {
+                    flex: 1;
+                    min-width: 300px;
+                }
+
+                &.render-col {
+                    width: 150px;
+                    text-align: center;
+                }
+            }
+        }
+
+        tbody {
+            tr {
+                border-bottom: 1px solid #e2e8f0;
+                transition: background-color 0.2s;
+
+                &:hover {
+                    background-color: #f8fafc;
+                }
+
+                &:last-child {
+                    border-bottom: none;
+                }
+            }
+
+            td {
+                padding: 16px 12px;
+                vertical-align: top;
+                border-right: 1px solid #e2e8f0;
+
+                &:last-child {
+                    border-right: none;
+                }
+
+                &.checkbox-col {
+                    text-align: center;
+                    vertical-align: middle;
+
+                    input[type="checkbox"] {
+                        width: 16px;
+                        height: 16px;
+                        cursor: pointer;
+                    }
+                }
+
+                &.sno-col {
+                    text-align: center;
+                    font-weight: 500;
+                    color: #64748b;
+                    vertical-align: middle;
+                }
+
+                &.title-col {
+                    .query-title {
+                        font-weight: 500;
+                        color: #1e293b;
+                        line-height: 1.4;
+                    }
+                }
+
+                &.description-col {
+                    .query-description {
+                        color: #475569;
+                        line-height: 1.5;
+                        display: block;
+                    }
+                }
+
+                &.render-col {
+                    text-align: center;
+                    vertical-align: middle;
+
+                    .action-buttons {
+                        display: flex;
+                        gap: 8px;
+                        justify-content: center;
+                        align-items: center;
+                    }
+                }
+            }
+        }
+    }
+
+    .run-btn {
+        background-color: #204b73;
+        color: white;
+        border: none;
+        padding: 8px 16px;
+        border-radius: 6px;
+        font-size: 13px;
+        font-weight: 500;
+        cursor: pointer;
+        transition: background-color 0.2s;
+
+    }
+
+    .edit-btn {
+        background: none;
+        border: 1px solid #d1d5db;
+        color: #6b7280;
+        padding: 6px;
+        border-radius: 4px;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.2s;
+
+        &:hover {
+            background: #f3f4f6;
+            border-color: #9ca3af;
+            color: #374151;
+        }
+
+        svg {
+            width: 16px;
+            height: 16px;
+        }
+    }
+
+    .bulk-actions {
+        background: #f8fafc;
+        padding: 16px 24px;
+        border-top: 1px solid #e2e8f0;
+        display: flex;
+        justify-content: flex-end;
+
+        .remove-selected-btn {
+            background: #dc2626;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: background-color 0.2s;
+
+            &:hover {
+                background: #b91c1c;
+            }
+        }
+    }
+
+    // Responsive design
+    @media (max-width: 768px) {
+        .saved-queries-table {
+            font-size: 12px;
+
+            thead th,
+            tbody td {
+                padding: 12px 8px;
+            }
+
+            .description-col {
+                min-width: 200px;
+            }
+
+            .action-buttons {
+                flex-direction: column;
+                gap: 4px;
+            }
+
+            .run-btn {
+                padding: 6px 12px;
+                font-size: 12px;
+            }
+        }
+    }
+}
