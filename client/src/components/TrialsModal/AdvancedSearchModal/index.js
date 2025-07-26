@@ -36,6 +36,7 @@ import { FaSortAlphaDownAlt } from "react-icons/fa";
 import { FaRegSquare } from "react-icons/fa6";
 import { MdDelete, MdEdit } from "react-icons/md";
 import { FilterModal } from "@/components/TrialsModal/FilterModal";
+import { SaveCurrentQueryModal } from "../SaveCurrentQueryModal";
 
 export const AdvancedSearchModal = ({
     isOpen,

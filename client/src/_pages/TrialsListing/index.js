@@ -15,9 +15,7 @@ import {
 } from "@/api/trials/searchQuery";
 
 import { IoSearch } from "react-icons/io5";
-import { FaRegFolder, FaTimes, FaStar, FaRegStar } from "react-icons/fa";
-import { RiListCheck } from "react-icons/ri";
-import { BsCardText } from "react-icons/bs";
+import { FaRegFolder, FaTimes } from "react-icons/fa";
 import { TbArrowsSort } from "react-icons/tb";
 import { CiSaveDown2 } from "react-icons/ci";
 import { GoHistory } from "react-icons/go";
@@ -29,19 +27,16 @@ import { IoSearchOutline } from "react-icons/io5";
 import { IoFilterOutline } from "react-icons/io5";
 import { TfiSave } from "react-icons/tfi";
 import { LuUpload } from "react-icons/lu";
-import { FaMinus } from "react-icons/fa6";
-import { FaPlus } from "react-icons/fa6";
 
 import { IoIosArrowDown } from "react-icons/io";
-import { FaSortAlphaDownAlt } from "react-icons/fa";
 import { FaRegSquare } from "react-icons/fa6";
-import { MdDelete, MdEdit } from "react-icons/md";
 import { FilterModal } from "@/components/TrialsModal/FilterModal";
 import { AdvancedSearchModal } from "@/components/TrialsModal/AdvancedSearchModal";
 import { FavoriteQueriesModal } from "@/components/TrialsModal/FavoriteQueriesModal";
 import { SavedQueriesModal } from "@/components/TrialsModal/SavedQueriesModal";
 import { QueryHistoryModal } from "@/components/TrialsModal/QueryHistroyModal";
 import { SaveCurrentQueryModal } from "@/components/TrialsModal/SaveCurrentQueryModal";
+import { ExportModal } from "@/components/TrialsModal/ExportModal";
 
 export const TrialsListing = () => {
     const [activeModal, setActiveModal] = useState(null);
@@ -848,6 +843,54 @@ export const TrialsListing = () => {
                             <FaRegSquare className="checkbox-icon" />
                         </div>
                         <div
+                            className={`header-column sortable ${sortBy === "trialId" ? "active-sort" : ""}`}
+                            onClick={() => handleHeaderSort("trialId")}
+                        >
+                            Trial ID
+                            {sortBy === "trialId" &&
+                                (sortOrder === "asc" ? "↑" : "↓")}
+                            <div className="filter-text">
+                                Filter
+                                <IoIosArrowDown className="filter-arrow" />
+                            </div>
+                        </div>
+                        <div
+                            className={`header-column sortable ${sortBy === "therapeuticArea" ? "active-sort" : ""}`}
+                            onClick={() => handleHeaderSort("therapeuticArea")}
+                        >
+                            Therapeutic Area
+                            {sortBy === "therapeuticArea" &&
+                                (sortOrder === "asc" ? "↑" : "↓")}
+                            <div className="filter-text">
+                                Filter
+                                <IoIosArrowDown className="filter-arrow" />
+                            </div>
+                        </div>
+                        <div
+                            className={`header-column sortable ${sortBy === "diseaseType" ? "active-sort" : ""}`}
+                            onClick={() => handleHeaderSort("diseaseType")}
+                        >
+                            Disease Type
+                            {sortBy === "diseaseType" &&
+                                (sortOrder === "asc" ? "↑" : "↓")}
+                            <div className="filter-text">
+                                Filter
+                                <IoIosArrowDown className="filter-arrow" />
+                            </div>
+                        </div>
+                        <div
+                            className={`header-column sortable ${sortBy === "primaryDrug" ? "active-sort" : ""}`}
+                            onClick={() => handleHeaderSort("primaryDrug")}
+                        >
+                            Primary Drug
+                            {sortBy === "primaryDrug" &&
+                                (sortOrder === "asc" ? "↑" : "↓")}
+                            <div className="filter-text">
+                                Filter
+                                <IoIosArrowDown className="filter-arrow" />
+                            </div>
+                        </div>
+                        <div
                             className={`header-column sortable ${sortBy === "trialStatus" ? "active-sort" : ""}`}
                             onClick={() => handleHeaderSort("trialStatus")}
                         >
@@ -1012,9 +1055,20 @@ export const TrialsListing = () => {
                                 />
                             )}
                             {activeModal === "export" && (
-                                <div>
-                                    <p>Export options will go here</p>
-                                </div>
+                                <ExportModal
+                                    isOpen={activeModal === "export"}
+                                    onClose={() => setActiveModal(null)}
+                                    trials={processedTrials}
+                                    selectedTrials={[]}
+                                    onExport={(selectedTrials, format) => {
+                                        console.log(
+                                            "Exporting:",
+                                            selectedTrials,
+                                            "as",
+                                            format,
+                                        );
+                                    }}
+                                />
                             )}
                         </div>
                     </div>
