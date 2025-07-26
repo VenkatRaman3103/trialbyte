@@ -1,7 +1,9 @@
+import { inArray } from 'drizzle-orm';
 import { Router } from 'express';
 import { db } from '../db/index.js';
 import { selectedTrials } from '../db/selected_trials.js';
 import { eq } from 'drizzle-orm';
+import { trials } from '../db/trials.js';
 
 export const selectedTrialsRouter = Router();
 
@@ -40,17 +42,22 @@ selectedTrialsRouter.post('/selected-trials', async (req, res) => {
 // get all selected trials
 selectedTrialsRouter.get('/selected-trials', async (req, res) => {
     try {
-        const response = await db.select().from(selectedTrials);
-        res.status(200).json(response);
+        const selectedTrialsData = await db.select().from(selectedTrials);
+        const selectedTrialIds = selectedTrialsData.map(item => item.trial_id);
+
+        const trialsData = await db
+            .select()
+            .from(trials)
+            .where(inArray(trials.id, selectedTrialIds));
+
+        res.status(200).json(trialsData);
     } catch (error) {
         const errorMessage = {
             origin: 'GET /selected-trials',
-            error: error,
+            error,
         };
-        console.log(errorMessage);
-        res.status(500).json({
-            errorMessage,
-        });
+        console.error(errorMessage);
+        res.status(500).json({ errorMessage });
     }
 });
 
