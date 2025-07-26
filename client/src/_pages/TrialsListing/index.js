@@ -41,6 +41,7 @@ import { CustomizeColumnModal } from "@/components/TrialsModal/CustomizeColumnMo
 import { getAllFavTitles } from "@/api/trials/favTitle/getAllFavTitles";
 import { saveFavTitles } from "@/api/trials/favTitle/saveFavTitles";
 import { TrialsTabs } from "@/components/TrialsTabs";
+import { createSelectedTrials } from "@/api/trials/selectedTrials/createSelectedTrials";
 
 export const TrialsListing = () => {
     const [activeMode, setActiveMode] = useState("list");
@@ -160,6 +161,11 @@ export const TrialsListing = () => {
 
     const saveFavTitlesMutation = useMutation({
         mutationFn: () => saveFavTitles(selectedItems),
+    });
+
+    const saveSeletedItems = useMutation({
+        mutationFn: () =>
+            createSelectedTrials(selectedItems.map((item) => item.id)),
     });
 
     // Search and filtering logic
@@ -611,6 +617,7 @@ export const TrialsListing = () => {
     }
 
     function openSelectedItems() {
+        saveSeletedItems.mutate();
         setActiveMode("tabs");
     }
 
