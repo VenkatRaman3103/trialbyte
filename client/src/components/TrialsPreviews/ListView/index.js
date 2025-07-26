@@ -1,7 +1,7 @@
 import React from "react";
 import "./index.scss";
 
-export const ListView = ({ data }) => {
+export const ListView = ({ data, handleSelectItems }) => {
     console.log(data, "dataListView");
 
     const {
@@ -35,7 +35,11 @@ export const ListView = ({ data }) => {
     return (
         <div className="list-view-item">
             <div className="list-view-checkbox-wrapper">
-                <input type="checkbox" className="list-view-checkbox" />
+                <input
+                    type="checkbox"
+                    className="list-view-checkbox"
+                    onChange={() => handleSelectItems(data)}
+                />
             </div>
             <div className="list-view-id">#{trialId}</div>
             <div className="list-view-icon-text">

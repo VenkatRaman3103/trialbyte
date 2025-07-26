@@ -1,6 +1,6 @@
 "use client";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 import "./index.scss";
 import { ListView } from "@/components/TrialsPreviews/ListView";
 import { getAllTrials } from "@/api/trials/getAllTrials";
@@ -37,8 +37,12 @@ import { SavedQueriesModal } from "@/components/TrialsModal/SavedQueriesModal";
 import { QueryHistoryModal } from "@/components/TrialsModal/QueryHistroyModal";
 import { SaveCurrentQueryModal } from "@/components/TrialsModal/SaveCurrentQueryModal";
 import { ExportModal } from "@/components/TrialsModal/ExportModal";
+import { getAllFavTitles } from "@/api/trials/favTitle/getAllFavTitles";
+import { saveFavTitles } from "@/api/trials/favTitle/saveFavTitles";
 
 export const TrialsListing = () => {
+    const [selectedItems, setSelectedItems] = useState([]);
+
     const [activeModal, setActiveModal] = useState(null);
     const [sortBy, setSortBy] = useState("");
     const [sortOrder, setSortOrder] = useState("asc");
@@ -91,6 +95,11 @@ export const TrialsListing = () => {
         queryKey: ["favorite-queries"],
     });
 
+    const { data: favTitlesData } = useQuery({
+        queryFn: () => getAllFavTitles(),
+        queryKey: ["fav-titles"],
+    });
+
     /// --- MUTATIONS ---
     const createQueryMutation = useMutation({
         mutationFn: createSavedQuery,
@@ -134,6 +143,10 @@ export const TrialsListing = () => {
             queryClient.invalidateQueries({ queryKey: ["saved-queries"] });
             queryClient.invalidateQueries({ queryKey: ["favorite-queries"] });
         },
+    });
+
+    const saveFavTitlesMutation = useMutation({
+        mutationFn: () => saveFavTitles(selectedItems),
     });
 
     // Search and filtering logic
@@ -536,6 +549,23 @@ export const TrialsListing = () => {
         );
     };
 
+    function handleSelectItems(item) {
+        setSelectedItems((prev) => {
+            const isExist = prev.map((trial) => trial.id).includes(item.id);
+            if (isExist) {
+                return [...prev.filter((trial) => trial.id != item.id)];
+            } else {
+                return [...prev, item];
+            }
+        });
+    }
+
+    function handleSaveFavTitles() {
+        saveFavTitlesMutation.mutate();
+    }
+
+    console.log(favTitlesData, "favTitlesData");
+
     return (
         <div className="trial-listing-container">
             <div className="listing-actions-buttons-container">
@@ -838,6 +868,9 @@ export const TrialsListing = () => {
                 </div>
 
                 <div className="listing-items-container">
+                    <button onClick={handleSaveFavTitles}>
+                        add the title to favorit
+                    </button>
                     <div className="listing-items-header-container">
                         <div className="header-column select-all">
                             <FaRegSquare className="checkbox-icon" />
@@ -934,7 +967,11 @@ export const TrialsListing = () => {
                             </div>
                         ) : processedTrials?.length > 0 ? (
                             processedTrials.map((trial) => (
-                                <ListView data={trial} key={trial.id} />
+                                <ListView
+                                    data={trial}
+                                    key={trial.id}
+                                    handleSelectItems={handleSelectItems}
+                                />
                             ))
                         ) : (
                             <div className="no-results">
