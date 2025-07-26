@@ -1,6 +1,13 @@
+import { useMutation } from "@tanstack/react-query";
 import "./index.scss";
 
 export const FavoriteQueriesModal = ({ favorites }) => {
+    const [selectedItems, setSelectedItems] = useState([]);
+
+    const deleteFavTitleMutation = useMutation({
+        mutationFn: () => setSelectedItems(selectedItems),
+    });
+
     if (!favorites || favorites.length === 0) {
         return (
             <div className="empty-state">
@@ -8,6 +15,10 @@ export const FavoriteQueriesModal = ({ favorites }) => {
                 <p>Mark queries as favorites to see them here!</p>
             </div>
         );
+    }
+
+    function handleSelectItems() {
+        deleteFavTitleMutation.mutate();
     }
 
     return (
@@ -24,7 +35,7 @@ export const FavoriteQueriesModal = ({ favorites }) => {
     );
 };
 
-export const FavoriteTitlesItems = ({ data }) => {
+export const FavoriteTitlesItems = ({ data, handleSelectItems }) => {
     const {
         status,
         trialIdentifier: trialId,
@@ -54,6 +65,6 @@ export const FavoriteTitlesItems = ({ data }) => {
             <div className={`list-view-status status ${status}`}>{status}</div>
             <div className="list-view-text">{sponsorCollaborators}</div>
             <div className="list-view-text">{trialPhase}</div>
-        </div>,
+        </div>
     );
 };

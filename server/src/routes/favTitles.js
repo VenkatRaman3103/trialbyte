@@ -46,3 +46,15 @@ favTitleRouter.post('/fav-titles', async (req, res) => {
         res.status(500).json({ message: 'Internal server error at favTitleRouter POST' });
     }
 });
+
+favTitleRouter.delete('/fav-titles', async (req, res) => {
+    const { trial_ids } = req.body;
+    try {
+        for (const trialId of trial_ids) {
+            await db.delete(favTitle).where(eq(favTitle.id, trialId));
+        }
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: 'Internal server error at favTitleRouter DELETE' });
+    }
+});
