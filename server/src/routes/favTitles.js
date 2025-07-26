@@ -48,13 +48,34 @@ favTitleRouter.post('/fav-titles', async (req, res) => {
 });
 
 favTitleRouter.delete('/fav-titles', async (req, res) => {
+    console.log('DELETE /fav-titles route hit');
+    console.log('Request body:', req.body);
+
     const { trial_ids } = req.body;
+
+    if (!trial_ids || !Array.isArray(trial_ids)) {
+        return res.status(400).json({ message: 'trial_ids must be an array' });
+    }
+
     try {
         for (const trialId of trial_ids) {
-            await db.delete(favTitle).where(eq(favTitle.id, trialId));
+            console.log(`Attempting to delete trial ID: ${trialId}`);
+
+            // Check if the record exists first
+            const existingRecord = await db.select().from(favTitle).where(eq(favTitle.id, trialId));
+            console.log(`Existing record for ${trialId}:`, existingRecord);
+
+            const result = await db.delete(favTitle).where(eq(favTitle.trial_id, trialId));
+            console.log(`Delete result for ${trialId}:`, result);
         }
+
+        console.log('All deletions completed, sending response');
+        res.status(200).json({
+            message: 'Favorite titles deleted successfully',
+            deleted_ids: trial_ids,
+        });
     } catch (error) {
-        console.error(error);
+        console.error('Error during deletion:', error);
         res.status(500).json({ message: 'Internal server error at favTitleRouter DELETE' });
     }
 });
