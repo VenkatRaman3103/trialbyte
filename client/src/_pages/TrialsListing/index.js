@@ -40,8 +40,10 @@ import { ExportModal } from "@/components/TrialsModal/ExportModal";
 import { CustomizeColumnModal } from "@/components/TrialsModal/CustomizeColumnModal";
 import { getAllFavTitles } from "@/api/trials/favTitle/getAllFavTitles";
 import { saveFavTitles } from "@/api/trials/favTitle/saveFavTitles";
+import { TrialsTabs } from "@/components/TrialsTabs";
 
 export const TrialsListing = () => {
+    const [activeMode, setActiveMode] = useState("list");
     const [selectedItems, setSelectedItems] = useState([]);
 
     const [activeModal, setActiveModal] = useState(null);
@@ -608,7 +610,9 @@ export const TrialsListing = () => {
         saveFavTitlesMutation.mutate();
     }
 
-    console.log(favTitlesData, "favTitlesData");
+    function openSelectedItems() {
+        setActiveMode("tabs");
+    }
 
     return (
         <div className="trial-listing-container">
@@ -691,312 +695,371 @@ export const TrialsListing = () => {
                 </div>
             </div>
 
-            <div className="listing-container">
-                <div className="listing-sidebar-container">
-                    <div className="listing-sidebar-search-section">
-                        <IoSearch className="search-icon" />
-                        <input
-                            type="text"
-                            placeholder="Search trials..."
-                            value={searchQuery}
-                            onChange={(e) => setSearchQuery(e.target.value)}
-                        />
-                        {searchQuery && (
-                            <button
-                                className="clear-search-input"
-                                onClick={() => setSearchQuery("")}
-                            >
-                                <FaTimes />
-                            </button>
-                        )}
-                    </div>
-
-                    <div className="listing-sidebar-view-type-section">
-                        <div className="view-type-section-header">
-                            <FaRegFolder className="header-icon" />
-                            View Type
-                        </div>
-                        <div className="view-type-section-content">
-                            <label className="checkbox-label">
+            {activeMode === "tabs" ? (
+                <TrialsTabs selectedItems={selectedItems} />
+            ) : (
+                <>
+                    <div className="listing-container">
+                        <div className="listing-sidebar-container">
+                            <div className="listing-sidebar-search-section">
+                                <IoSearch className="search-icon" />
                                 <input
-                                    type="checkbox"
-                                    className="custom-checkbox"
-                                />
-                                List view
-                            </label>
-                            <label className="checkbox-label">
-                                <input
-                                    type="checkbox"
-                                    className="custom-checkbox"
-                                />
-                                Card view
-                            </label>
-                        </div>
-                    </div>
-
-                    <div className="listing-sidebar-sort-by-section">
-                        <div className="sort-by-section-header">
-                            <TbArrowsSort className="header-icon" />
-                            Sort By
-                        </div>
-                        <div className="sort-by-section-content">
-                            <label className="checkbox-label">
-                                <input
-                                    type="radio"
-                                    name="sortBy"
-                                    className="custom-checkbox"
-                                    checked={sortBy === "trialId"}
-                                    onChange={() => handleSortChange("trialId")}
-                                />
-                                Trial ID
-                                {sortBy === "trialId" && (
-                                    <span className="sort-indicator">
-                                        {sortOrder === "asc" ? "↑" : "↓"}
-                                    </span>
-                                )}
-                            </label>
-                            <label className="checkbox-label">
-                                <input
-                                    type="radio"
-                                    name="sortBy"
-                                    className="custom-checkbox"
-                                    checked={sortBy === "therapeuticArea"}
-                                    onChange={() =>
-                                        handleSortChange("therapeuticArea")
+                                    type="text"
+                                    placeholder="Search trials..."
+                                    value={searchQuery}
+                                    onChange={(e) =>
+                                        setSearchQuery(e.target.value)
                                     }
                                 />
-                                Therapeutic Area
-                                {sortBy === "therapeuticArea" && (
-                                    <span className="sort-indicator">
-                                        {sortOrder === "asc" ? "↑" : "↓"}
-                                    </span>
+                                {searchQuery && (
+                                    <button
+                                        className="clear-search-input"
+                                        onClick={() => setSearchQuery("")}
+                                    >
+                                        <FaTimes />
+                                    </button>
                                 )}
-                            </label>
-                            <label className="checkbox-label">
-                                <input
-                                    type="radio"
-                                    name="sortBy"
-                                    className="custom-checkbox"
-                                    checked={sortBy === "diseaseType"}
-                                    onChange={() =>
-                                        handleSortChange("diseaseType")
-                                    }
-                                />
-                                Disease Type
-                                {sortBy === "diseaseType" && (
-                                    <span className="sort-indicator">
-                                        {sortOrder === "asc" ? "↑" : "↓"}
-                                    </span>
-                                )}
-                            </label>
-                            <label className="checkbox-label">
-                                <input
-                                    type="radio"
-                                    name="sortBy"
-                                    className="custom-checkbox"
-                                    checked={sortBy === "primaryDrug"}
-                                    onChange={() =>
-                                        handleSortChange("primaryDrug")
-                                    }
-                                />
-                                Primary Drug
-                                {sortBy === "primaryDrug" && (
-                                    <span className="sort-indicator">
-                                        {sortOrder === "asc" ? "↑" : "↓"}
-                                    </span>
-                                )}
-                            </label>
-                            <label className="checkbox-label">
-                                <input
-                                    type="radio"
-                                    name="sortBy"
-                                    className="custom-checkbox"
-                                    checked={sortBy === "trialStatus"}
-                                    onChange={() =>
-                                        handleSortChange("trialStatus")
-                                    }
-                                />
-                                Trial Status
-                                {sortBy === "trialStatus" && (
-                                    <span className="sort-indicator">
-                                        {sortOrder === "asc" ? "↑" : "↓"}
-                                    </span>
-                                )}
-                            </label>
-                            <label className="checkbox-label">
-                                <input
-                                    type="radio"
-                                    name="sortBy"
-                                    className="custom-checkbox"
-                                    checked={sortBy === "sponsor"}
-                                    onChange={() => handleSortChange("sponsor")}
-                                />
-                                Sponsor
-                                {sortBy === "sponsor" && (
-                                    <span className="sort-indicator">
-                                        {sortOrder === "asc" ? "↑" : "↓"}
-                                    </span>
-                                )}
-                            </label>
-                            <label className="checkbox-label">
-                                <input
-                                    type="radio"
-                                    name="sortBy"
-                                    className="custom-checkbox"
-                                    checked={sortBy === "phase"}
-                                    onChange={() => handleSortChange("phase")}
-                                />
-                                Phase
-                                {sortBy === "phase" && (
-                                    <span className="sort-indicator">
-                                        {sortOrder === "asc" ? "↑" : "↓"}
-                                    </span>
-                                )}
-                            </label>
-                            {sortBy && (
-                                <button
-                                    className="clear-sort-button"
-                                    onClick={() => {
-                                        setSortBy("");
-                                        setSortOrder("asc");
-                                    }}
-                                >
-                                    Clear Sort
-                                </button>
-                            )}
-                        </div>
-                    </div>
+                            </div>
 
-                    <div
-                        className="listing-sidebar-option-section"
-                        onClick={() => {
-                            if (getCurrentQueryHasChanges()) {
-                                setActiveModal("save-current");
-                            }
-                        }}
-                        style={{
-                            cursor: getCurrentQueryHasChanges()
-                                ? "pointer"
-                                : "not-allowed",
-                            opacity: getCurrentQueryHasChanges() ? 1 : 0.5,
-                        }}
-                    >
-                        <CiSaveDown2 className="option-icon" />
-                        Save This Query
-                    </div>
-                    <div
-                        className="listing-sidebar-option-section"
-                        onClick={() => setActiveModal("history")}
-                        style={{ cursor: "pointer" }}
-                    >
-                        <GoHistory className="option-icon" />
-                        Query History
-                    </div>
-                    <div
-                        className="listing-sidebar-option-section"
-                        onClick={() => setActiveModal("favorites")}
-                        style={{ cursor: "pointer" }}
-                    >
-                        <CiBookmark className="option-icon" />
-                        Favorite Queries
-                        {favoriteQueriesData?.data?.length > 0 && (
-                            <span className="search-indicator">
-                                ({favoriteQueriesData.data.length})
-                            </span>
-                        )}
-                    </div>
-                    <div
-                        className="listing-sidebar-option-section"
-                        onClick={() => setActiveModal("customize-columns")}
-                        style={{ cursor: "pointer" }}
-                    >
-                        <SlList className="option-icon" />
-                        Customize Column View
-                    </div>
-                </div>
-                <div className="listing-items-container">
-                    <button onClick={handleSaveFavTitles}>
-                        Add the title to favorite
-                    </button>
-
-                    <div className="trials-table-container">
-                        <table className="trials-table">
-                            <thead>
-                                <tr>
-                                    <th className="select-all">
-                                        <FaRegSquare className="checkbox-icon" />
-                                    </th>
-                                    {getColumnHeaders().map((header) => (
-                                        <th
-                                            key={header.sortKey}
-                                            className={`sortable ${sortBy === header.sortKey ? "active-sort" : ""}`}
-                                            onClick={() =>
-                                                handleHeaderSort(header.sortKey)
-                                            }
-                                        >
-                                            <div className="header-content">
-                                                {header.label}
-                                                {sortBy === header.sortKey && (
-                                                    <span className="sort-indicator">
-                                                        {sortOrder === "asc"
-                                                            ? "↑"
-                                                            : "↓"}
-                                                    </span>
-                                                )}
-                                            </div>
-                                            <div className="filter-text">
-                                                Filter
-                                                <IoIosArrowDown className="filter-arrow" />
-                                            </div>
-                                        </th>
-                                    ))}
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {trialsLoading ? (
-                                    <tr>
-                                        <td
-                                            colSpan={visibleColumns.length + 1}
-                                            className="table-loading"
-                                        >
-                                            Loading trials...
-                                        </td>
-                                    </tr>
-                                ) : processedTrials?.length > 0 ? (
-                                    processedTrials.map((trial) => (
-                                        <ListView
-                                            data={trial}
-                                            key={trial.id}
-                                            handleSelectItems={
-                                                handleSelectItems
-                                            }
-                                            visibleColumns={visibleColumns}
+                            <div className="listing-sidebar-view-type-section">
+                                <div className="view-type-section-header">
+                                    <FaRegFolder className="header-icon" />
+                                    View Type
+                                </div>
+                                <div className="view-type-section-content">
+                                    <label className="checkbox-label">
+                                        <input
+                                            type="checkbox"
+                                            className="custom-checkbox"
                                         />
-                                    ))
-                                ) : (
-                                    <tr>
-                                        <td
-                                            colSpan={visibleColumns.length + 1}
-                                            className="table-no-results"
+                                        List view
+                                    </label>
+                                    <label className="checkbox-label">
+                                        <input
+                                            type="checkbox"
+                                            className="custom-checkbox"
+                                        />
+                                        Card view
+                                    </label>
+                                </div>
+                            </div>
+
+                            <div className="listing-sidebar-sort-by-section">
+                                <div className="sort-by-section-header">
+                                    <TbArrowsSort className="header-icon" />
+                                    Sort By
+                                </div>
+                                <div className="sort-by-section-content">
+                                    <label className="checkbox-label">
+                                        <input
+                                            type="radio"
+                                            name="sortBy"
+                                            className="custom-checkbox"
+                                            checked={sortBy === "trialId"}
+                                            onChange={() =>
+                                                handleSortChange("trialId")
+                                            }
+                                        />
+                                        Trial ID
+                                        {sortBy === "trialId" && (
+                                            <span className="sort-indicator">
+                                                {sortOrder === "asc"
+                                                    ? "↑"
+                                                    : "↓"}
+                                            </span>
+                                        )}
+                                    </label>
+                                    <label className="checkbox-label">
+                                        <input
+                                            type="radio"
+                                            name="sortBy"
+                                            className="custom-checkbox"
+                                            checked={
+                                                sortBy === "therapeuticArea"
+                                            }
+                                            onChange={() =>
+                                                handleSortChange(
+                                                    "therapeuticArea",
+                                                )
+                                            }
+                                        />
+                                        Therapeutic Area
+                                        {sortBy === "therapeuticArea" && (
+                                            <span className="sort-indicator">
+                                                {sortOrder === "asc"
+                                                    ? "↑"
+                                                    : "↓"}
+                                            </span>
+                                        )}
+                                    </label>
+                                    <label className="checkbox-label">
+                                        <input
+                                            type="radio"
+                                            name="sortBy"
+                                            className="custom-checkbox"
+                                            checked={sortBy === "diseaseType"}
+                                            onChange={() =>
+                                                handleSortChange("diseaseType")
+                                            }
+                                        />
+                                        Disease Type
+                                        {sortBy === "diseaseType" && (
+                                            <span className="sort-indicator">
+                                                {sortOrder === "asc"
+                                                    ? "↑"
+                                                    : "↓"}
+                                            </span>
+                                        )}
+                                    </label>
+                                    <label className="checkbox-label">
+                                        <input
+                                            type="radio"
+                                            name="sortBy"
+                                            className="custom-checkbox"
+                                            checked={sortBy === "primaryDrug"}
+                                            onChange={() =>
+                                                handleSortChange("primaryDrug")
+                                            }
+                                        />
+                                        Primary Drug
+                                        {sortBy === "primaryDrug" && (
+                                            <span className="sort-indicator">
+                                                {sortOrder === "asc"
+                                                    ? "↑"
+                                                    : "↓"}
+                                            </span>
+                                        )}
+                                    </label>
+                                    <label className="checkbox-label">
+                                        <input
+                                            type="radio"
+                                            name="sortBy"
+                                            className="custom-checkbox"
+                                            checked={sortBy === "trialStatus"}
+                                            onChange={() =>
+                                                handleSortChange("trialStatus")
+                                            }
+                                        />
+                                        Trial Status
+                                        {sortBy === "trialStatus" && (
+                                            <span className="sort-indicator">
+                                                {sortOrder === "asc"
+                                                    ? "↑"
+                                                    : "↓"}
+                                            </span>
+                                        )}
+                                    </label>
+                                    <label className="checkbox-label">
+                                        <input
+                                            type="radio"
+                                            name="sortBy"
+                                            className="custom-checkbox"
+                                            checked={sortBy === "sponsor"}
+                                            onChange={() =>
+                                                handleSortChange("sponsor")
+                                            }
+                                        />
+                                        Sponsor
+                                        {sortBy === "sponsor" && (
+                                            <span className="sort-indicator">
+                                                {sortOrder === "asc"
+                                                    ? "↑"
+                                                    : "↓"}
+                                            </span>
+                                        )}
+                                    </label>
+                                    <label className="checkbox-label">
+                                        <input
+                                            type="radio"
+                                            name="sortBy"
+                                            className="custom-checkbox"
+                                            checked={sortBy === "phase"}
+                                            onChange={() =>
+                                                handleSortChange("phase")
+                                            }
+                                        />
+                                        Phase
+                                        {sortBy === "phase" && (
+                                            <span className="sort-indicator">
+                                                {sortOrder === "asc"
+                                                    ? "↑"
+                                                    : "↓"}
+                                            </span>
+                                        )}
+                                    </label>
+                                    {sortBy && (
+                                        <button
+                                            className="clear-sort-button"
+                                            onClick={() => {
+                                                setSortBy("");
+                                                setSortOrder("asc");
+                                            }}
                                         >
-                                            <p>
-                                                No trials found matching your
-                                                search criteria.
-                                            </p>
-                                            <button
-                                                onClick={clearAllSearches}
-                                                className="clear-filters-btn"
-                                            >
-                                                Clear all filters
-                                            </button>
-                                        </td>
-                                    </tr>
+                                            Clear Sort
+                                        </button>
+                                    )}
+                                </div>
+                            </div>
+
+                            <div
+                                className="listing-sidebar-option-section"
+                                onClick={() => {
+                                    if (getCurrentQueryHasChanges()) {
+                                        setActiveModal("save-current");
+                                    }
+                                }}
+                                style={{
+                                    cursor: getCurrentQueryHasChanges()
+                                        ? "pointer"
+                                        : "not-allowed",
+                                    opacity: getCurrentQueryHasChanges()
+                                        ? 1
+                                        : 0.5,
+                                }}
+                            >
+                                <CiSaveDown2 className="option-icon" />
+                                Save This Query
+                            </div>
+                            <div
+                                className="listing-sidebar-option-section"
+                                onClick={() => setActiveModal("history")}
+                                style={{ cursor: "pointer" }}
+                            >
+                                <GoHistory className="option-icon" />
+                                Query History
+                            </div>
+                            <div
+                                className="listing-sidebar-option-section"
+                                onClick={() => setActiveModal("favorites")}
+                                style={{ cursor: "pointer" }}
+                            >
+                                <CiBookmark className="option-icon" />
+                                Favorite Queries
+                                {favoriteQueriesData?.data?.length > 0 && (
+                                    <span className="search-indicator">
+                                        ({favoriteQueriesData.data.length})
+                                    </span>
                                 )}
-                            </tbody>
-                        </table>
+                            </div>
+                            <div
+                                className="listing-sidebar-option-section"
+                                onClick={() =>
+                                    setActiveModal("customize-columns")
+                                }
+                                style={{ cursor: "pointer" }}
+                            >
+                                <SlList className="option-icon" />
+                                Customize Column View
+                            </div>
+                        </div>
+                        <div className="listing-items-container">
+                            <button onClick={handleSaveFavTitles}>
+                                Add the title to favorite
+                            </button>
+
+                            <div className="trials-table-container">
+                                <table className="trials-table">
+                                    <thead>
+                                        <tr>
+                                            <th className="select-all">
+                                                <FaRegSquare className="checkbox-icon" />
+                                            </th>
+                                            {getColumnHeaders().map(
+                                                (header) => (
+                                                    <th
+                                                        key={header.sortKey}
+                                                        className={`sortable ${sortBy === header.sortKey ? "active-sort" : ""}`}
+                                                        onClick={() =>
+                                                            handleHeaderSort(
+                                                                header.sortKey,
+                                                            )
+                                                        }
+                                                    >
+                                                        <div className="header-content">
+                                                            {header.label}
+                                                            {sortBy ===
+                                                                header.sortKey && (
+                                                                <span className="sort-indicator">
+                                                                    {sortOrder ===
+                                                                    "asc"
+                                                                        ? "↑"
+                                                                        : "↓"}
+                                                                </span>
+                                                            )}
+                                                        </div>
+                                                        <div className="filter-text">
+                                                            Filter
+                                                            <IoIosArrowDown className="filter-arrow" />
+                                                        </div>
+                                                    </th>
+                                                ),
+                                            )}
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {trialsLoading ? (
+                                            <tr>
+                                                <td
+                                                    colSpan={
+                                                        visibleColumns.length +
+                                                        1
+                                                    }
+                                                    className="table-loading"
+                                                >
+                                                    Loading trials...
+                                                </td>
+                                            </tr>
+                                        ) : processedTrials?.length > 0 ? (
+                                            processedTrials.map((trial) => (
+                                                <ListView
+                                                    data={trial}
+                                                    key={trial.id}
+                                                    handleSelectItems={
+                                                        handleSelectItems
+                                                    }
+                                                    visibleColumns={
+                                                        visibleColumns
+                                                    }
+                                                />
+                                            ))
+                                        ) : (
+                                            <tr>
+                                                <td
+                                                    colSpan={
+                                                        visibleColumns.length +
+                                                        1
+                                                    }
+                                                    className="table-no-results"
+                                                >
+                                                    <p>
+                                                        No trials found matching
+                                                        your search criteria.
+                                                    </p>
+                                                    <button
+                                                        onClick={
+                                                            clearAllSearches
+                                                        }
+                                                        className="clear-filters-btn"
+                                                    >
+                                                        Clear all filters
+                                                    </button>
+                                                </td>
+                                            </tr>
+                                        )}
+                                    </tbody>
+                                </table>
+                            </div>
+
+                            <button
+                                className="open-btn"
+                                onClick={openSelectedItems}
+                            >
+                                open selected button
+                            </button>
+                        </div>
                     </div>
-                </div>
-            </div>
+                </>
+            )}
 
             {activeModal === "filter" && (
                 <FilterModal
