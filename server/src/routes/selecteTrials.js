@@ -1,6 +1,7 @@
 import { Router } from 'express';
 import { db } from '../db/index.js';
 import { selectedTrials } from '../db/selected_trials.js';
+import { eq } from 'drizzle-orm';
 
 export const selectedTrialsRouter = Router();
 
@@ -44,6 +45,26 @@ selectedTrialsRouter.get('/selected-trials', async (req, res) => {
     } catch (error) {
         const errorMessage = {
             origin: 'GET /selected-trials',
+            error: error,
+        };
+        console.log(errorMessage);
+        res.status(500).json({
+            errorMessage,
+        });
+    }
+});
+
+selectedTrialsRouter.delete('/selected-trials/:id', async (req, res) => {
+    const { id } = req.params;
+    try {
+        const response = await db
+            .delete(selectedTrials)
+            .where(eq(selectedTrials.trial_id, id))
+            .returning();
+        res.status(200).json(response);
+    } catch (error) {
+        const errorMessage = {
+            origin: 'DELETE /selected-trials/:id',
             error: error,
         };
         console.log(errorMessage);
