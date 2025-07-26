@@ -3,17 +3,16 @@ import "./index.scss";
 import { IoClose } from "react-icons/io5";
 import { FaRegSquare, FaCheckSquare } from "react-icons/fa";
 import { LuUpload } from "react-icons/lu";
+import { unparse } from "papaparse";
 
 export const ExportModal = ({
     isOpen,
     onClose,
     trials = [],
     selectedTrials = [],
-    onExport,
 }) => {
     const [selectAll, setSelectAll] = useState(false);
     const [selectedItems, setSelectedItems] = useState(new Set(selectedTrials));
-    const [exportFormat, setExportFormat] = useState("csv");
 
     if (!isOpen) return null;
 
@@ -27,26 +26,18 @@ export const ExportModal = ({
     };
 
     const handleSelectItem = (trialId) => {
-        const newSelected = new Set(selectedItems);
-        if (newSelected.has(trialId)) {
-            newSelected.delete(trialId);
+        const updated = new Set(selectedItems);
+        if (updated.has(trialId)) {
+            updated.delete(trialId);
         } else {
-            newSelected.add(trialId);
+            updated.add(trialId);
         }
-        setSelectedItems(newSelected);
-        setSelectAll(newSelected.size === trials.length);
-    };
-
-    const handleExport = () => {
-        const selectedTrialData = trials.filter((trial) =>
-            selectedItems.has(trial.id),
-        );
-        onExport?.(selectedTrialData, exportFormat);
-        onClose();
+        setSelectedItems(updated);
+        setSelectAll(updated.size === trials.length);
     };
 
     const getStatusColor = (status) => {
-        switch (status?.toLowerCase()) {
+        switch ((status || "").toLowerCase()) {
             case "closed":
                 return "status-closed";
             case "completed":
@@ -60,6 +51,38 @@ export const ExportModal = ({
             default:
                 return "status-default";
         }
+    };
+
+    const handleExport = () => {
+        const selectedTrialData = trials.filter((trial) =>
+            selectedItems.has(trial.id),
+        );
+
+        if (!selectedTrialData.length) return;
+
+        const rows = selectedTrialData.map((trial) => ({
+            TrialID: trial.trialIdentifier || trial.id,
+            TherapeuticArea: trial.therapeuticArea || "Oncology",
+            DiseaseType: trial.diseaseType || "Lung Cancer",
+            PrimaryDrug: trial.primaryDrugs || "Paclitaxel",
+            Status: trial.status || "Open",
+            Sponsor: trial.sponsorCollaborators || "Astellas",
+            Phase: trial.trialPhase || trial.phase || "2",
+        }));
+
+        const csv = unparse(rows);
+
+        const blob = new Blob([csv], { type: "text/csv;charset=utf-8;" });
+        const url = URL.createObjectURL(blob);
+        const link = document.createElement("a");
+        link.href = url;
+        link.setAttribute("download", "trials_export.csv");
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        URL.revokeObjectURL(url);
+
+        onClose();
     };
 
     return (
@@ -77,26 +100,10 @@ export const ExportModal = ({
 
                 <div className="export-modal-content">
                     <div className="export-options">
-                        <div className="format-selection">
-                            <label>Export Format:</label>
-                            <select
-                                value={exportFormat}
-                                onChange={(e) =>
-                                    setExportFormat(e.target.value)
-                                }
-                                className="format-select"
-                            >
-                                <option value="csv">CSV</option>
-                                <option value="excel">Excel</option>
-                                <option value="pdf">PDF</option>
-                            </select>
-                        </div>
-                        <div className="selection-info">
-                            <span>
-                                {selectedItems.size} of {trials.length} trials
-                                selected
-                            </span>
-                        </div>
+                        <span>
+                            {selectedItems.size} of {trials.length} trials
+                            selected
+                        </span>
                     </div>
 
                     <div className="trials-table">
@@ -149,18 +156,10 @@ export const ExportModal = ({
                                         </button>
                                     </div>
                                     <div className="row-column trial-id">
-                                        <span className="trial-id-text">
-                                            #{trial.trialIdentifier || trial.id}
-                                        </span>
+                                        #{trial.trialIdentifier || trial.id}
                                     </div>
                                     <div className="row-column therapeutic-area">
-                                        <span className="therapeutic-icon">
-                                            🎗️
-                                        </span>
-                                        <span>
-                                            {trial.therapeuticArea ||
-                                                "Oncology"}
-                                        </span>
+                                        🎗️ {trial.therapeuticArea || "Oncology"}
                                     </div>
                                     <div className="row-column disease-type">
                                         {trial.diseaseType || "Lung Cancer"}
