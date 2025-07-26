@@ -1,145 +1,262 @@
 $border-color: #e0e0e0;
 $text-color-dark: #333;
 $text-color-light: #666;
-$padding-base: 25px 10px;
-
 $status-planned: #FFD166;
 $status-terminated: #dc3545;
 $status-open: #28a745;
 $status-closed: #6f42c1;
 $status-active: #007bff;
 
-.list-view-item {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: $padding-base;
-    border: 1px solid #dce1e9;
-    border-bottom: 1px solid $border-color;
-    background-color: #fff;
+// Table container styles
+.trials-table-container {
+    width: 100%;
+    background-color: white;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.trials-table {
+    width: 100%;
+    border-collapse: collapse;
     font-family: Arial, sans-serif;
-    color: $text-color-dark;
-    border-radius: 8px;
-    margin-bottom: 10px;
 
-    >div {
-        flex-shrink: 0;
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        text-align: center;
+    // Header styles
+    tr {
+        width: 100%;
     }
 
-    .list-view-checkbox-wrapper {
-        flex-basis: 40px;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-    }
+    thead {
+        width: 100%;
+        background-color: #204b73;
 
-    .list-view-checkbox {
-        width: 18px;
-        height: 18px;
-        cursor: pointer;
-    }
+        th {
+            padding: 20px 15px;
+            text-align: center;
+            color: white;
+            font-weight: 500;
+            font-size: 14px;
+            border: none;
+            position: relative;
+            cursor: pointer;
+            user-select: none;
 
-    .list-view-id {
-        width: 100px;
-        font-weight: bold;
-        color: $text-color-dark;
-    }
+            &:first-child {
+                width: 50px;
+                padding: 20px 10px;
+            }
 
-    .list-view-icon-text {
-        width: 100px;
-        display: flex;
-        align-items: center;
+            &:hover {
+                background-color: rgba(255, 255, 255, 0.1);
+            }
 
-        .list-view-icon {
-            display: inline-block;
-            background-size: contain;
-            background-repeat: no-repeat;
-            background-position: center;
+            .sort-indicator {
+                margin-left: 5px;
+                font-weight: bold;
+                color: #a7d9f7;
+            }
+
+            .filter-text {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                gap: 3px;
+                font-size: 12px;
+                color: #a7d9f7;
+                margin-top: 5px;
+                cursor: pointer;
+
+                .filter-arrow {
+                    font-size: 10px;
+                }
+            }
+
+            &.select-all {
+                .checkbox-icon {
+                    font-size: 20px;
+                    color: white;
+                    border: 1px solid white;
+                    border-radius: 4px;
+                    padding: 2px;
+                    cursor: pointer;
+                }
+            }
         }
-
     }
 
-    .list-view-text {
-        width: 100px;
-        text-align: center;
-        color: $text-color-light;
-    }
+    // Body styles
+    tbody {
+        width: 100%;
 
-    .list-view-status {
-        padding: 4px 12px;
-        border-radius: 4px;
-        font-weight: bold;
-        text-align: center;
-        flex-basis: 90px;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        height: 30px;
+        tr {
+            border-bottom: 1px solid $border-color;
+            transition: background-color 0.2s ease;
 
-    }
 
-    .status-planned {
-        background-color: $status-planned;
-        color: $text-color-dark;
-    }
+            &:hover {
+                background-color: #f8f9fa;
+            }
 
-    .status-terminated {
-        background-color: $status-terminated;
-        color: #fff;
-    }
+            &:last-child {
+                border-bottom: none;
+            }
 
-    .status-open {
-        background-color: $status-open;
-        color: #fff;
-    }
+            td {
+                width: 200px;
+                padding: 15px;
+                text-align: center;
+                vertical-align: middle;
+                color: $text-color-light;
 
-    .status-closed {
-        background-color: $status-closed;
-        color: #fff;
-    }
+                &:first-child {
+                    width: 50px;
+                    padding: 15px 10px;
+                }
 
-    .status-active {
-        background-color: $status-active;
-        color: #fff;
-    }
+                &.trial-id {
+                    font-weight: bold;
+                    color: $text-color-dark;
+                }
 
-    .status-default {
-        background-color: #cccccc;
-        color: $text-color-dark;
+                &.therapeutic-area {
+                    .area-icon {
+                        display: inline-flex;
+                        align-items: center;
+                        justify-content: center;
+                        width: 24px;
+                        height: 24px;
+                        border-radius: 4px;
+                        background-color: #e3f2fd;
+                        color: #1976d2;
+                        font-size: 12px;
+                        margin-right: 8px;
+                    }
+                }
+
+                &.trial-status {
+                    .status-badge {
+                        display: inline-block;
+                        padding: 6px 12px;
+                        border-radius: 6px;
+                        font-weight: 500;
+                        font-size: 12px;
+                        text-transform: uppercase;
+                        letter-spacing: 0.5px;
+
+                        &.status-planned {
+                            background-color: $status-planned;
+                            color: $text-color-dark;
+                        }
+
+                        &.status-terminated {
+                            background-color: $status-terminated;
+                            color: white;
+                        }
+
+                        &.status-open {
+                            background-color: $status-open;
+                            color: white;
+                        }
+
+                        &.status-closed {
+                            background-color: $status-closed;
+                            color: white;
+                        }
+
+                        &.status-active {
+                            background-color: $status-active;
+                            color: white;
+                        }
+
+                        &.status-default {
+                            background-color: #6c757d;
+                            color: white;
+                        }
+                    }
+                }
+
+                .trial-checkbox {
+                    width: 18px;
+                    height: 18px;
+                    cursor: pointer;
+                    accent-color: #007bff;
+                }
+            }
+        }
     }
 }
 
-@media (max-width: 768px) {
-    .list-view-item {
-        flex-wrap: wrap;
-
-        .list-view-id,
-        .list-view-icon-text,
-        .list-view-text,
-        .list-view-status {
-            flex-basis: 48%;
-            margin-bottom: 10px;
-        }
-    }
-}
-
-.status {
-    padding: 4px 12px;
-    border-radius: 4px;
-    font-weight: bold;
+// Loading state
+.table-loading {
     text-align: center;
-    flex-basis: 90px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 30px;
+    padding: 40px;
+    color: $text-color-light;
+    font-style: italic;
+}
 
-    &.active {
-        background-color: green;
+// No results state
+.table-no-results {
+    text-align: center;
+    padding: 40px;
+
+    p {
+        color: $text-color-light;
+        margin-bottom: 20px;
+        font-size: 16px;
+    }
+
+    .clear-filters-btn {
+        background-color: #007bff;
         color: white;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 6px;
+        cursor: pointer;
+        font-size: 14px;
+        transition: background-color 0.2s ease;
+
+        &:hover {
+            background-color: #0056b3;
+        }
+    }
+}
+
+// Responsive design
+@media (max-width: 768px) {
+    .trials-table-container {
+        overflow-x: auto;
+    }
+
+    .trials-table {
+        min-width: 800px;
+
+        th,
+        td {
+            padding: 10px 8px;
+            font-size: 12px;
+        }
+
+        th {
+            .filter-text {
+                display: none; // Hide filter text on mobile
+            }
+        }
+    }
+}
+
+@media (max-width: 480px) {
+    .trials-table {
+        min-width: 600px;
+
+        th,
+        td {
+            padding: 8px 6px;
+            font-size: 11px;
+        }
+
+        .status-badge {
+            padding: 4px 8px !important;
+            font-size: 10px !important;
+        }
     }
 }

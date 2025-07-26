@@ -1,9 +1,19 @@
 import React from "react";
 import "./index.scss";
 
-export const ListView = ({ data, handleSelectItems }) => {
-    console.log(data, "dataListView");
-
+export const ListView = ({
+    data,
+    handleSelectItems,
+    visibleColumns = [
+        "trialId",
+        "therapeuticArea",
+        "diseaseType",
+        "primaryDrug",
+        "trialStatus",
+        "sponsor",
+        "phase",
+    ],
+}) => {
     const {
         status,
         trialIdentifier: trialId,
@@ -14,44 +24,83 @@ export const ListView = ({ data, handleSelectItems }) => {
         trialPhase,
     } = data || {};
 
-    const getStatusClassName = (currentStatus) => {
-        switch (currentStatus?.toLowerCase()) {
-            case "planned":
-                return "status-planned";
-            case "terminated":
-                return "status-terminated";
-            case "open":
-                return "status-open";
-            case "closed":
-                return "status-closed";
-            case "active":
-                return "active";
+    // Column configuration mapping
+    const columnConfig = {
+        trialId: {
+            value: `#${trialId}`,
+            className: "trial-id",
+        },
+        therapeuticArea: {
+            value: therapeuticArea,
+            className: "therapeutic-area",
+            hasIcon: true,
+        },
+        diseaseType: {
+            value: diseaseType,
+            className: "disease-type",
+        },
+        primaryDrug: {
+            value: primaryDrugs,
+            className: "primary-drug",
+        },
+        trialStatus: {
+            value: status,
+            className: "trial-status",
+            isStatus: true,
+        },
+        sponsor: {
+            value: sponsorCollaborators,
+            className: "sponsor",
+        },
+        phase: {
+            value: trialPhase,
+            className: "phase",
+        },
+    };
 
-            default:
-                return "status-default";
+    const renderCellContent = (columnKey, column) => {
+        if (column.hasIcon && column.value) {
+            return (
+                <>
+                    <span className="area-icon">
+                        {column.value.charAt(0).toUpperCase()}
+                    </span>
+                    {column.value}
+                </>
+            );
         }
+
+        if (column.isStatus) {
+            const statusClass = `status-${column.value?.toLowerCase() || "default"}`;
+            return (
+                <span className={`status-badge ${statusClass}`}>
+                    {column.value || "Unknown"}
+                </span>
+            );
+        }
+
+        return column.value || "-";
     };
 
     return (
-        <div className="list-view-item">
-            <div className="list-view-checkbox-wrapper">
+        <tr className="list-view-row">
+            <td>
                 <input
                     type="checkbox"
-                    className="list-view-checkbox"
+                    className="trial-checkbox"
                     onChange={() => handleSelectItems(data)}
                 />
-            </div>
-            <div className="list-view-id">#{trialId}</div>
-            <div className="list-view-icon-text">
-                <span className="list-view-icon oncology-icon">
-                    {therapeuticArea}
-                </span>
-            </div>
-            <div className="list-view-text">{diseaseType}</div>
-            <div className="list-view-text">{primaryDrugs}</div>
-            <div className={`list-view-status status ${status}`}>{status}</div>
-            <div className="list-view-text">{sponsorCollaborators}</div>
-            <div className="list-view-text">{trialPhase}</div>
-        </div>
+            </td>
+            {visibleColumns.map((columnKey) => {
+                const column = columnConfig[columnKey];
+                if (!column) return null;
+
+                return (
+                    <td key={columnKey} className={column.className}>
+                        {renderCellContent(columnKey, column)}
+                    </td>
+                );
+            })}
+        </tr>
     );
 };
