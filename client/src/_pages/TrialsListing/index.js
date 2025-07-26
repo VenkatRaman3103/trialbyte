@@ -1085,7 +1085,7 @@ export const TrialsListing = () => {
                             )}
                             {activeModal === "favorites" && (
                                 <FavoriteQueriesModal
-                                    favorites={favoriteQueriesData?.data || []}
+                                    favorites={favTitlesData}
                                     onLoadQuery={handleLoadQuery}
                                     onDeleteQuery={handleDeleteQuery}
                                     onToggleFavorite={handleToggleFavorite}
