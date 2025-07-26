@@ -1,6 +1,5 @@
 import "./index.scss";
 
-// Favorite Queries Modal Component
 export const FavoriteQueriesModal = ({ favorites }) => {
     if (!favorites || favorites.length === 0) {
         return (
@@ -16,6 +15,11 @@ export const FavoriteQueriesModal = ({ favorites }) => {
             {favorites.map((title) => (
                 <FavoriteTitlesItems data={title} />
             ))}
+            <div className="favorite-queries-list-cta-container">
+                <div className="favorite-queries-btn remove">remove</div>
+                <div className="favorite-queries-btn open">open</div>
+                <div className="favorite-queries-btn export">export</div>
+            </div>
         </div>
     );
 };

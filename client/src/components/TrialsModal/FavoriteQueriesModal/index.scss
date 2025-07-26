@@ -9,6 +9,10 @@ $status-open: #28a745;
 $status-closed: #6f42c1;
 $status-active: #007bff;
 
+$cta-btn-bg-inactive: #f1f1f1;
+$cta-btn-bg-active: #204b73;
+
+
 .favorite-queries-list {
     .list-view-item {
 
@@ -146,4 +150,27 @@ $status-active: #007bff;
         }
     }
 
+}
+
+.favorite-queries-list-cta-container {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: end;
+    gap: 20px;
+
+    .favorite-queries-btn {
+        padding: 10px 20px;
+        background-color: $cta-btn-bg-inactive;
+        border-radius: 7px;
+        color: $cta-btn-bg-active;
+        font-weight: bold;
+
+        cursor: pointer;
+
+        &:hover {
+            color: $cta-btn-bg-inactive;
+            background-color: $cta-btn-bg-active ;
+        }
+    }
 }
