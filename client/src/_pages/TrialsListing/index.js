@@ -703,7 +703,7 @@ export const TrialsListing = () => {
             </div>
 
             {activeMode === "tabs" ? (
-                <TrialsTabs selectedItems={selectedItems} />
+                <TrialsTabs />
             ) : (
                 <>
                     <div className="listing-container">

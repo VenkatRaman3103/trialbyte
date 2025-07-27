@@ -1,0 +1,224 @@
+$accent-color: #204b73;
+
+.trial-page-container {
+    min-height: 100vh;
+    height: 100%;
+    width: 100%;
+
+    .trial-page-tabs-container {
+        width: 100%;
+        display: flex;
+
+        justify-content: start;
+
+        .trial-page-tab {
+            min-width: 80px;
+            padding: 10px 10px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            border-top-left-radius: 10px;
+            border-top-right-radius: 10px;
+
+            &.active {
+                background-color: $accent-color;
+                color: white;
+            }
+        }
+    }
+
+    .trial-content-container {
+        width: 100%;
+        height: 100%;
+
+        .trial-content-header-container {
+            height: 100px;
+            width: 100%;
+
+            background-color: $accent-color;
+
+            display: flex;
+            align-items: center;
+
+            padding-left: 40px;
+
+            border-bottom-left-radius: 10px;
+            border-bottom-right-radius: 10px;
+            border-top-right-radius: 10px;
+
+            .trial-content-heading {
+                color: white;
+                font-size: 18px;
+            }
+        }
+
+
+        .trial-content-body-container {
+            width: 100%;
+            height: 100%;
+            border-radius: 10px;
+            border: 1px solid #a1bdd6;
+
+            margin-top: 20px;
+            padding-bottom: 20px;
+
+            /* overview section*/
+            .trial-content-overview-section {
+                width: 100%;
+                height: 100%;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+
+                .trial-content-overview-section-header {
+                    width: 100%;
+                    height: 60px;
+
+                    display: flex;
+                    flex-direction: row;
+                    justify-content: space-around;
+                    align-items: center;
+
+                    background-color: #c3e9fb;
+                    border-top-left-radius: 10px;
+                    border-top-right-radius: 10px;
+
+                    .overview-section-left {
+                        height: 100%;
+                        width: 50%;
+                        display: flex;
+                        align-items: center;
+                        gap: 50px;
+
+                        .overview-section-heading {
+                            font-size: 20px;
+                            font-weight: 600;
+                            padding: 20px;
+                        }
+
+                        .overview-section-divider {
+                            height: 100%;
+                            width: 1px;
+
+                            background-color: #a1bdd6;
+                        }
+
+                        .overview-section-status-container {
+                            height: 100%;
+                            display: flex;
+                            align-items: center;
+                            gap: 10px;
+
+                            .overview-section-status-laber {
+                                font-size: 18px;
+                                font-weight: 600;
+                                color: $accent-color;
+                            }
+
+                            .overview-section-status-button {
+                                padding: 7px 15px;
+                                background-color: $accent-color;
+                                color: white;
+                                border-radius: 7px;
+                                font-size: 18px;
+                                font-weight: 600;
+                            }
+                        }
+                    }
+
+                    .overview-section-right {
+                        width: 50%;
+                        display: flex;
+                        align-items: center;
+                        justify-content: end;
+                        gap: 50px;
+                        padding-right: 20px;
+
+                        .overview-section-endpoint-container {
+                            display: flex;
+                            align-items: center;
+
+                            gap: 20px;
+
+                            .overview-section-endpoint-laber {
+                                font-size: 18px;
+                                font-weight: 600;
+                                color: $accent-color;
+                            }
+
+                            .overview-section-endpoint-toggle {
+                                width: 40px;
+                                height: 20px;
+                                border-radius: 100px;
+                                padding: 1px;
+                                background-color: green;
+
+                                padding: 2px;
+
+                                display: flex;
+                                align-items: center;
+                                justify-content: start;
+
+                                &.active {
+                                    justify-content: end;
+
+                                }
+
+                                .overview-section-endpoint-toggle-mark {
+                                    height: 16px;
+                                    width: 16px;
+                                    background-color: white;
+
+                                    border-radius: 100px;
+                                }
+                            }
+                        }
+
+                        .overview-section-result-container {
+                            display: flex;
+                            align-items: center;
+                            gap: 10px;
+
+                            .overview-section-result-laber {
+                                font-size: 18px;
+                                font-weight: 600;
+                                color: $accent-color;
+                            }
+
+                            .overview-section-result-toggle-btn-container {
+                                height: 30px;
+                                width: 80px;
+                                display: flex;
+                                border-radius: 3px;
+                                border: 1px solid black;
+                                align-items: center;
+
+
+                                .overview-section-result-toggle-btn {
+                                    width: 50%;
+                                    height: 100%;
+                                    border-right: 1px solid black;
+
+                                    display: flex;
+                                    align-items: center;
+                                    justify-content: center;
+
+                                    &.active {
+                                        background-color: green;
+                                        color: white;
+                                    }
+
+                                    &:last-child {
+                                        border-right: none;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
