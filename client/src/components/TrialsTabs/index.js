@@ -105,6 +105,31 @@ export const TrialsTabs = () => {
                             </div>
                         </div>
                     </div>
+
+                    {/* banner section */}
+                    <div className="trial-content-banner-section">
+                        <div class="trial-content-banner-top">
+                            <div class="trial-content-banner-heading">
+                                Therapeutic Area :
+                            </div>
+                            <div className="trial-content-banner-tags">
+                                <div class="trial-content-banner-tag">some</div>
+                            </div>
+                        </div>
+                        <div class="trial-content-banner-bottom">
+                            <div class="trial-content-banner-heading">
+                                Trial Identifier :
+                            </div>
+                            <div className="trial-content-banner-tags">
+                                <div class="trial-content-banner-tag">some</div>
+                                <div class="trial-content-banner-tag">some</div>
+                                <div class="trial-content-banner-tag">some</div>
+                                <div class="trial-content-banner-tag">some</div>
+                                <div class="trial-content-banner-tag">some</div>
+                                <div class="trial-content-banner-tag">some</div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

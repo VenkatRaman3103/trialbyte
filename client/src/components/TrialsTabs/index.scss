@@ -219,6 +219,59 @@ $accent-color: #204b73;
                     }
                 }
             }
+
+            /* banner */
+            .trial-content-banner-section {
+                width: 100%;
+                height: 150px;
+
+                background-color: #5a7792;
+
+                display: flex;
+                flex-direction: column;
+                justify-content: space-around;
+
+                padding-right: 30px;
+                padding-left: 30px;
+
+                .trial-content-banner-heading {
+                    font-size: 18px;
+                    font-weight: 600;
+                    color: white;
+
+                    min-width: 170px;
+                }
+
+                .trial-content-banner-tags {
+                    width: 100%;
+                    display: flex;
+                    flex-wrap: wrap;
+
+                    gap: 10px;
+
+                    .trial-content-banner-tag {
+                        background-color: white;
+                        padding: 8px 20px;
+                        border-radius: 10px;
+
+                        font-size: 18px;
+                        font-weight: 600;
+                        color: $accent-color;
+                    }
+                }
+
+                .trial-content-banner-top {
+                    width: 100%;
+                    display: flex;
+                    align-items: center;
+                }
+
+                .trial-content-banner-bottom {
+                    display: flex;
+                    flex-direction: column;
+                    gap: 10px;
+                }
+            }
         }
     }
 }
