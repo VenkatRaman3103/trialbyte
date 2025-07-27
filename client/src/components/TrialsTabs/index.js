@@ -847,17 +847,14 @@ const StudyPublication = () => {
                         Source :
                     </span>{" "}
                     PubMed
-                    <span className="studyPublication-infoIcon">
-                        &#x2b; {/* Plus sign icon */}
-                    </span>{" "}
                 </div>
             </div>
 
-            <h2 className="studyPublication-title">
+            <div className="studyPublication-title">
                 A Multicenter Randomized Phase III Study of Single Agent
                 Efficacy and Optimal Combination Sequence of Everolimus and
                 Pasireotide LAR in Advanced Thyroid Cancer.
-            </h2>
+            </div>
         </div>
     );
 };
