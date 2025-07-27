@@ -684,3 +684,131 @@ $accent-color: #204b73;
         min-width: unset;
     }
 }
+
+.overview-section-endpoint-container {
+    display: flex;
+    align-items: center;
+
+    gap: 20px;
+
+    .overview-section-endpoint-laber {
+        font-size: 18px;
+        font-weight: 600;
+        color: $accent-color;
+    }
+
+    .overview-section-endpoint-toggle {
+        width: 40px;
+        height: 20px;
+        border-radius: 100px;
+        padding: 1px;
+        background-color: green;
+
+        padding: 2px;
+
+        display: flex;
+        align-items: center;
+        justify-content: start;
+
+        &.active {
+            justify-content: end;
+
+        }
+
+        .overview-section-endpoint-toggle-mark {
+            height: 16px;
+            width: 16px;
+            background-color: white;
+
+            border-radius: 100px;
+        }
+    }
+}
+
+.trial-outcome-container {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+
+    grid-template-areas: "left right";
+
+    .trial-outcome-left-container {
+        grid-area: "left";
+
+        padding: 20px;
+        margin: 20px;
+        border-radius: 10px;
+        border: 1px solid #e0e0e0;
+
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+
+        .trial-outcome-below-endpoint {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+
+            .trial-outcome-right-heading {
+                font-size: 18px;
+                font-weight: 600;
+                color: $accent-color;
+            }
+
+            .trial-outcome-right-tag {
+                padding: 10px 20px;
+                background-color: green;
+                color: white;
+                border-radius: 10px;
+            }
+        }
+    }
+
+    .trial-outcome-right-container {
+        grid-area: "right";
+
+        padding: 20px;
+        margin-top: 20px;
+        margin-bottom: 20px;
+        margin-right: 20px;
+        border-radius: 10px;
+        border: 1px solid #e0e0e0;
+
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+
+        .trial-outcome-right-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            .trial-outcome-right-heading {
+                font-size: 18px;
+                font-weight: 600;
+                color: $accent-color;
+            }
+
+            .trial-outcome-right-tag {
+                background-color: #f0f0f0;
+                font-size: 14px;
+                font-weight: 600;
+                padding: 8px 15px;
+                border-radius: 10px;
+            }
+        }
+
+        .trial-outcome-right-cta-container {
+            width: 100%;
+            display: flex;
+            justify-content: end;
+            gap: 10px;
+
+            .trial-outcome-right-cta-btn {
+                padding: 8px 15px;
+                border-radius: 10px;
+                background-color: #204b73;
+                color: white;
+            }
+        }
+    }
+}

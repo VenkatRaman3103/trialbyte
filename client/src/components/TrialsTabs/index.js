@@ -148,6 +148,59 @@ export const TrialsTabs = () => {
 
                     {/* content section */}
                     <div className="trial-contents-section">
+                        <Section heading={"trial-contents-section"}>
+                            <div className="trial-outcome-container">
+                                <div className="trial-outcome-left-container">
+                                    <div className="overview-section-endpoint-container">
+                                        <div className="overview-section-endpoint-laber">
+                                            Results available
+                                        </div>
+                                        <div
+                                            className={`overview-section-endpoint-toggle  ${activeTrial.endpointsMet == "true" ? "active" : ""}`}
+                                        >
+                                            <div
+                                                className={`overview-section-endpoint-toggle-mark`}
+                                            ></div>
+                                        </div>
+                                    </div>
+
+                                    <div className="trial-outcome-below-endpoint">
+                                        <div className="trial-outcome-right-heading">
+                                            Trial Outcome :
+                                        </div>
+                                        <div className="trial-outcome-right-tag">
+                                            Completed, Primary endpoints met
+                                        </div>
+                                    </div>
+                                </div>
+                                <div className="trial-outcome-right-container">
+                                    <div className="trial-outcome-right-header">
+                                        <div className="trial-outcome-right-heading">
+                                            Trial Outcome Reference
+                                        </div>
+                                        <div className="trial-outcome-right-tag">
+                                            April 2, 2021
+                                        </div>
+                                    </div>
+                                    <div className="trial-outcome-right-content">
+                                        Multicenter 3-arm Trial to Evaluate the
+                                        Efficacy and Safety of Pasireotide LAR
+                                        or Everolimus Alone or in Combination in
+                                        Patients With Well Differentiated
+                                        Neuroendocrine Carcinoma of the Lung and
+                                        Thymus - LUNA Trial.
+                                    </div>
+                                    <div className="trial-outcome-right-cta-container">
+                                        <div className="trial-outcome-right-cta-btn">
+                                            View source
+                                        </div>
+                                        <div className="trial-outcome-right-cta-btn">
+                                            Attachments
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </Section>
                         <Content>
                             <h1>Scientific Title </h1>
                             <p>
@@ -434,7 +487,7 @@ export const Boxes = ({ description, heading }) => {
 
 const ClinicalTrialTimeline = () => {
     const [openCards, setOpenCards] = useState({
-        card1: true, // CT.gov card is open by default
+        card1: true,
         card2: false,
         card3: false,
     });
