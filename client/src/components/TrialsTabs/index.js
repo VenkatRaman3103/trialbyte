@@ -4,6 +4,7 @@ import { useQuery } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
 import { Download, FileText, X, Plus } from "lucide-react";
 import "./index.scss";
+import { ClinicalTrialTimelineWithImage } from "./ClinicalTrialTimelineWithImage";
 
 export const TrialsTabs = () => {
     const { data: data } = useQuery({
@@ -148,6 +149,9 @@ export const TrialsTabs = () => {
 
                     {/* content section */}
                     <div className="trial-contents-section">
+                        <Section>
+                            <ClinicalTrialTimelineWithImage />
+                        </Section>
                         <Section>
                             <StudyPublication />
                         </Section>
