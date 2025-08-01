@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import { Download, FileText, X, Plus } from "lucide-react";
 import "./index.scss";
 import { ClinicalTrialTimelineWithImage } from "./ClinicalTrialTimelineWithImage";
+import { some } from "./dummydata";
 
 export const TrialsTabs = () => {
     const { data: data } = useQuery({
@@ -149,16 +150,275 @@ export const TrialsTabs = () => {
 
                     {/* content section */}
                     <div className="trial-contents-section">
-                        <Section>
-                            <ClinicalTrialTimelineWithImage />
+                        <Content>
+                            <h1>Scientific Title</h1>
+                            <p>{activeTrial.title}</p>
+                        </Content>
+
+                        <Content>
+                            <h1>Summary</h1>
+                            <p>{activeTrial.summary}</p>
+                        </Content>
+
+                        <Content>
+                            <h1>Key Information</h1>
+                            <table className="fixed-width-heading">
+                                <tr>
+                                    <td className="heading">Disease Type :</td>
+                                    <td>{activeTrial.diseaseType}</td>
+                                </tr>
+
+                                <tr>
+                                    <td className="heading">
+                                        Patient Segment :
+                                    </td>
+                                    <td>{activeTrial.patientSegment}</td>
+                                </tr>
+
+                                <tr>
+                                    <td className="heading">Primary Drug :</td>
+                                    <td>{activeTrial.primaryDrugs}</td>
+                                </tr>
+
+                                <tr>
+                                    <td className="heading">
+                                        Secondary Drug :
+                                    </td>
+                                    <td>{activeTrial.otherDrugs}</td>
+                                </tr>
+                                <tr>
+                                    <td className="heading">Trial Phase :</td>
+                                    <td>{activeTrial.otherDrugs}</td>
+                                </tr>
+                            </table>
+                        </Content>
+                        <Content>
+                            <h1>Countries</h1>
+                            <div className="tags-container">
+                                <div className="tag">some</div>
+                                <div className="tag">some</div>
+                                <div className="tag">some</div>
+                                <div className="tag active">
+                                    {activeTrial.countries}
+                                </div>
+                                <div className="tag">some</div>
+                                <div className="tag">some</div>
+                            </div>
+                        </Content>
+                        <Content>
+                            <div>
+                                <p>
+                                    <span>Region :</span>
+                                    {activeTrial.region}
+                                </p>
+
+                                <p>
+                                    <span>Sponsors & Collaborators :</span>
+                                    {activeTrial.sponsorCollaborators}
+                                </p>
+
+                                <p>
+                                    <span>Sponsor Field of Activity :</span>
+                                    {activeTrial.sponsorFieldOfActivity}
+                                </p>
+                                <p>
+                                    <span>Associated CRO :</span>
+                                    {activeTrial.associatedCRO}
+                                </p>
+
+                                <p>
+                                    <span>Trial Tags :</span>
+                                    {activeTrial.trialTags}
+                                </p>
+
+                                <p>
+                                    <span>Source Links :</span>
+                                    <ul>
+                                        {activeTrial.referenceLinks &&
+                                            activeTrial?.referenceLinks?.map(
+                                                (item) => <li>{item}</li>,
+                                            )}
+                                    </ul>
+                                </p>
+                                <p>
+                                    <span>Trial Record Status : </span>
+                                    {activeTrial.trialRecordStatus}
+                                </p>
+                            </div>
+                        </Content>
+                        <Section heading={"Objectives"}>
+                            <Content>
+                                <h1>Purpose of the trial</h1>
+                                <p>{activeTrial.purposeOfTheTrial}</p>
+                            </Content>
+                            <Content>
+                                <h1>Primary Outcome</h1>
+                                <div>
+                                    <h1>Outcome Measure :</h1>
+                                    <p>{activeTrial.purposeOfTheTrial}</p>
+                                </div>
+                                <div>
+                                    <h1>Measure Description : </h1>
+                                    <p>{activeTrial.primaryOutcomeMeasure}</p>
+                                </div>
+                                <div>
+                                    <h1>Time Frame :</h1>
+                                    <p>{activeTrial.timingReference}</p>
+                                </div>
+                            </Content>
+
+                            <Content>
+                                <h1>Other Outcome : 1</h1>
+                                <div>
+                                    <h1>Outcome Measure :</h1>
+                                    <p>{activeTrial.otherOutcomeMeasure}</p>
+                                </div>
+                                <div>
+                                    <h1>Measure Description : </h1>
+                                    <p>{activeTrial.otherOutcomeMeasure}</p>
+                                </div>
+                                <div>
+                                    <h1>Time Frame :</h1>
+                                    <p>{activeTrial.otherOutcomeMeasure}</p>
+                                </div>
+                            </Content>
                         </Section>
-                        <Section>
-                            <StudyPublication />
+                        <Section heading={"Treatment Plan"}>
+                            <Content>
+                                <h1>Study Design Keywords </h1>
+                                <div className="tags-container">
+                                    <div className="tag">some</div>
+                                    <div className="tag">some</div>
+                                    <div className="tag">some</div>
+                                    <div className="tag active">
+                                        {activeTrial.studyDesignKeywords}
+                                    </div>
+                                    <div className="tag">some</div>
+                                    <div className="tag">some</div>
+                                </div>
+                            </Content>
+                            <Content>
+                                <h1>Study Design</h1>
+                                <div>
+                                    <p>
+                                        <span>Primary Purpose :</span>
+                                        Treatment
+                                    </p>
+
+                                    <p>
+                                        <span>Allocation :</span>
+                                        Randomized
+                                    </p>
+
+                                    <p>
+                                        <span>Interventional Model :</span>
+                                        Single Group Assignment
+                                    </p>
+                                    <p>
+                                        <span>Masking :</span>
+                                        None (Open Label)
+                                    </p>
+
+                                    <p>
+                                        This was a prospective, multicenter,
+                                        randomized, open-label, 3-arm, phase II
+                                        study with a single-stage design in each
+                                        arm.
+                                    </p>
+                                </div>
+                            </Content>
+
+                            <Content>
+                                <h1>Treatment Regimen</h1>
+                                <p>Subjects were randomized as follows :</p>
+                                <div>
+                                    <p>
+                                        <span>Pasireotide LAR :</span>
+                                        <div>
+                                            Pasireotide long acting release
+                                            (LAR) 60 mg will be administered as
+                                            an intra muscular (i.m.) depot
+                                            injection once every 28 days
+                                            starting on Day 1
+                                        </div>
+                                    </p>
+                                    <p>
+                                        <span>Everolimus :</span>
+                                        <div>
+                                            Everolimus 10 mg taken orally (p.o)
+                                            once daily starting on Day 1
+                                        </div>
+                                    </p>
+                                    <p>
+                                        <span>
+                                            Pasireotide LAR and Everolimus
+                                            Combination :{" "}
+                                        </span>
+                                        <div>
+                                            Pasireotide LAR 60 mg i.m. injected
+                                            once every 28 days + Everolimus 10
+                                            mg p.o. daily starting on Day 1
+                                        </div>
+                                    </p>
+                                </div>
+                            </Content>
+                            <p className="extra">Number of arms: 3</p>
                         </Section>
-                        <Section>
-                            <TrialPublish />
+
+                        <Section heading={"Heading"} column="double">
+                            <div className="left">
+                                <Content>
+                                    <h1>Inclusion Criteria</h1>
+                                    <ul>
+                                        {activeTrial.inclusionCriteria &&
+                                            activeTrial.inclusionCriteria.map(
+                                                (item) => <li>{item}</li>,
+                                            )}
+                                    </ul>
+                                </Content>
+                                <Content>
+                                    <h1>Exclusion Criteria</h1>
+                                    <ul>
+                                        {activeTrial.exclusionCriteria &&
+                                            activeTrial.exclusionCriteria.map(
+                                                (item) => <li>{item}</li>,
+                                            )}
+                                    </ul>
+                                </Content>
+                            </div>
+                            <div className="right">
+                                <Boxes
+                                    heading={"Ages Eligible for Study "}
+                                    description={activeTrial.ageFrom}
+                                />
+                                <Boxes
+                                    heading={"Sexes Eligible for Study "}
+                                    description={activeTrial.sex}
+                                />
+                                <Boxes
+                                    heading={"Healthy Volunteers"}
+                                    description={activeTrial.healthyVolunteers}
+                                />
+                                <Boxes
+                                    heading={"Target No of Volunteers"}
+                                    description={
+                                        activeTrial.targetNoOfVolunteers
+                                    }
+                                />
+                                <Boxes
+                                    heading={"Actual enrolled Volunteers"}
+                                    description={
+                                        activeTrial.actualEnrolledVolunteers
+                                    }
+                                />
+                            </div>
                         </Section>
-                        <Section heading={"trial-contents-section"}>
+
+                        <Section heading={"TimeLine"}>
+                            <ClinicalTrialTimeline data={some} />
+                        </Section>
+
+                        <Section heading={"Outcome"}>
                             <div className="trial-outcome-container">
                                 <div className="trial-outcome-left-container">
                                     <div className="overview-section-endpoint-container">
@@ -166,7 +426,7 @@ export const TrialsTabs = () => {
                                             Results available
                                         </div>
                                         <div
-                                            className={`overview-section-endpoint-toggle  ${activeTrial.endpointsMet == "true" ? "active" : ""}`}
+                                            className={`overview-section-endpoint-toggle  ${activeTrial.resultsAvailable == "true" ? "active" : ""}`}
                                         >
                                             <div
                                                 className={`overview-section-endpoint-toggle-mark`}
@@ -179,7 +439,7 @@ export const TrialsTabs = () => {
                                             Trial Outcome :
                                         </div>
                                         <div className="trial-outcome-right-tag">
-                                            Completed, Primary endpoints met
+                                            {activeTrial.trialOutcome}
                                         </div>
                                     </div>
                                 </div>
@@ -193,12 +453,7 @@ export const TrialsTabs = () => {
                                         </div>
                                     </div>
                                     <div className="trial-outcome-right-content">
-                                        Multicenter 3-arm Trial to Evaluate the
-                                        Efficacy and Safety of Pasireotide LAR
-                                        or Everolimus Alone or in Combination in
-                                        Patients With Well Differentiated
-                                        Neuroendocrine Carcinoma of the Lung and
-                                        Thymus - LUNA Trial.
+                                        {activeTrial.trialOutcomeReference}
                                     </div>
                                     <div className="trial-outcome-right-cta-container">
                                         <div className="trial-outcome-right-cta-btn">
@@ -210,6 +465,9 @@ export const TrialsTabs = () => {
                                     </div>
                                 </div>
                             </div>
+                        </Section>
+                        <Section heading={"Published Results"}>
+                            <TrialPublish data={some} />
                         </Section>
                         <Content>
                             <h1>Scientific Title </h1>
@@ -410,55 +668,13 @@ export const TrialsTabs = () => {
                                 </table>
                             </Content>
                         </Section>
-                        <Section heading={"Heading"} column="double">
-                            <div className="left">
-                                <Content>
-                                    <h1>Key Information</h1>
-                                    <table className="fixed-width-heading">
-                                        <tr>
-                                            <td className="heading">some:</td>
-                                            <td>some</td>
-                                        </tr>
 
-                                        <tr>
-                                            <td className="heading">some:</td>
-                                            <td>some</td>
-                                        </tr>
-
-                                        <tr>
-                                            <td className="heading">some:</td>
-                                            <td>some</td>
-                                        </tr>
-
-                                        <tr>
-                                            <td className="heading">some:</td>
-                                            <td>some</td>
-                                        </tr>
-                                    </table>
-                                </Content>
-                            </div>
-                            <div className="right">
-                                <Boxes
-                                    heading={"Ages Eligible for Study"}
-                                    description={
-                                        "Adult patients with advanced (unresectable or metastatic) neuroendocrine carcinoma of the lung and thymus"
-                                    }
-                                />
-                                <Boxes
-                                    heading={"Ages Eligible for Study"}
-                                    description={
-                                        "Adult patients with advanced (unresectable or metastatic) neuroendocrine carcinoma of the lung and thymus"
-                                    }
-                                />
-                                <Boxes
-                                    heading={"Ages Eligible for Study"}
-                                    description={
-                                        "Adult patients with advanced (unresectable or metastatic) neuroendocrine carcinoma of the lung and thymus"
-                                    }
-                                />
-                            </div>
+                        <Section>
+                            <ClinicalTrialTimelineWithImage />
                         </Section>
-                        <ClinicalTrialTimeline />
+                        <Section>
+                            <StudyPublication />
+                        </Section>
                     </div>
                 </div>
             </div>
@@ -495,7 +711,7 @@ export const Boxes = ({ description, heading }) => {
     );
 };
 
-const ClinicalTrialTimeline = () => {
+const ClinicalTrialTimeline = ({ data }) => {
     const [openCards, setOpenCards] = useState({
         card1: true,
         card2: false,
@@ -532,13 +748,13 @@ const ClinicalTrialTimeline = () => {
                     <tbody>
                         <tr>
                             <td className="category-cell">Actual</td>
-                            <td>08/16/2013</td>
-                            <td>68.4</td>
-                            <td>05/10/2019</td>
-                            <td>9.3</td>
+                            <td>{data.startDateActual}</td>
+                            <td>{data.inclusionPeriodActual}</td>
+                            <td>{data.enrollmentClosedDateActual}</td>
                             <td>02/10/2020</td>
-                            <td>20.1</td>
-                            <td>10/13/2021</td>
+                            <td>{data.overallDurationToComplete}</td>
+                            <td>{data.overallDurationToPublishResult}</td>
+                            <td>{data.resultPublishedDateActual}</td>
                         </tr>
                     </tbody>
                 </table>
@@ -739,7 +955,7 @@ const ClinicalTrialTimeline = () => {
     );
 };
 
-const TrialPublish = () => {
+const TrialPublish = ({ data }) => {
     return (
         <div className="trialPublish-container">
             <div className="trialPublish-card">
@@ -748,7 +964,7 @@ const TrialPublish = () => {
                         <span className="trialPublish-header-label">
                             Date :
                         </span>{" "}
-                        October 23, 2021
+                        {data.resultPublishedDateActual}
                     </div>
                     <div>
                         <span className="trialPublish-header-label">
@@ -759,19 +975,15 @@ const TrialPublish = () => {
                     <div>
                         <span className="trialPublish-header-label">
                             Source :
-                        </span>{" "}
-                        PubMed
+                        </span>
+                        {data.publications}
                         <span className="trialPublish-infoIcon">
                             &#9432;
                         </span>{" "}
                     </div>
                 </div>
 
-                <h2 className="trialPublish-title">
-                    Efficacy and safety of long-acting pasireotide or everolimus
-                    alone or in combination in patients with advanced carcinoids
-                    of the lung and thymus (LUNA):
-                </h2>
+                <h2 className="trialPublish-title">{data.publications}</h2>
                 <div className="trialPublish-content">
                     <p className="trialPublish-authors">
                         Piero Ferolla, Maria Pia Brizzi, Tim Meyer, Wasat
