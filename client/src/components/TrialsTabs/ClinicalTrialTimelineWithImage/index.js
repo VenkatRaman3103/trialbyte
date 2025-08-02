@@ -3,7 +3,7 @@ import "./index.scss";
 import { useState } from "react";
 import Image from "next/image";
 
-export const ClinicalTrialTimelineWithImage = () => {
+export const ClinicalTrialTimelineWithImage = ({ data }) => {
     const [openCards, setOpenCards] = useState({
         card1: true,
         card2: false,
