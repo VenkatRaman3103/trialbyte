@@ -438,47 +438,91 @@ export const DrugTabs = () => {
                         </button>
                     </div>
                 </div>
-                <NewsCard />
+                <div className="content-container">
+                    <div className="news-container">
+                        {/* First Card (Expanded) */}
+                        <div className="news-card">
+                            <div className="news-header expanded">
+                                <strong>03–April–2024:</strong> New Phase 3 data
+                                evaluating everolimus (RAD0001), an
+                                investigational TROP2-directed antibody–drug
+                                conjugate, in previously treated locally
+                                recurrent neuroendocrine cancer.
+                                <button className="toggle-btn">
+                                    <i className="fas fa-minus"></i>
+                                </button>
+                            </div>
+                        </div>
+
+                        {/* Second Card (Collapsed) */}
+                        <div className="news-card">
+                            <div className="news-header">
+                                <strong>21–October–2020:</strong> A Phase III
+                                Study of Safety and Efficacy of Pasireotide LAR
+                                or Everolimus Alone or in Combination in
+                                Patients With Well Differentiated Neuroendocrine
+                                Carcinoma of the Lung and Thymus.
+                                <button
+                                    className="toggle-btn"
+                                    onClick={() => setExpanded(true)}
+                                >
+                                    <i className="fas fa-plus"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <ReportCard />
+            </div>
+
+            <div className="section-container">
+                <div className="section-header-container">
+                    Licensing & Marketing
+                </div>
+                <LegalSectionCard />
             </div>
         </div>
     );
 };
 
-const NewsCard = () => {
-    const [expanded, setExpanded] = useState(true);
+const ReportCard = () => {
+    const [isOpen, setIsOpen] = useState(true);
 
     return (
-        <div className="news-container">
-            {/* First Card (Expanded) */}
-            <div className="news-card">
-                <div className="news-header expanded">
-                    <strong>03–April–2024:</strong> New Phase 3 data evaluating
-                    everolimus (RAD0001), an investigational TROP2-directed
-                    antibody–drug conjugate, in previously treated locally
-                    recurrent neuroendocrine cancer.
+        <div className="report-container">
+            {/* Expanded card */}
+            <div className="report-card">
+                <div className={`report-header ${isOpen ? "active" : ""}`}>
+                    <div className="report-tags">
+                        <span className="tag">Date : 15, Apr, 2023</span>
+                        <span className="tag">Company Presentation</span>
+                    </div>
                     <button
                         className="toggle-btn"
-                        onClick={() => setExpanded(false)}
+                        onClick={() => setIsOpen(false)}
                     >
                         <i className="fas fa-minus"></i>
                     </button>
                 </div>
-                {expanded && (
+
+                <div className="report-subtitle">
+                    Development report from CEO on our R&D strategies and
+                    Pipeline updates
+                </div>
+
+                {isOpen && (
                     <>
-                        <p className="news-body">
-                            Merck (NYSE: MRK), known as MSD outside of the
-                            United States and Canada, today announced that new
-                            data for four approved oncology medicines and four
-                            pipeline candidates in more than 25 types of cancer
-                            will be presented at the 2024 American Society of
-                            Clinical Oncology (ASCO) Annual Meeting in Chicago
-                            from May 31–June 4. New data being shared at the
-                            meeting showcase the company’s continued progress to
-                            advance clinical research for Merck’s broad
-                            portfolio and diverse pipeline of investigational
-                            candidates.
-                        </p>
-                        <div className="news-actions">
+                        <div className="report-image-wrapper">
+                            <Image
+                                src="/map_image.svg"
+                                alt="Pipeline Table"
+                                className="pipeline-image"
+                                width={1024}
+                                height={400}
+                            />
+                        </div>
+
+                        <div className="report-actions">
                             <button className="action-button">
                                 View source
                             </button>
@@ -493,21 +537,67 @@ const NewsCard = () => {
                 )}
             </div>
 
-            {/* Second Card (Collapsed) */}
-            <div className="news-card">
-                <div className="news-header">
-                    <strong>21–October–2020:</strong> A Phase III Study of
-                    Safety and Efficacy of Pasireotide LAR or Everolimus Alone
-                    or in Combination in Patients With Well Differentiated
-                    Neuroendocrine Carcinoma of the Lung and Thymus.
+            {/* Collapsed card */}
+            <div className="report-card">
+                <div className="report-header">
+                    <div className="report-tags">
+                        <span className="tag">Date : 16 May 2022</span>
+                        <span className="tag">SEC filing</span>
+                    </div>
                     <button
                         className="toggle-btn"
-                        onClick={() => setExpanded(true)}
+                        onClick={() => setIsOpen(true)}
                     >
                         <i className="fas fa-plus"></i>
                     </button>
                 </div>
+                <div className="report-subtitle">
+                    SEC filings for the year 2022 Q1
+                </div>
             </div>
+        </div>
+    );
+};
+
+const sections = [
+    {
+        title: "Agreement",
+        content: `The companies will globally develop and commercialize Seattle Genetics’ ladiratuzumab vedotin, an investigational antibody–drug conjugate (ADC) targeting LIV–1, which is currently in phase 2 clinical trials for breast cancer and other solid tumors. The collaboration will pursue a broad joint development program evaluating ladiratuzumab vedotin as monotherapy and in combination with Merck’s anti–PD–1 therapy KEYTRUDA (pembrolizumab) in triple–negative breast cancer, hormone receptor–positive breast cancer and other LIV–1–expressing solid tumors. Under the terms of the agreement, Seattle Genetics will receive a $600 million upfront payment and Merck will make a $1.0 billion equity investment in 5.0 million shares of Seattle Genetics common stock at a price of $200 per share. In addition, Seattle Genetics is eligible for progress–dependent milestone payments of up to $2.6 billion.`,
+    },
+    {
+        title: "Licensing availability",
+        content: `“We are pleased to partner with Merck, a global leader in cardiovascular care. We believe Merck’s clinical expertise and global scale will help accelerate the development of HRS-5346 and potentially provide more patients with an additional option to reduce their risk of atherosclerosis,” said Dr. Frank Jiang, Executive Vice President and Chief Strategy Officer of Hengrui Pharma.`,
+        withButtons: true,
+    },
+    {
+        title: "Marketing Approvals",
+        content: `On 8 October 2009, orphan designation (EU/3/09/671) was granted by the European Commission to Novartis Europharm Limited, United Kingdom, for pasireotide for the treatment of Cushing's disease. Pasireotide in treatment of Cushing's disease has been authorised in the EU as Signifor since 24 April 2012. The sponsorship was transferred to Novartis Europharm Limited, Ireland, in May 2018. The sponsorship was transferred to Recordati Rare Diseases, France in May 2020.`,
+        withButtons: true,
+    },
+];
+
+const LegalSectionCard = () => {
+    return (
+        <div className="legal-card-container">
+            {sections.map((section, index) => (
+                <div key={index} className="legal-card">
+                    <h4 className="legal-card-title">{section.title} :</h4>
+                    <p className="legal-card-content">{section.content}</p>
+                    {section.withButtons && (
+                        <div className="legal-card-actions">
+                            <button className="action-button">
+                                View source
+                            </button>
+                            <button className="action-button">
+                                Attachments <i className="fas fa-book-open"></i>
+                            </button>
+                            <button className="icon-button">
+                                <i className="fas fa-download"></i>
+                            </button>
+                        </div>
+                    )}
+                </div>
+            ))}
         </div>
     );
 };
