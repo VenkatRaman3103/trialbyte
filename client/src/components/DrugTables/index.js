@@ -481,6 +481,8 @@ export const DrugTabs = () => {
                 </div>
                 <LegalSectionCard />
             </div>
+
+            <LogsSection />
         </div>
     );
 };
@@ -598,6 +600,31 @@ const LegalSectionCard = () => {
                     )}
                 </div>
             ))}
+        </div>
+    );
+};
+
+const LogsSection = () => {
+    return (
+        <div className="logs-container">
+            <div className="logs-header">
+                <h4 className="logs-title">Logs</h4>
+                <div className="logs-alert">
+                    <span>Alert</span>
+                    <i className="fas fa-bell logs-bell-icon"></i>
+                </div>
+            </div>
+
+            <div className="logs-content">
+                <div className="logs-date">
+                    <span className="logs-label">Trial added Date :</span>{" "}
+                    03/26/2025
+                </div>
+                <div className="logs-date">
+                    <span className="logs-label">Last Modified Date :</span>{" "}
+                    03/28/2025
+                </div>
+            </div>
         </div>
     );
 };

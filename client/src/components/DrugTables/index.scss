@@ -551,3 +551,58 @@ tbody tr {
     cursor: pointer;
     padding: 0.4rem;
 }
+
+.logs-container {
+    border: 1px solid #e0e6ed;
+    border-radius: 12px;
+    overflow: hidden;
+    font-family: sans-serif;
+    width: 100%;
+}
+
+.logs-header {
+    background-color: #cdeeff;
+    padding: 0.8rem 1rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logs-title {
+    font-size: 1rem;
+    font-weight: 600;
+    color: #1c1c1c;
+}
+
+.logs-alert {
+    background-color: white;
+    padding: 0.4rem 0.75rem;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-weight: 500;
+    color: #21415f;
+}
+
+.logs-bell-icon {
+    font-size: 1rem;
+}
+
+.logs-content {
+    display: flex;
+    justify-content: space-between;
+    padding: 1rem;
+    font-size: 0.95rem;
+    color: #1c1c1c;
+    flex-wrap: wrap;
+}
+
+.logs-date {
+    font-weight: 500;
+}
+
+.logs-label {
+    color: #21415f;
+    font-weight: 600;
+}
