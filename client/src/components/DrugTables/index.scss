@@ -1,0 +1,391 @@
+.drug-page-container {
+    width: 100%;
+    height: 100%;
+
+    .section-container {
+        width: 100%;
+        height: 100%;
+
+        border-radius: 20px;
+        overflow: hidden;
+        border: 1px solid #E0E0E0;
+
+        .section-header-container {
+            height: 80px;
+            width: 100%;
+            background-color: #c3e9fb;
+
+            display: flex;
+            align-items: center;
+            padding: 0 40px;
+
+            font-size: 20px;
+            font-weight: 600;
+
+            margin-bottom: 20px;
+        }
+    }
+}
+
+.content-container {
+    margin: 20px;
+
+    border: 1px solid #E0E0E0;
+    border-radius: 20px;
+    padding: 20px;
+
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+
+    .content-header-container {
+
+        width: 100%;
+
+        display: flex;
+        align-items: center;
+
+        font-size: 18px;
+        font-weight: 600;
+        color: #2B4863;
+    }
+
+}
+
+.tag {
+    width: fit-content;
+    border: 1px solid #E0E0E0;
+    padding: 10px;
+    border-radius: 10px;
+
+    &.fill {
+        &.bgGreen {
+            background-color: #28b463;
+            color: white;
+        }
+    }
+}
+
+.flex-cotainer {
+    display: flex;
+    gap: 10px;
+
+    &.column {
+        flex-direction: column;
+        gap: 0px;
+    }
+}
+
+.no-border {
+    border: none;
+}
+
+.sub-section {
+    width: calc(50% - 20px);
+    border-radius: 20px;
+    border: 1px solid #E0E0E0;
+    padding: 10px;
+}
+
+.btn-section {
+    width: 100%;
+    display: flex;
+    justify-content: end;
+
+    .btn {
+        width: fit-content;
+        padding: 10px 20px;
+        background-color: #204b73;
+        color: white;
+        border-radius: 10px;
+    }
+}
+
+.content-wraper {
+    display: flex;
+    gap: 25px;
+}
+
+.misc {
+    padding-left: 20px;
+    padding-bottom: 10px;
+}
+
+.container {
+    width: 100%;
+    display: flex;
+    padding: 0 20px;
+    padding-bottom: 20px;
+    gap: 1rem;
+    flex-wrap: wrap;
+}
+
+.card {
+    width: calc(50% - 10px);
+    border: 1px solid #e2e2e2;
+    border-radius: 6px;
+    background: white;
+}
+
+.card-header {
+    background-color: #21415f;
+    color: white;
+    font-weight: bold;
+    padding: 10px 15px;
+    border-top-left-radius: 6px;
+    border-top-right-radius: 6px;
+}
+
+.card-body {
+    display: flex;
+    flex-direction: column;
+}
+
+.option {
+    padding: 10px 15px;
+    border-top: 1px solid #f1f1f1;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: #165d93;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.option:hover {
+    background: #f5faff;
+}
+
+.star {
+    color: #ccc;
+    font-size: 14px;
+}
+
+.preclinical-section {
+    border: 1px solid #dfe3e8;
+    border-radius: 10px;
+    background-color: white;
+    width: 100%;
+    margin: 20px;
+    padding: 20px;
+}
+
+.preclinical-title {
+    color: #21415f;
+    font-size: 1.2rem;
+    margin-bottom: 1rem;
+}
+
+.preclinical-card {
+    border: 1px solid #e3e3e3;
+    border-radius: 10px;
+    padding: 1rem;
+    margin-bottom: 1rem;
+}
+
+.preclinical-description {
+    font-size: 0.95rem;
+    margin-bottom: 1rem;
+}
+
+.preclinical-actions {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+}
+
+.action-button {
+    background-color: #21415f;
+    color: white;
+    border: none;
+    padding: 0.5rem 0.8rem;
+    border-radius: 5px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-size: 0.85rem;
+}
+
+.icon-button {
+    background: none;
+    border: none;
+    color: #21415f;
+    font-size: 1rem;
+    cursor: pointer;
+    padding: 0.4rem;
+}
+
+.clinical-section {
+    width: 100%;
+    padding: 1.5rem;
+    border-radius: 10px;
+}
+
+.clinical-title {
+    font-size: 1.2rem;
+    color: #21415f;
+    margin-bottom: 1rem;
+}
+
+.clinical-table {
+    width: 100%;
+    border-collapse: collapse;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.table-head {
+    background-color: #21415f;
+    color: white;
+    font-weight: 600;
+    padding: 12px 10px;
+    text-align: left;
+}
+
+.table-cell {
+    padding: 12px 10px;
+    border-top: 1px solid #ececec;
+    font-size: 0.95rem;
+    vertical-align: top;
+}
+
+tbody tr {
+    background-color: #f9f9f9;
+}
+
+.pipeline-card {
+    background: white;
+    border: 1px solid #e1e4e8;
+    border-radius: 10px;
+    padding: 1.5rem;
+    width: calc(100% - 40px);
+    margin: 20px;
+}
+
+.pipeline-date {
+    color: #21415f;
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+}
+
+.pipeline-image-wrapper {
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    overflow: hidden;
+    margin-bottom: 1rem;
+}
+
+.pipeline-image {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+.pipeline-actions {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+}
+
+.action-button {
+    background-color: #21415f;
+    color: white;
+    border: none;
+    padding: 0.5rem 0.9rem;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 0.875rem;
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+}
+
+.icon-button {
+    background: none;
+    border: none;
+    color: #21415f;
+    font-size: 1rem;
+    cursor: pointer;
+    padding: 0.4rem;
+}
+
+.news-container {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    width: calc(100%);
+    padding: 20px;
+}
+
+.news-card {
+    width: 100%;
+    background: white;
+    border: 1px solid #dfe3e8;
+    border-radius: 10px;
+}
+
+.news-header {
+    background: transparent;
+    padding: 1rem;
+    font-size: 0.95rem;
+    font-weight: 500;
+    color: #21415f;
+    position: relative;
+    border-radius: 6px;
+}
+
+.news-header.expanded {
+    background-color: #21415f;
+    color: white;
+}
+
+.toggle-btn {
+    background: none;
+    border: none;
+    color: inherit;
+    font-size: 1.1rem;
+    position: absolute;
+    right: 1rem;
+    top: 1.1rem;
+    cursor: pointer;
+}
+
+.news-body {
+    margin: 1rem 0;
+    font-size: 0.95rem;
+    line-height: 1.5;
+    color: #333;
+    padding: 0 20px;
+}
+
+.news-actions {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+    padding: 20px;
+    padding-top: 0px;
+}
+
+.action-button {
+    background-color: #21415f;
+    color: white;
+    border: none;
+    padding: 0.5rem 0.9rem;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 0.875rem;
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+}
+
+.icon-button {
+    background: none;
+    border: none;
+    color: #21415f;
+    font-size: 1rem;
+    cursor: pointer;
+    padding: 0.4rem;
+}
