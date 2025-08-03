@@ -1,4 +1,5 @@
 import { DrugTabs } from "@/components/DrugTables";
+//
 
 export default function Home() {
     return (
