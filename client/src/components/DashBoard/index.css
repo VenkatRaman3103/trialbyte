@@ -1,0 +1,217 @@
+.kpi-dashboard {
+    background: #f9fcff;
+    border-radius: 10px;
+    font-family: Arial, sans-serif;
+    padding: 20px;
+    max-width: 900px;
+    margin: auto;
+}
+
+.kpi-header {
+    background: #cceeff;
+    padding: 10px 20px;
+    font-weight: bold;
+    font-size: 1.2rem;
+    border-radius: 8px 8px 0 0;
+}
+
+.kpi-content {
+    display: flex;
+    flex-wrap: wrap;
+    padding: 20px;
+    gap: 20px;
+    background: #fff;
+    border-radius: 0 0 10px 10px;
+}
+
+.kpi-stats {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    flex: 2;
+}
+
+.kpi-box {
+    background: #f1f9ff;
+    border-radius: 8px;
+    flex: 1 1 45%;
+    min-width: 160px;
+    text-align: center;
+    padding: 20px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+}
+
+.kpi-box h2 {
+    color: #007acc;
+    margin: 0;
+    font-size: 1.8rem;
+}
+
+.kpi-box p {
+    margin: 5px 0 0;
+    font-size: 0.9rem;
+    color: #555;
+}
+
+.kpi-sponsors {
+    flex: 1;
+    min-width: 250px;
+}
+
+.kpi-sponsors h3 {
+    margin-bottom: 10px;
+    font-size: 1.1rem;
+    color: #333;
+}
+
+.sponsor-row {
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px;
+    padding: 10px;
+    background: #f9fcff;
+    border-radius: 6px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+.sponsor-logo-placeholder {
+    background: #d9f0ff;
+    color: #007acc;
+    font-weight: bold;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1rem;
+    margin-right: 10px;
+}
+
+.sponsor-info {
+    flex: 1;
+}
+
+.sponsor-info span {
+    display: block;
+    font-size: 0.75rem;
+    color: #777;
+}
+
+.sponsor-count {
+    text-align: right;
+    font-size: 0.9rem;
+}
+
+.sponsor-count small {
+    display: block;
+    font-size: 0.7rem;
+    color: #aaa;
+}
+
+.trial-dashboard {
+    background: #f9fcff;
+    border-radius: 10px;
+    font-family: Arial, sans-serif;
+    padding: 20px;
+    max-width: 1000px;
+    margin: auto;
+}
+
+.trial-header {
+    background: #cceeff;
+    padding: 10px 20px;
+    font-weight: bold;
+    font-size: 1.2rem;
+    border-radius: 8px 8px 0 0;
+}
+
+.chart-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    gap: 20px;
+    padding: 20px 0;
+}
+
+.chart-box {
+    background: #fff;
+    border-radius: 10px;
+    padding: 10px;
+    border: 1px solid #e3e3e3;
+    text-align: center;
+}
+
+.chart-title {
+    font-size: 0.9rem;
+    color: #888;
+    margin-top: 10px;
+}
+
+.dataset-container {
+    background: #e9f2f9;
+    border-radius: 8px;
+    padding: 16px;
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+.dataset-card {
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    padding: 16px;
+}
+
+.dataset-title {
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 12px;
+}
+
+.dataset-table-wrapper {
+    overflow-x: auto;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+}
+
+.dataset-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
+}
+
+.dataset-table thead {
+    background-color: #184d77;
+    color: white;
+}
+
+.dataset-table th,
+.dataset-table td {
+    padding: 10px;
+    border: 1px solid #ddd;
+    text-align: left;
+}
+
+.dataset-table tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+.dataset-actions {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 12px;
+}
+
+.export-btn {
+    background-color: #184d77;
+    color: white;
+    padding: 8px 16px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+.export-btn:hover {
+    background-color: #133a5c;
+}
