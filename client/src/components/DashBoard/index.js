@@ -24,14 +24,17 @@ import {
     Scatter,
     ZAxis,
 } from "recharts";
+import { Section } from "../TrialsTabs";
 
 export const DashBoard = () => {
     return (
-        <>
+        <div className="dashboard-container">
             <KPIDashboard />
             <TrialDistribution />
-            <DatasetTable />
-        </>
+            <Section heading="Dataset">
+                <DatasetTable />
+            </Section>
+        </div>
     );
 };
 
@@ -470,35 +473,32 @@ const dummyData = Array(10).fill({
 export default function DatasetTable() {
     return (
         <div className="dataset-container">
-            <div className="dataset-card">
-                <h2 className="dataset-title">Dataset</h2>
-                <div className="dataset-table-wrapper">
-                    <table className="dataset-table">
-                        <thead>
-                            <tr>
-                                <th>Therapeutic Area</th>
-                                <th>Disease Type</th>
-                                <th>Trial IDs</th>
-                                <th>Status</th>
-                                <th>Scientific Title</th>
+            <div className="dataset-table-wrapper">
+                <table className="dataset-table">
+                    <thead>
+                        <tr>
+                            <th>Therapeutic Area</th>
+                            <th>Disease Type</th>
+                            <th>Trial IDs</th>
+                            <th>Status</th>
+                            <th>Scientific Title</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {dummyData.map((row, index) => (
+                            <tr key={index}>
+                                <td>{row.therapeuticArea}</td>
+                                <td>{row.diseaseType}</td>
+                                <td>{row.trialIDs}</td>
+                                <td>{row.status}</td>
+                                <td>{row.scientificTitle}</td>
                             </tr>
-                        </thead>
-                        <tbody>
-                            {dummyData.map((row, index) => (
-                                <tr key={index}>
-                                    <td>{row.therapeuticArea}</td>
-                                    <td>{row.diseaseType}</td>
-                                    <td>{row.trialIDs}</td>
-                                    <td>{row.status}</td>
-                                    <td>{row.scientificTitle}</td>
-                                </tr>
-                            ))}
-                        </tbody>
-                    </table>
-                </div>
-                <div className="dataset-actions">
-                    <button className="export-btn">Export</button>
-                </div>
+                        ))}
+                    </tbody>
+                </table>
+            </div>
+            <div className="dataset-actions">
+                <button className="export-btn">Export</button>
             </div>
         </div>
     );

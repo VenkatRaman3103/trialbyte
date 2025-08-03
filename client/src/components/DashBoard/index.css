@@ -1,9 +1,11 @@
+.dashboard-container {
+    padding: 0 100px;
+}
 .kpi-dashboard {
-    background: #f9fcff;
     border-radius: 10px;
     font-family: Arial, sans-serif;
     padding: 20px;
-    max-width: 900px;
+    width: 100%;
     margin: auto;
 }
 
@@ -110,11 +112,10 @@
 }
 
 .trial-dashboard {
-    background: #f9fcff;
     border-radius: 10px;
     font-family: Arial, sans-serif;
     padding: 20px;
-    max-width: 1000px;
+    width: 100%;
     margin: auto;
 }
 
@@ -148,7 +149,6 @@
 }
 
 .dataset-container {
-    background: #e9f2f9;
     border-radius: 8px;
     padding: 16px;
     max-width: 1000px;
