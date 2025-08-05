@@ -17,3 +17,4 @@ export * from './trials.js';
 export * from './savedQueries.js';
 export * from './fav_titles.js';
 export * from './selected_trials.js';
+export * from './drugs.js';
