@@ -1,6 +1,9 @@
 "use client";
 import React, { useState } from "react";
 import "./index.css";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import axios from "axios";
+import { backendUrl } from "@/config";
 
 const DrugForm = () => {
     const [activeTab, setActiveTab] = useState("overview");
@@ -64,6 +67,16 @@ const DrugForm = () => {
         fullReview: false,
         nextReviewDate: "",
         notes: "",
+    });
+
+    const queryClient = useQueryClient();
+
+    // mutations
+    const createMutation = useMutation({
+        mutationFn: async (data) => {
+            console.log(data);
+            const response = await axios.post(`${backendUrl}/drugs`, data);
+        },
     });
 
     const handleInputChange = (field, value) => {
@@ -137,11 +150,13 @@ const DrugForm = () => {
     };
 
     const handleCreateRecord = () => {
-        console.log("Creating new record...");
+        console.log("Creating new record...", formData);
+        createMutation.mutate(formData);
         // Add create record functionality here
     };
 
     const handleSaveChanges = () => {
+        createMutation.mutate(formData);
         console.log("Saving changes...", formData);
         // Add save functionality here
     };
