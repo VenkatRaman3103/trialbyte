@@ -147,6 +147,7 @@ const DrugForm = () => {
     };
 
     const renderTabContent = () => {
+        //
         console.log("Active tab:", activeTab);
         switch (activeTab) {
             case "overview":
