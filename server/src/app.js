@@ -6,6 +6,7 @@ import { trialsRouter } from './routes/trials.js';
 import searchQueryRouter from './routes/searchQuery.js';
 import { favTitleRouter } from './routes/favTitles.js';
 import { selectedTrialsRouter } from './routes/selecteTrials.js';
+import { drugsRouter } from './routes/drug.js';
 
 const app = express();
 app.use(cors());
@@ -21,5 +22,7 @@ app.use('/api', searchQueryRouter);
 app.use('/api', favTitleRouter);
 
 app.use('/api', selectedTrialsRouter);
+
+app.use('/api', drugsRouter);
 
 export default app;
