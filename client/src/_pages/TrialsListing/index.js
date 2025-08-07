@@ -42,6 +42,7 @@ import { getAllFavTitles } from "@/api/trials/favTitle/getAllFavTitles";
 import { saveFavTitles } from "@/api/trials/favTitle/saveFavTitles";
 import { TrialsTabs } from "@/components/TrialsTabs";
 import { createSelectedTrials } from "@/api/trials/selectedTrials/createSelectedTrials";
+import NavbarTrialListing from "@/components/NavbarTrialListing";
 
 export const TrialsListing = () => {
     const [activeMode, setActiveMode] = useState("list");
@@ -616,95 +617,98 @@ export const TrialsListing = () => {
         saveFavTitlesMutation.mutate();
     }
 
-    function openSelectedItems() {
+    function openSelectedItems(item) {
+        console.log(item, "item===");
         saveSeletedItems.mutate();
-        setActiveMode("tabs");
+        setActiveMode(item);
     }
 
     return (
-        <div className="trial-listing-container">
-            <div className="listing-actions-buttons-container">
-                <div className="listing-navigation-buttons-container">
-                    <div className="listing-back-button">
-                        <LuArrowLeft className="back-icon" />
-                        back
+        <>
+            <NavbarTrialListing
+                openSelectedItems={openSelectedItems}
+                activeMode={activeMode}
+            />
+            <div className="trial-listing-container">
+                <div className="listing-actions-buttons-container">
+                    <div className="listing-navigation-buttons-container">
+                        <div className="listing-back-button">
+                            <LuArrowLeft className="back-icon" />
+                            back
+                        </div>
                     </div>
-                </div>
 
-                {/* Updated Search Status Bar to include filter information */}
-                {(searchQuery ||
-                    advancedSearchCriteria.length > 0 ||
-                    getActiveFiltersCount() > 0) && (
-                    <div className="search-status-bar">
-                        <span>
-                            Showing {processedTrials.length} of{" "}
-                            {allTrials?.length || 0} trials
-                            {searchQuery && ` matching "${searchQuery}"`}
-                            {advancedSearchCriteria.length > 0 &&
-                                ` with ${advancedSearchCriteria.length} advanced criteria`}
-                            {getActiveFiltersCount() > 0 &&
-                                ` and ${getActiveFiltersCount()} active filters`}
-                        </span>
-                        <button
-                            onClick={clearAllSearches}
-                            className="clear-search-btn"
+                    {/* Updated Search Status Bar to include filter information */}
+                    {(searchQuery ||
+                        advancedSearchCriteria.length > 0 ||
+                        getActiveFiltersCount() > 0) && (
+                        <div className="search-status-bar">
+                            <span>
+                                Showing {processedTrials.length} of{" "}
+                                {allTrials?.length || 0} trials
+                                {searchQuery && ` matching "${searchQuery}"`}
+                                {advancedSearchCriteria.length > 0 &&
+                                    ` with ${advancedSearchCriteria.length} advanced criteria`}
+                                {getActiveFiltersCount() > 0 &&
+                                    ` and ${getActiveFiltersCount()} active filters`}
+                            </span>
+                            <button
+                                onClick={clearAllSearches}
+                                className="clear-search-btn"
+                            >
+                                Clear All Filters
+                            </button>
+                        </div>
+                    )}
+
+                    <div className="listing-cta-buttons-container">
+                        <div
+                            className="listing-cta-button-container search-button"
+                            onClick={() => openRespectiveModal("search")}
                         >
-                            Clear All Filters
-                        </button>
-                    </div>
-                )}
-
-                <div className="listing-cta-buttons-container">
-                    <div
-                        className="listing-cta-button-container search-button"
-                        onClick={() => openRespectiveModal("search")}
-                    >
-                        <IoSearchOutline className="cta-icon" />
-                        Advanced Search
-                        {advancedSearchCriteria.length > 0 && (
-                            <span className="search-indicator">
-                                ({advancedSearchCriteria.length})
-                            </span>
-                        )}
-                    </div>
-                    {/* Updated Filter Button to show active filters count */}
-                    <div
-                        className="listing-cta-button-container filter-button"
-                        onClick={() => openRespectiveModal("filter")}
-                    >
-                        <IoFilterOutline className="cta-icon" />
-                        Filter
-                        {getActiveFiltersCount() > 0 && (
-                            <span className="search-indicator">
-                                ({getActiveFiltersCount()})
-                            </span>
-                        )}
-                    </div>
-                    <div
-                        className="listing-cta-button-container query-button"
-                        onClick={() => openRespectiveModal("query")}
-                    >
-                        <TfiSave className="cta-icon" />
-                        Saved Queries
-                        {savedQueriesData?.data?.length > 0 && (
-                            <span className="search-indicator">
-                                ({savedQueriesData.data.length})
-                            </span>
-                        )}
-                    </div>
-                    <div
-                        className="listing-cta-button-container export-button"
-                        onClick={() => openRespectiveModal("export")}
-                    >
-                        <LuUpload className="cta-icon" />
-                        Export
+                            <IoSearchOutline className="cta-icon" />
+                            Advanced Search
+                            {advancedSearchCriteria.length > 0 && (
+                                <span className="search-indicator">
+                                    ({advancedSearchCriteria.length})
+                                </span>
+                            )}
+                        </div>
+                        {/* Updated Filter Button to show active filters count */}
+                        <div
+                            className="listing-cta-button-container filter-button"
+                            onClick={() => openRespectiveModal("filter")}
+                        >
+                            <IoFilterOutline className="cta-icon" />
+                            Filter
+                            {getActiveFiltersCount() > 0 && (
+                                <span className="search-indicator">
+                                    ({getActiveFiltersCount()})
+                                </span>
+                            )}
+                        </div>
+                        <div
+                            className="listing-cta-button-container query-button"
+                            onClick={() => openRespectiveModal("query")}
+                        >
+                            <TfiSave className="cta-icon" />
+                            Saved Queries
+                            {savedQueriesData?.data?.length > 0 && (
+                                <span className="search-indicator">
+                                    ({savedQueriesData.data.length})
+                                </span>
+                            )}
+                        </div>
+                        <div
+                            className="listing-cta-button-container export-button"
+                            onClick={() => openRespectiveModal("export")}
+                        >
+                            <LuUpload className="cta-icon" />
+                            Export
+                        </div>
                     </div>
                 </div>
-            </div>
 
-            {activeMode === "tabs" ? (
-                <TrialsTabs />
-            ) : (
                 <>
                     <div className="listing-container">
                         <div className="listing-sidebar-container">
@@ -959,258 +963,283 @@ export const TrialsListing = () => {
                                 Customize Column View
                             </div>
                         </div>
-                        <div className="listing-items-container">
-                            <button onClick={handleSaveFavTitles}>
-                                Add the title to favorite
-                            </button>
 
-                            <div className="trials-table-container">
-                                <table className="trials-table">
-                                    <thead>
-                                        <tr>
-                                            <th className="select-all">
-                                                <FaRegSquare className="checkbox-icon" />
-                                            </th>
-                                            {getColumnHeaders().map(
-                                                (header) => (
-                                                    <th
-                                                        key={header.sortKey}
-                                                        className={`sortable ${sortBy === header.sortKey ? "active-sort" : ""}`}
-                                                        onClick={() =>
-                                                            handleHeaderSort(
-                                                                header.sortKey,
-                                                            )
+                        {activeMode === "tabs" ? (
+                            <TrialsTabs />
+                        ) : (
+                            <div className="listing-items-container">
+                                <button onClick={handleSaveFavTitles}>
+                                    Add the title to favorite
+                                </button>
+
+                                <div className="trials-table-container">
+                                    <table className="trials-table">
+                                        <thead>
+                                            <tr>
+                                                <th className="select-all">
+                                                    <FaRegSquare className="checkbox-icon" />
+                                                </th>
+                                                {getColumnHeaders().map(
+                                                    (header) => (
+                                                        <th
+                                                            key={header.sortKey}
+                                                            className={`sortable ${sortBy === header.sortKey ? "active-sort" : ""}`}
+                                                            onClick={() =>
+                                                                handleHeaderSort(
+                                                                    header.sortKey,
+                                                                )
+                                                            }
+                                                        >
+                                                            <div className="header-content">
+                                                                {header.label}
+                                                                {sortBy ===
+                                                                    header.sortKey && (
+                                                                    <span className="sort-indicator">
+                                                                        {sortOrder ===
+                                                                        "asc"
+                                                                            ? "↑"
+                                                                            : "↓"}
+                                                                    </span>
+                                                                )}
+                                                            </div>
+                                                            <div className="filter-text">
+                                                                Filter
+                                                                <IoIosArrowDown className="filter-arrow" />
+                                                            </div>
+                                                        </th>
+                                                    ),
+                                                )}
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {trialsLoading ? (
+                                                <tr>
+                                                    <td
+                                                        colSpan={
+                                                            visibleColumns.length +
+                                                            1
                                                         }
+                                                        className="table-loading"
                                                     >
-                                                        <div className="header-content">
-                                                            {header.label}
-                                                            {sortBy ===
-                                                                header.sortKey && (
-                                                                <span className="sort-indicator">
-                                                                    {sortOrder ===
-                                                                    "asc"
-                                                                        ? "↑"
-                                                                        : "↓"}
-                                                                </span>
-                                                            )}
-                                                        </div>
-                                                        <div className="filter-text">
-                                                            Filter
-                                                            <IoIosArrowDown className="filter-arrow" />
-                                                        </div>
-                                                    </th>
-                                                ),
+                                                        Loading trials...
+                                                    </td>
+                                                </tr>
+                                            ) : processedTrials?.length > 0 ? (
+                                                processedTrials.map((trial) => (
+                                                    <ListView
+                                                        data={trial}
+                                                        key={trial.id}
+                                                        handleSelectItems={
+                                                            handleSelectItems
+                                                        }
+                                                        visibleColumns={
+                                                            visibleColumns
+                                                        }
+                                                    />
+                                                ))
+                                            ) : (
+                                                <tr>
+                                                    <td
+                                                        colSpan={
+                                                            visibleColumns.length +
+                                                            1
+                                                        }
+                                                        className="table-no-results"
+                                                    >
+                                                        <p>
+                                                            No trials found
+                                                            matching your search
+                                                            criteria.
+                                                        </p>
+                                                        <button
+                                                            onClick={
+                                                                clearAllSearches
+                                                            }
+                                                            className="clear-filters-btn"
+                                                        >
+                                                            Clear all filters
+                                                        </button>
+                                                    </td>
+                                                </tr>
                                             )}
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        {trialsLoading ? (
-                                            <tr>
-                                                <td
-                                                    colSpan={
-                                                        visibleColumns.length +
-                                                        1
-                                                    }
-                                                    className="table-loading"
-                                                >
-                                                    Loading trials...
-                                                </td>
-                                            </tr>
-                                        ) : processedTrials?.length > 0 ? (
-                                            processedTrials.map((trial) => (
-                                                <ListView
-                                                    data={trial}
-                                                    key={trial.id}
-                                                    handleSelectItems={
-                                                        handleSelectItems
-                                                    }
-                                                    visibleColumns={
-                                                        visibleColumns
-                                                    }
-                                                />
-                                            ))
-                                        ) : (
-                                            <tr>
-                                                <td
-                                                    colSpan={
-                                                        visibleColumns.length +
-                                                        1
-                                                    }
-                                                    className="table-no-results"
-                                                >
-                                                    <p>
-                                                        No trials found matching
-                                                        your search criteria.
-                                                    </p>
-                                                    <button
-                                                        onClick={
-                                                            clearAllSearches
-                                                        }
-                                                        className="clear-filters-btn"
-                                                    >
-                                                        Clear all filters
-                                                    </button>
-                                                </td>
-                                            </tr>
-                                        )}
-                                    </tbody>
-                                </table>
-                            </div>
+                                        </tbody>
+                                    </table>
+                                </div>
 
-                            <button
-                                className="open-btn"
-                                onClick={openSelectedItems}
-                            >
-                                open selected button
-                            </button>
-                        </div>
-                    </div>
-                </>
-            )}
-
-            {activeModal === "filter" && (
-                <FilterModal
-                    isOpen={activeModal === "filter"}
-                    onClose={() => setActiveModal(null)}
-                    onApplyFilters={handleApplyFilters}
-                    initialFilters={filterCriteria}
-                />
-            )}
-
-            {activeModal === "customize-columns" && (
-                <CustomizeColumnModal
-                    isOpen={activeModal === "customize-columns"}
-                    onClose={() => setActiveModal(null)}
-                    onApplyColumns={handleApplyColumns}
-                    initialColumns={visibleColumns}
-                />
-            )}
-
-            {/* Modals */}
-            {activeModal &&
-                activeModal !== "filter" &&
-                activeModal !== "customize-columns" && (
-                    <div
-                        className="modal-container"
-                        onClick={() => setActiveModal(null)}
-                    >
-                        <div
-                            className="modal-content"
-                            onClick={(e) => e.stopPropagation()}
-                        >
-                            <div className="modal-header">
-                                <h2>
-                                    {activeModal === "search" &&
-                                        "Advanced Search"}
-                                    {activeModal === "filter" &&
-                                        "Filter Trials"}
-                                    {activeModal === "query" && "Saved Queries"}
-                                    {activeModal === "export" && "Export Data"}
-                                    {activeModal === "save-current" &&
-                                        "Save Current Query"}
-                                    {activeModal === "history" &&
-                                        "Query History"}
-                                    {activeModal === "favorites" &&
-                                        "Favorite Queries"}
-                                    {activeModal === "customize-columns" &&
-                                        "Customize Column View"}
-                                </h2>
                                 <button
-                                    className="close-button"
-                                    onClick={() => setActiveModal(null)}
+                                    className="open-btn"
+                                    onClick={() => openSelectedItems("tabs")}
                                 >
-                                    ×
+                                    open selected button
                                 </button>
                             </div>
-                            <div className="modal-body">
-                                {activeModal === "search" && (
-                                    <AdvancedSearchModal
-                                        isOpen={activeModal === "search"}
-                                        onClose={() => setActiveModal(null)}
-                                        onSearch={handleAdvancedSearch}
-                                        initialCriteria={advancedSearchCriteria}
-                                        onSaveQuery={
-                                            handleSaveFromAdvancedSearch
-                                        }
-                                        onOpenSavedQueries={() =>
-                                            setActiveModal("query")
-                                        }
-                                        savedQueries={
-                                            savedQueriesData?.data || []
-                                        }
-                                        isLoading={savedQueriesLoading}
-                                        onLoadQuery={handleLoadQuery}
-                                        searchQuery={searchQuery}
-                                        sortBy={sortBy}
-                                        sortOrder={sortOrder}
-                                        isSaving={createQueryMutation.isPending}
-                                    />
-                                )}
-                                {activeModal === "query" && (
-                                    <SavedQueriesModal
-                                        queries={savedQueriesData?.data || []}
-                                        isLoading={savedQueriesLoading}
-                                        onLoadQuery={handleLoadQuery}
-                                        onDeleteQuery={handleDeleteQuery}
-                                        onToggleFavorite={handleToggleFavorite}
-                                    />
-                                )}
-                                {activeModal === "save-current" && (
-                                    <SaveCurrentQueryModal
-                                        queryName={saveQueryName}
-                                        setQueryName={setSaveQueryName}
-                                        queryDescription={saveQueryDescription}
-                                        setQueryDescription={
-                                            setSaveQueryDescription
-                                        }
-                                        onSave={handleSaveQuery}
-                                        isLoading={
-                                            createQueryMutation.isPending
-                                        }
-                                        currentQuery={{
-                                            searchQuery,
-                                            advancedSearchCriteria,
-                                            sortBy,
-                                            sortOrder,
-                                            filterCriteria,
-                                            visibleColumns,
-                                        }}
-                                    />
-                                )}
-                                {activeModal === "history" && (
-                                    <QueryHistoryModal
-                                        history={queryHistoryData?.data || []}
-                                        onLoadQuery={handleLoadQuery}
-                                    />
-                                )}
-                                {activeModal === "favorites" && (
-                                    <FavoriteQueriesModal
-                                        favorites={favTitlesData}
-                                        onLoadQuery={handleLoadQuery}
-                                        onDeleteQuery={handleDeleteQuery}
-                                        onToggleFavorite={handleToggleFavorite}
-                                    />
-                                )}
-                                {activeModal === "export" && (
-                                    <ExportModal
-                                        isOpen={activeModal === "export"}
-                                        onClose={() => setActiveModal(null)}
-                                        trials={processedTrials}
-                                        selectedTrials={[]}
-                                        onExport={(selectedTrials, format) => {
-                                            console.log(
-                                                "Exporting:",
+                        )}
+                    </div>
+                </>
+
+                {activeModal === "filter" && (
+                    <FilterModal
+                        isOpen={activeModal === "filter"}
+                        onClose={() => setActiveModal(null)}
+                        onApplyFilters={handleApplyFilters}
+                        initialFilters={filterCriteria}
+                    />
+                )}
+
+                {activeModal === "customize-columns" && (
+                    <CustomizeColumnModal
+                        isOpen={activeModal === "customize-columns"}
+                        onClose={() => setActiveModal(null)}
+                        onApplyColumns={handleApplyColumns}
+                        initialColumns={visibleColumns}
+                    />
+                )}
+
+                {/* Modals */}
+                {activeModal &&
+                    activeModal !== "filter" &&
+                    activeModal !== "customize-columns" && (
+                        <div
+                            className="modal-container"
+                            onClick={() => setActiveModal(null)}
+                        >
+                            <div
+                                className="modal-content"
+                                onClick={(e) => e.stopPropagation()}
+                            >
+                                <div className="modal-header">
+                                    <h2>
+                                        {activeModal === "search" &&
+                                            "Advanced Search"}
+                                        {activeModal === "filter" &&
+                                            "Filter Trials"}
+                                        {activeModal === "query" &&
+                                            "Saved Queries"}
+                                        {activeModal === "export" &&
+                                            "Export Data"}
+                                        {activeModal === "save-current" &&
+                                            "Save Current Query"}
+                                        {activeModal === "history" &&
+                                            "Query History"}
+                                        {activeModal === "favorites" &&
+                                            "Favorite Queries"}
+                                        {activeModal === "customize-columns" &&
+                                            "Customize Column View"}
+                                    </h2>
+                                    <button
+                                        className="close-button"
+                                        onClick={() => setActiveModal(null)}
+                                    >
+                                        ×
+                                    </button>
+                                </div>
+                                <div className="modal-body">
+                                    {activeModal === "search" && (
+                                        <AdvancedSearchModal
+                                            isOpen={activeModal === "search"}
+                                            onClose={() => setActiveModal(null)}
+                                            onSearch={handleAdvancedSearch}
+                                            initialCriteria={
+                                                advancedSearchCriteria
+                                            }
+                                            onSaveQuery={
+                                                handleSaveFromAdvancedSearch
+                                            }
+                                            onOpenSavedQueries={() =>
+                                                setActiveModal("query")
+                                            }
+                                            savedQueries={
+                                                savedQueriesData?.data || []
+                                            }
+                                            isLoading={savedQueriesLoading}
+                                            onLoadQuery={handleLoadQuery}
+                                            searchQuery={searchQuery}
+                                            sortBy={sortBy}
+                                            sortOrder={sortOrder}
+                                            isSaving={
+                                                createQueryMutation.isPending
+                                            }
+                                        />
+                                    )}
+                                    {activeModal === "query" && (
+                                        <SavedQueriesModal
+                                            queries={
+                                                savedQueriesData?.data || []
+                                            }
+                                            isLoading={savedQueriesLoading}
+                                            onLoadQuery={handleLoadQuery}
+                                            onDeleteQuery={handleDeleteQuery}
+                                            onToggleFavorite={
+                                                handleToggleFavorite
+                                            }
+                                        />
+                                    )}
+                                    {activeModal === "save-current" && (
+                                        <SaveCurrentQueryModal
+                                            queryName={saveQueryName}
+                                            setQueryName={setSaveQueryName}
+                                            queryDescription={
+                                                saveQueryDescription
+                                            }
+                                            setQueryDescription={
+                                                setSaveQueryDescription
+                                            }
+                                            onSave={handleSaveQuery}
+                                            isLoading={
+                                                createQueryMutation.isPending
+                                            }
+                                            currentQuery={{
+                                                searchQuery,
+                                                advancedSearchCriteria,
+                                                sortBy,
+                                                sortOrder,
+                                                filterCriteria,
+                                                visibleColumns,
+                                            }}
+                                        />
+                                    )}
+                                    {activeModal === "history" && (
+                                        <QueryHistoryModal
+                                            history={
+                                                queryHistoryData?.data || []
+                                            }
+                                            onLoadQuery={handleLoadQuery}
+                                        />
+                                    )}
+                                    {activeModal === "favorites" && (
+                                        <FavoriteQueriesModal
+                                            favorites={favTitlesData}
+                                            onLoadQuery={handleLoadQuery}
+                                            onDeleteQuery={handleDeleteQuery}
+                                            onToggleFavorite={
+                                                handleToggleFavorite
+                                            }
+                                        />
+                                    )}
+                                    {activeModal === "export" && (
+                                        <ExportModal
+                                            isOpen={activeModal === "export"}
+                                            onClose={() => setActiveModal(null)}
+                                            trials={processedTrials}
+                                            selectedTrials={[]}
+                                            onExport={(
                                                 selectedTrials,
-                                                "as",
                                                 format,
-                                            );
-                                        }}
-                                    />
-                                )}
+                                            ) => {
+                                                console.log(
+                                                    "Exporting:",
+                                                    selectedTrials,
+                                                    "as",
+                                                    format,
+                                                );
+                                            }}
+                                        />
+                                    )}
+                                </div>
                             </div>
                         </div>
-                    </div>
-                )}
-        </div>
+                    )}
+            </div>
+        </>
     );
 };

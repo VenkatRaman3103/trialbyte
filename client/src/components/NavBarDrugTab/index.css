@@ -1,0 +1,94 @@
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #f8f9fa;
+    padding: 10px 20px;
+    border-radius: 12px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
+    font-family: "Segoe UI", sans-serif;
+}
+
+.navbar-left {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.logo {
+    font-size: 26px;
+    background: #e7fff3;
+    border-radius: 10px;
+    padding: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.nav-item {
+    background: #fff;
+    padding: 8px 16px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 14px;
+    color: #333;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.nav-item.active {
+    background: #163d68;
+    color: #fff;
+}
+
+.navbar-middle {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex: 1;
+    max-width: 400px;
+    margin: 0 20px;
+}
+
+.search-input {
+    flex: 1;
+    padding: 10px;
+    border: none;
+    border-radius: 12px;
+    background: #fff;
+    font-size: 14px;
+}
+
+.search-btn {
+    background: #163d68;
+    color: #fff;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+.navbar-right {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.icon-btn {
+    background: #fff;
+    border: none;
+    padding: 8px;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.username {
+    background: #fff;
+    padding: 8px 12px;
+    border-radius: 12px;
+    font-size: 14px;
+    font-weight: 500;
+}

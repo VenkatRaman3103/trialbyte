@@ -1,3 +1,4 @@
+import NavbarTrialListing from "@/components/NavbarTrialListing";
 import RootLayout from "./layout";
 import { TrialsListing } from "@/_pages/TrialsListing";
 

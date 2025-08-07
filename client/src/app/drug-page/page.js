@@ -1,5 +1,7 @@
 "use client";
 import { DrugTabs } from "@/components/DrugTables";
+import NavbarDrugListing from "@/components/NavbarDrugListing";
+import NavBarDrugTab from "@/components/NavBarDrugTab";
 import { backendUrl } from "@/config";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
@@ -26,8 +28,11 @@ export default function Home() {
     }, [data]);
 
     return (
-        <div style={{ margin: "50px" }}>
-            <DrugTabs tabIds={tabIds} data={data} />
-        </div>
+        <>
+            <NavBarDrugTab />
+            <div style={{ margin: "50px" }}>
+                <DrugTabs tabIds={tabIds} data={data} />
+            </div>
+        </>
     );
 }

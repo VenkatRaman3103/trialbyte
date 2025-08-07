@@ -37,647 +37,279 @@ export const TrialsTabs = () => {
 
     return (
         <div className="trial-page-container">
-            <div className="trial-page-tabs-container">
-                {data?.map((item) => (
-                    <div
-                        className={`trial-page-tab ${activeTrialId === item.id ? "active" : ""}`}
-                        key={item.id}
-                        onClick={() => setActiveTrialId(item.id)}
-                    >
-                        {item.trialIdentifier}
-                    </div>
-                ))}
-            </div>
-            <div className="trial-content-container">
-                <div className="trial-content-header-container">
-                    <div className="trial-content-header-icon"></div>
-                    <div className="trial-content-heading">
-                        3-arm Trial to Evaluate Pasireotide LAR/​Everolimus
-                        Alone/​in Combination in Patients With Lung/Thymus NET -
-                        LUNA Trial (LUNA)
-                    </div>
+            <div className="trial-page-wrapper">
+                <div className="trial-page-tabs-container">
+                    {data?.map((item) => (
+                        <div
+                            className={`trial-page-tab ${activeTrialId === item.id ? "active" : ""}`}
+                            key={item.id}
+                            onClick={() => setActiveTrialId(item.id)}
+                        >
+                            {item.trialIdentifier}
+                        </div>
+                    ))}
                 </div>
-                <div className="trial-content-body-container">
-                    {/* over view section*/}
-                    <div className="trial-content-overview-section">
-                        <div className="trial-content-overview-section-header">
-                            <div className="overview-section-left">
-                                <div className="overview-section-heading">
-                                    Overview
-                                </div>
-                                <div className="overview-section-divider"></div>
-                                <div className="overview-section-status-container">
-                                    <div className="overview-section-status-laber">
-                                        status:
-                                    </div>
-                                    <div className="overview-section-status-button">
-                                        {activeTrial.status}
-                                    </div>
-                                </div>
-                            </div>
-                            <div className="overview-section-right">
-                                <div className="overview-section-endpoint-container">
-                                    <div className="overview-section-endpoint-laber">
-                                        endpoint met
-                                    </div>
-                                    <div
-                                        className={`overview-section-endpoint-toggle  ${activeTrial.endpointsMet == "true" ? "active" : ""}`}
-                                    >
-                                        <div
-                                            className={`overview-section-endpoint-toggle-mark`}
-                                        ></div>
-                                    </div>
-                                </div>
-                                <div className="overview-section-result-container">
-                                    <div className="overview-section-result-laber">
-                                        results posted
-                                    </div>
-                                    {/*resultsAvailable*/}
-                                    <div className="overview-section-result-toggle-btn-container">
-                                        <div
-                                            className={`overview-section-result-toggle-btn ${activeTrial.resultsAvailable == "true" ? "active" : ""}`}
-                                        >
-                                            yes
-                                        </div>
-                                        <div
-                                            className={`overview-section-result-toggle-btn ${activeTrial.resultsAvailable == "false" ? "active" : ""}`}
-                                        >
-                                            no
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                <div className="trial-content-container">
+                    <div className="trial-content-header-container">
+                        <div className="trial-content-header-icon"></div>
+                        <div className="trial-content-heading">
+                            3-arm Trial to Evaluate Pasireotide LAR/​Everolimus
+                            Alone/​in Combination in Patients With Lung/Thymus
+                            NET - LUNA Trial (LUNA)
                         </div>
                     </div>
-
-                    {/* banner section */}
-                    <div className="trial-content-banner-section">
-                        <div className="trial-content-banner-top">
-                            <div className="trial-content-banner-heading">
-                                Therapeutic Area :
-                            </div>
-                            <div className="trial-content-banner-tags">
-                                <div className="trial-content-banner-tag">
-                                    some
-                                </div>
-                            </div>
-                        </div>
-                        <div className="trial-content-banner-bottom">
-                            <div className="trial-content-banner-heading">
-                                Trial Identifier :
-                            </div>
-                            <div className="trial-content-banner-tags">
-                                <div className="trial-content-banner-tag">
-                                    some
-                                </div>
-                                <div className="trial-content-banner-tag">
-                                    some
-                                </div>
-                                <div className="trial-content-banner-tag">
-                                    some
-                                </div>
-                                <div className="trial-content-banner-tag">
-                                    some
-                                </div>
-                                <div className="trial-content-banner-tag">
-                                    some
-                                </div>
-                                <div className="trial-content-banner-tag">
-                                    some
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    {/* content section */}
-                    <div className="trial-contents-section">
-                        <Content>
-                            <h1>Scientific Title</h1>
-                            <p>{activeTrial.title}</p>
-                        </Content>
-
-                        <Content>
-                            <h1>Summary</h1>
-                            <p>{activeTrial.summary}</p>
-                        </Content>
-
-                        <Content>
-                            <h1>Key Information</h1>
-                            <table className="fixed-width-heading">
-                                <tr>
-                                    <td className="heading">Disease Type :</td>
-                                    <td>{activeTrial.diseaseType}</td>
-                                </tr>
-
-                                <tr>
-                                    <td className="heading">
-                                        Patient Segment :
-                                    </td>
-                                    <td>{activeTrial.patientSegment}</td>
-                                </tr>
-
-                                <tr>
-                                    <td className="heading">Primary Drug :</td>
-                                    <td>{activeTrial.primaryDrugs}</td>
-                                </tr>
-
-                                <tr>
-                                    <td className="heading">
-                                        Secondary Drug :
-                                    </td>
-                                    <td>{activeTrial.otherDrugs}</td>
-                                </tr>
-                                <tr>
-                                    <td className="heading">Trial Phase :</td>
-                                    <td>{activeTrial.otherDrugs}</td>
-                                </tr>
-                            </table>
-                        </Content>
-                        <Content>
-                            <h1>Countries</h1>
-                            <div className="tags-container">
-                                <div className="tag">some</div>
-                                <div className="tag">some</div>
-                                <div className="tag">some</div>
-                                <div className="tag active">
-                                    {activeTrial.countries}
-                                </div>
-                                <div className="tag">some</div>
-                                <div className="tag">some</div>
-                            </div>
-                        </Content>
-                        <Content>
-                            <div>
-                                <p>
-                                    <span>Region :</span>
-                                    {activeTrial.region}
-                                </p>
-
-                                <p>
-                                    <span>Sponsors & Collaborators :</span>
-                                    {activeTrial.sponsorCollaborators}
-                                </p>
-
-                                <p>
-                                    <span>Sponsor Field of Activity :</span>
-                                    {activeTrial.sponsorFieldOfActivity}
-                                </p>
-                                <p>
-                                    <span>Associated CRO :</span>
-                                    {activeTrial.associatedCRO}
-                                </p>
-
-                                <p>
-                                    <span>Trial Tags :</span>
-                                    {activeTrial.trialTags}
-                                </p>
-
-                                <p>
-                                    <span>Source Links :</span>
-                                    <ul>
-                                        {activeTrial.referenceLinks &&
-                                            activeTrial?.referenceLinks?.map(
-                                                (item) => <li>{item}</li>,
-                                            )}
-                                    </ul>
-                                </p>
-                                <p>
-                                    <span>Trial Record Status : </span>
-                                    {activeTrial.trialRecordStatus}
-                                </p>
-                            </div>
-                        </Content>
-                        <Section heading={"Objectives"}>
-                            <Content>
-                                <h1>Purpose of the trial</h1>
-                                <p>{activeTrial.purposeOfTheTrial}</p>
-                            </Content>
-                            <Content>
-                                <h1>Primary Outcome</h1>
-                                <div>
-                                    <h1>Outcome Measure :</h1>
-                                    <p>{activeTrial.purposeOfTheTrial}</p>
-                                </div>
-                                <div>
-                                    <h1>Measure Description : </h1>
-                                    <p>{activeTrial.primaryOutcomeMeasure}</p>
-                                </div>
-                                <div>
-                                    <h1>Time Frame :</h1>
-                                    <p>{activeTrial.timingReference}</p>
-                                </div>
-                            </Content>
-
-                            <Content>
-                                <h1>Other Outcome : 1</h1>
-                                <div>
-                                    <h1>Outcome Measure :</h1>
-                                    <p>{activeTrial.otherOutcomeMeasure}</p>
-                                </div>
-                                <div>
-                                    <h1>Measure Description : </h1>
-                                    <p>{activeTrial.otherOutcomeMeasure}</p>
-                                </div>
-                                <div>
-                                    <h1>Time Frame :</h1>
-                                    <p>{activeTrial.otherOutcomeMeasure}</p>
-                                </div>
-                            </Content>
-                        </Section>
-                        <Section heading={"Treatment Plan"}>
-                            <Content>
-                                <h1>Study Design Keywords </h1>
-                                <div className="tags-container">
-                                    <div className="tag">some</div>
-                                    <div className="tag">some</div>
-                                    <div className="tag">some</div>
-                                    <div className="tag active">
-                                        {activeTrial.studyDesignKeywords}
+                    <div className="trial-content-body-container">
+                        {/* over view section*/}
+                        <div className="trial-content-overview-section">
+                            <div className="trial-content-overview-section-header">
+                                <div className="overview-section-left">
+                                    <div className="overview-section-heading">
+                                        Overview
                                     </div>
-                                    <div className="tag">some</div>
-                                    <div className="tag">some</div>
-                                </div>
-                            </Content>
-                            <Content>
-                                <h1>Study Design</h1>
-                                <div>
-                                    <p>
-                                        <span>Primary Purpose :</span>
-                                        Treatment
-                                    </p>
-
-                                    <p>
-                                        <span>Allocation :</span>
-                                        Randomized
-                                    </p>
-
-                                    <p>
-                                        <span>Interventional Model :</span>
-                                        Single Group Assignment
-                                    </p>
-                                    <p>
-                                        <span>Masking :</span>
-                                        None (Open Label)
-                                    </p>
-
-                                    <p>
-                                        This was a prospective, multicenter,
-                                        randomized, open-label, 3-arm, phase II
-                                        study with a single-stage design in each
-                                        arm.
-                                    </p>
-                                </div>
-                            </Content>
-
-                            <Content>
-                                <h1>Treatment Regimen</h1>
-                                <p>Subjects were randomized as follows :</p>
-                                <div>
-                                    <p>
-                                        <span>Pasireotide LAR :</span>
-                                        <div>
-                                            Pasireotide long acting release
-                                            (LAR) 60 mg will be administered as
-                                            an intra muscular (i.m.) depot
-                                            injection once every 28 days
-                                            starting on Day 1
+                                    <div className="overview-section-divider"></div>
+                                    <div className="overview-section-status-container">
+                                        <div className="overview-section-status-laber">
+                                            status:
                                         </div>
-                                    </p>
-                                    <p>
-                                        <span>Everolimus :</span>
-                                        <div>
-                                            Everolimus 10 mg taken orally (p.o)
-                                            once daily starting on Day 1
+                                        <div className="overview-section-status-button">
+                                            {activeTrial.status}
                                         </div>
-                                    </p>
-                                    <p>
-                                        <span>
-                                            Pasireotide LAR and Everolimus
-                                            Combination :{" "}
-                                        </span>
-                                        <div>
-                                            Pasireotide LAR 60 mg i.m. injected
-                                            once every 28 days + Everolimus 10
-                                            mg p.o. daily starting on Day 1
-                                        </div>
-                                    </p>
+                                    </div>
                                 </div>
-                            </Content>
-                            <p className="extra">Number of arms: 3</p>
-                        </Section>
-
-                        <Section heading={"Heading"} column="double">
-                            <div className="left">
-                                <Content>
-                                    <h1>Inclusion Criteria</h1>
-                                    <ul>
-                                        {activeTrial.inclusionCriteria &&
-                                            activeTrial.inclusionCriteria.map(
-                                                (item) => <li>{item}</li>,
-                                            )}
-                                    </ul>
-                                </Content>
-                                <Content>
-                                    <h1>Exclusion Criteria</h1>
-                                    <ul>
-                                        {activeTrial.exclusionCriteria &&
-                                            activeTrial.exclusionCriteria.map(
-                                                (item) => <li>{item}</li>,
-                                            )}
-                                    </ul>
-                                </Content>
-                            </div>
-                            <div className="right">
-                                <Boxes
-                                    heading={"Ages Eligible for Study "}
-                                    description={activeTrial.ageFrom}
-                                />
-                                <Boxes
-                                    heading={"Sexes Eligible for Study "}
-                                    description={activeTrial.sex}
-                                />
-                                <Boxes
-                                    heading={"Healthy Volunteers"}
-                                    description={activeTrial.healthyVolunteers}
-                                />
-                                <Boxes
-                                    heading={"Target No of Volunteers"}
-                                    description={
-                                        activeTrial.targetNoOfVolunteers
-                                    }
-                                />
-                                <Boxes
-                                    heading={"Actual enrolled Volunteers"}
-                                    description={
-                                        activeTrial.actualEnrolledVolunteers
-                                    }
-                                />
-                            </div>
-                        </Section>
-
-                        <Section heading={"TimeLine"}>
-                            <ClinicalTrialTimeline data={some} />
-                        </Section>
-
-                        <Section heading={"Outcome"}>
-                            <div className="trial-outcome-container">
-                                <div className="trial-outcome-left-container">
+                                <div className="overview-section-right">
                                     <div className="overview-section-endpoint-container">
                                         <div className="overview-section-endpoint-laber">
-                                            Results available
+                                            endpoint met
                                         </div>
                                         <div
-                                            className={`overview-section-endpoint-toggle  ${activeTrial.resultsAvailable == "true" ? "active" : ""}`}
+                                            className={`overview-section-endpoint-toggle  ${activeTrial.endpointsMet == "true" ? "active" : ""}`}
                                         >
                                             <div
                                                 className={`overview-section-endpoint-toggle-mark`}
                                             ></div>
                                         </div>
                                     </div>
-
-                                    <div className="trial-outcome-below-endpoint">
-                                        <div className="trial-outcome-right-heading">
-                                            Trial Outcome :
+                                    <div className="overview-section-result-container">
+                                        <div className="overview-section-result-laber">
+                                            results posted
                                         </div>
-                                        <div className="trial-outcome-right-tag">
-                                            {activeTrial.trialOutcome}
-                                        </div>
-                                    </div>
-                                </div>
-                                <div className="trial-outcome-right-container">
-                                    <div className="trial-outcome-right-header">
-                                        <div className="trial-outcome-right-heading">
-                                            Trial Outcome Reference
-                                        </div>
-                                        <div className="trial-outcome-right-tag">
-                                            {activeTrial.trialOutcome}
-                                        </div>
-                                    </div>
-                                    <div className="trial-outcome-right-content">
-                                        {activeTrial.trialOutcomeReference}
-                                    </div>
-                                    <div></div>
-                                    <div className="trial-outcome-right-cta-container">
-                                        <div className="trial-outcome-right-cta-btn">
-                                            View source
-                                        </div>
-                                        <div className="trial-outcome-right-cta-btn">
-                                            Attachments
+                                        {/*resultsAvailable*/}
+                                        <div className="overview-section-result-toggle-btn-container">
+                                            <div
+                                                className={`overview-section-result-toggle-btn ${activeTrial.resultsAvailable == "true" ? "active" : ""}`}
+                                            >
+                                                yes
+                                            </div>
+                                            <div
+                                                className={`overview-section-result-toggle-btn ${activeTrial.resultsAvailable == "false" ? "active" : ""}`}
+                                            >
+                                                no
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                        </Section>
-                        <Section heading={"Published Results"}>
-                            <TrialPublish data={some} />
-                        </Section>
-                        <Section
-                            heading={"Sites"}
-                            secondHeading={`Total No of Sites : ${some.totalNoOfSites}`}
-                        >
-                            <ClinicalTrialTimelineWithImage data={some} />
-                        </Section>
-                        <Section heading={"Other sources"}>
+                        </div>
+
+                        {/* banner section */}
+                        <div className="trial-content-banner-section">
+                            <div className="trial-content-banner-top">
+                                <div className="trial-content-banner-heading">
+                                    Therapeutic Area :
+                                </div>
+                                <div className="trial-content-banner-tags">
+                                    <div className="trial-content-banner-tag">
+                                        some
+                                    </div>
+                                </div>
+                            </div>
+                            <div className="trial-content-banner-bottom">
+                                <div className="trial-content-banner-heading">
+                                    Trial Identifier :
+                                </div>
+                                <div className="trial-content-banner-tags">
+                                    <div className="trial-content-banner-tag">
+                                        some
+                                    </div>
+                                    <div className="trial-content-banner-tag">
+                                        some
+                                    </div>
+                                    <div className="trial-content-banner-tag">
+                                        some
+                                    </div>
+                                    <div className="trial-content-banner-tag">
+                                        some
+                                    </div>
+                                    <div className="trial-content-banner-tag">
+                                        some
+                                    </div>
+                                    <div className="trial-content-banner-tag">
+                                        some
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        {/* content section */}
+                        <div className="trial-contents-section">
                             <Content>
-                                <h1>Other Sources</h1>
+                                <h1>Scientific Title</h1>
+                                <p>{activeTrial.title}</p>
+                            </Content>
 
-                                <div className="trial-table-image-section-strip">
-                                    <Image
-                                        src={`/map_image.svg`}
-                                        alt="Clinical Trial Illustration"
-                                        layout="fill"
-                                        objectFit="contain"
-                                    />
-                                </div>
+                            <Content>
+                                <h1>Summary</h1>
+                                <p>{activeTrial.summary}</p>
+                            </Content>
 
-                                <div className="trial-outcome-right-cta-container">
-                                    <div className="trial-outcome-right-cta-btn">
-                                        View Pipeline
-                                    </div>
-                                    <div className="trial-outcome-right-cta-btn">
-                                        Attachments
-                                    </div>
-                                </div>
+                            <Content>
+                                <h1>Key Information</h1>
+                                <table className="fixed-width-heading">
+                                    <tr>
+                                        <td className="heading">
+                                            Disease Type :
+                                        </td>
+                                        <td>{activeTrial.diseaseType}</td>
+                                    </tr>
+
+                                    <tr>
+                                        <td className="heading">
+                                            Patient Segment :
+                                        </td>
+                                        <td>{activeTrial.patientSegment}</td>
+                                    </tr>
+
+                                    <tr>
+                                        <td className="heading">
+                                            Primary Drug :
+                                        </td>
+                                        <td>{activeTrial.primaryDrugs}</td>
+                                    </tr>
+
+                                    <tr>
+                                        <td className="heading">
+                                            Secondary Drug :
+                                        </td>
+                                        <td>{activeTrial.otherDrugs}</td>
+                                    </tr>
+                                    <tr>
+                                        <td className="heading">
+                                            Trial Phase :
+                                        </td>
+                                        <td>{activeTrial.otherDrugs}</td>
+                                    </tr>
+                                </table>
                             </Content>
                             <Content>
-                                <TrialPublishMini data={some} />
+                                <h1>Countries</h1>
+                                <div className="tags-container">
+                                    <div className="tag">some</div>
+                                    <div className="tag">some</div>
+                                    <div className="tag">some</div>
+                                    <div className="tag active">
+                                        {activeTrial.countries}
+                                    </div>
+                                    <div className="tag">some</div>
+                                    <div className="tag">some</div>
+                                </div>
                             </Content>
                             <Content>
                                 <div>
-                                    <span>21-October-2020: </span>A Phase III
-                                    Study of Safety and Efficacy of Pasireotide
-                                    LAR or Everolimus Alone or in Combination in
-                                    Patients With Well Differentiated
-                                    Neuroendocrine Carcinoma of the Lung and
-                                    Thymus.
+                                    <p>
+                                        <span>Region :</span>
+                                        {activeTrial.region}
+                                    </p>
+
+                                    <p>
+                                        <span>Sponsors & Collaborators :</span>
+                                        {activeTrial.sponsorCollaborators}
+                                    </p>
+
+                                    <p>
+                                        <span>Sponsor Field of Activity :</span>
+                                        {activeTrial.sponsorFieldOfActivity}
+                                    </p>
+                                    <p>
+                                        <span>Associated CRO :</span>
+                                        {activeTrial.associatedCRO}
+                                    </p>
+
+                                    <p>
+                                        <span>Trial Tags :</span>
+                                        {activeTrial.trialTags}
+                                    </p>
+
+                                    <p>
+                                        <span>Source Links :</span>
+                                        <ul>
+                                            {activeTrial.referenceLinks &&
+                                                activeTrial?.referenceLinks?.map(
+                                                    (item) => <li>{item}</li>,
+                                                )}
+                                        </ul>
+                                    </p>
+                                    <p>
+                                        <span>Trial Record Status : </span>
+                                        {activeTrial.trialRecordStatus}
+                                    </p>
                                 </div>
-                                <p></p>
                             </Content>
-                        </Section>
-
-                        <Section heading={"Published Results"}>
-                            <TrialPublishImages data={some} />
-                            <TrialPublishNoHeader />
-                        </Section>
-
-                        <Section heading={"Associated studies"}>
-                            <div className="trialPublish-container">
-                                <div className="trialPublish-card">
-                                    <div className="trialPublish-header">
-                                        <div>
-                                            <span className="trialPublish-header-label">
-                                                Date :
-                                            </span>{" "}
-                                            April 2, 2024
-                                        </div>
-                                        <div>
-                                            <span className="trialPublish-header-label">
-                                                Study Type :
-                                            </span>{" "}
-                                            Follow up study
-                                        </div>
+                            <Section heading={"Objectives"}>
+                                <Content>
+                                    <h1>Purpose of the trial</h1>
+                                    <p>{activeTrial.purposeOfTheTrial}</p>
+                                </Content>
+                                <Content>
+                                    <h1>Primary Outcome</h1>
+                                    <div>
+                                        <h1>Outcome Measure :</h1>
+                                        <p>{activeTrial.purposeOfTheTrial}</p>
                                     </div>
-
-                                    <h2 className="trialPublish-title">
-                                        A follow up study on patients who were
-                                        treated on LUNA study to evaluate the
-                                        long term safety of patients with
-                                        Lung/​Thymus NET.
-                                    </h2>
-                                    <div className="trialPublish-content">
-                                        <p className="trialPublish-authors">
-                                            Piero Ferolla, Maria Pia Brizzi, Tim
-                                            Meyer, Wasat Mansoor, Julien
-                                            Mazieres, Christine Do Cao, Hervé
-                                            Léna, Alfredo Berruti
+                                    <div>
+                                        <h1>Measure Description : </h1>
+                                        <p>
+                                            {activeTrial.primaryOutcomeMeasure}
                                         </p>
+                                    </div>
+                                    <div>
+                                        <h1>Time Frame :</h1>
+                                        <p>{activeTrial.timingReference}</p>
+                                    </div>
+                                </Content>
 
-                                        <div className="trialPublish-section">
-                                            <h3 className="trialPublish-sectionTitle">
-                                                Study Overview
-                                            </h3>
-                                            <h3 className="trialPublish-sectionTitle">
-                                                Brief Summary
-                                            </h3>
-                                            <p className="trialPublish-sectionText">
-                                                This was a multicenter,
-                                                randomized, phase III study
-                                                evaluating Everolimus or
-                                                Pasireotide LAR alone or in
-                                                combination in adult patients
-                                                with advanced (unresectable or
-                                                metastatic) neuroendocrine
-                                                carcinoma of the lung and thymus
-                                            </p>
-                                            <h3 className="trialPublish-sectionTitle">
-                                                Official Title
-                                            </h3>
-                                            <p className="trialPublish-sectionText">
-                                                A long term follow up study on
-                                                patients who were treated on
-                                                LUNA study to evaluate the
-                                                safety and tolerability of
-                                                patients with Lung/Thymus NET.
-                                            </p>
-                                            <h3 className="trialPublish-sectionTitle">
-                                                Description
-                                            </h3>
-
-                                            <p>
-                                                <span>
-                                                    Ages Eligible for Study :
-                                                </span>
-                                                18 Years and Older
-                                            </p>
-
-                                            <p>
-                                                <span>
-                                                    Sexes Eligible for Study :
-                                                </span>
-                                                All
-                                            </p>
-
-                                            <p>
-                                                <span>
-                                                    Accepts Healthy Volunteers :
-                                                </span>
-                                                No
-                                            </p>
+                                <Content>
+                                    <h1>Other Outcome : 1</h1>
+                                    <div>
+                                        <h1>Outcome Measure :</h1>
+                                        <p>{activeTrial.otherOutcomeMeasure}</p>
+                                    </div>
+                                    <div>
+                                        <h1>Measure Description : </h1>
+                                        <p>{activeTrial.otherOutcomeMeasure}</p>
+                                    </div>
+                                    <div>
+                                        <h1>Time Frame :</h1>
+                                        <p>{activeTrial.otherOutcomeMeasure}</p>
+                                    </div>
+                                </Content>
+                            </Section>
+                            <Section heading={"Treatment Plan"}>
+                                <Content>
+                                    <h1>Study Design Keywords </h1>
+                                    <div className="tags-container">
+                                        <div className="tag">some</div>
+                                        <div className="tag">some</div>
+                                        <div className="tag">some</div>
+                                        <div className="tag active">
+                                            {activeTrial.studyDesignKeywords}
                                         </div>
-                                        <h3 className="trialPublish-sectionTitle">
-                                            Inclusion Criteria
-                                        </h3>
-                                        <div>
-                                            <ul>
-                                                <li>
-                                                    Histological confirmed
-                                                    advanced well differentiated
-                                                    typical and atypical
-                                                    carcinoid tumors of the lung
-                                                    or thymus
-                                                </li>
-                                                <li>
-                                                    Patients of all treatment
-                                                    lines including naive
-                                                    patients could have been
-                                                    enrolled
-                                                </li>
-                                                <li>
-                                                    At least one measurable
-                                                    lesion of disease on CT scan
-                                                    or MRI
-                                                </li>
-                                                <li>
-                                                    Radiological documentation
-                                                    of disease progression
-                                                    within 12 months prior to
-                                                    randomization
-                                                </li>
-                                                <li>
-                                                    Adequate liver, renal and
-                                                    bone marrow function
-                                                </li>
-                                                <li>
-                                                    WHO Performance Status 0-2
-                                                </li>
-                                            </ul>
-                                        </div>
-
-                                        <h3 className="trialPublish-sectionTitle">
-                                            Exclusion Criteria
-                                        </h3>
-                                        <div>
-                                            <ul>
-                                                <li>
-                                                    Poorly differentiated
-                                                    neuroendocrine carcinoma
-                                                </li>
-                                                <li>
-                                                    Non-neuroendocrine thymoma
-                                                </li>
-                                                <li>
-                                                    Patients with severe
-                                                    functional disease who
-                                                    required symptomatic
-                                                    treatment with somatostatin
-                                                    analogs
-                                                </li>
-                                                <li>
-                                                    Prior therapy with mTOR
-                                                    inhibitors
-                                                </li>
-                                                <li>
-                                                    History of liver disease
-                                                </li>
-                                                <li>Baseline QTcF 470 msec</li>
-                                                <li>
-                                                    Uncontrolled diabetes
-                                                    mellitus despite adequate
-                                                    therapy
-                                                </li>
-                                            </ul>
-                                        </div>
-
+                                        <div className="tag">some</div>
+                                        <div className="tag">some</div>
+                                    </div>
+                                </Content>
+                                <Content>
+                                    <h1>Study Design</h1>
+                                    <div>
                                         <p>
                                             <span>Primary Purpose :</span>
                                             Treatment
@@ -697,54 +329,449 @@ export const TrialsTabs = () => {
                                             None (Open Label)
                                         </p>
 
-                                        <h3 className="trialPublish-sectionTitle">
-                                            Primary Outcome Measure
-                                        </h3>
+                                        <p>
+                                            This was a prospective, multicenter,
+                                            randomized, open-label, 3-arm, phase
+                                            II study with a single-stage design
+                                            in each arm.
+                                        </p>
+                                    </div>
+                                </Content>
 
-                                        <h3 className="trialPublish-sectionTitle">
-                                            Outcome Measure :
-                                        </h3>
+                                <Content>
+                                    <h1>Treatment Regimen</h1>
+                                    <p>Subjects were randomized as follows :</p>
+                                    <div>
                                         <p>
-                                            Long term safety of Pasireotide and
-                                            Everolimus
-                                        </p>
-                                        <h3 className="trialPublish-sectionTitle">
-                                            Measure Description :
-                                        </h3>
-                                        <p>
-                                            Patients with Complete Response
-                                            (CR), Partial Response (PR), or
-                                            Stable Disease (SD) at Month 9 were
-                                            to be considered as
-                                            "progression-free" based on RECIST
-                                            v1.1.
-                                        </p>
-                                        <h3 className="trialPublish-sectionTitle">
-                                            Time Frame :
-                                        </h3>
-                                        <p>
-                                            <span>Sponsor : </span>
-                                            Novartis Pharmaceuticals
+                                            <span>Pasireotide LAR :</span>
+                                            <div>
+                                                Pasireotide long acting release
+                                                (LAR) 60 mg will be administered
+                                                as an intra muscular (i.m.)
+                                                depot injection once every 28
+                                                days starting on Day 1
+                                            </div>
                                         </p>
                                         <p>
-                                            <span>Investigators :</span>
-                                            Study Director:Novartis
-                                            Pharmaceuticals,Novartis
-                                            Pharmaceuticals
+                                            <span>Everolimus :</span>
+                                            <div>
+                                                Everolimus 10 mg taken orally
+                                                (p.o) once daily starting on Day
+                                                1
+                                            </div>
                                         </p>
-                                        <p>5 Years</p>
-                                        <div className="trialPublish-footer">
-                                            <button className="trialPublish-button trialPublish-button-primary">
+                                        <p>
+                                            <span>
+                                                Pasireotide LAR and Everolimus
+                                                Combination :{" "}
+                                            </span>
+                                            <div>
+                                                Pasireotide LAR 60 mg i.m.
+                                                injected once every 28 days +
+                                                Everolimus 10 mg p.o. daily
+                                                starting on Day 1
+                                            </div>
+                                        </p>
+                                    </div>
+                                </Content>
+                                <p className="extra">Number of arms: 3</p>
+                            </Section>
+
+                            <Section heading={"Heading"} column="double">
+                                <div className="left">
+                                    <Content>
+                                        <h1>Inclusion Criteria</h1>
+                                        <ul>
+                                            {activeTrial.inclusionCriteria &&
+                                                activeTrial.inclusionCriteria.map(
+                                                    (item) => <li>{item}</li>,
+                                                )}
+                                        </ul>
+                                    </Content>
+                                    <Content>
+                                        <h1>Exclusion Criteria</h1>
+                                        <ul>
+                                            {activeTrial.exclusionCriteria &&
+                                                activeTrial.exclusionCriteria.map(
+                                                    (item) => <li>{item}</li>,
+                                                )}
+                                        </ul>
+                                    </Content>
+                                </div>
+                                <div className="right">
+                                    <Boxes
+                                        heading={"Ages Eligible for Study "}
+                                        description={activeTrial.ageFrom}
+                                    />
+                                    <Boxes
+                                        heading={"Sexes Eligible for Study "}
+                                        description={activeTrial.sex}
+                                    />
+                                    <Boxes
+                                        heading={"Healthy Volunteers"}
+                                        description={
+                                            activeTrial.healthyVolunteers
+                                        }
+                                    />
+                                    <Boxes
+                                        heading={"Target No of Volunteers"}
+                                        description={
+                                            activeTrial.targetNoOfVolunteers
+                                        }
+                                    />
+                                    <Boxes
+                                        heading={"Actual enrolled Volunteers"}
+                                        description={
+                                            activeTrial.actualEnrolledVolunteers
+                                        }
+                                    />
+                                </div>
+                            </Section>
+
+                            <Section heading={"TimeLine"}>
+                                <ClinicalTrialTimeline data={some} />
+                            </Section>
+
+                            <Section heading={"Outcome"}>
+                                <div className="trial-outcome-container">
+                                    <div className="trial-outcome-left-container">
+                                        <div className="overview-section-endpoint-container">
+                                            <div className="overview-section-endpoint-laber">
+                                                Results available
+                                            </div>
+                                            <div
+                                                className={`overview-section-endpoint-toggle  ${activeTrial.resultsAvailable == "true" ? "active" : ""}`}
+                                            >
+                                                <div
+                                                    className={`overview-section-endpoint-toggle-mark`}
+                                                ></div>
+                                            </div>
+                                        </div>
+
+                                        <div className="trial-outcome-below-endpoint">
+                                            <div className="trial-outcome-right-heading">
+                                                Trial Outcome :
+                                            </div>
+                                            <div className="trial-outcome-right-tag">
+                                                {activeTrial.trialOutcome}
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div className="trial-outcome-right-container">
+                                        <div className="trial-outcome-right-header">
+                                            <div className="trial-outcome-right-heading">
+                                                Trial Outcome Reference
+                                            </div>
+                                            <div className="trial-outcome-right-tag">
+                                                {activeTrial.trialOutcome}
+                                            </div>
+                                        </div>
+                                        <div className="trial-outcome-right-content">
+                                            {activeTrial.trialOutcomeReference}
+                                        </div>
+                                        <div></div>
+                                        <div className="trial-outcome-right-cta-container">
+                                            <div className="trial-outcome-right-cta-btn">
                                                 View source
-                                            </button>
-                                            <button className="trialPublish-button trialPublish-button-secondary">
-                                                Full Text
-                                            </button>
+                                            </div>
+                                            <div className="trial-outcome-right-cta-btn">
+                                                Attachments
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                        </Section>
+                            </Section>
+                            <Section heading={"Published Results"}>
+                                <TrialPublish data={some} />
+                            </Section>
+                            <Section
+                                heading={"Sites"}
+                                secondHeading={`Total No of Sites : ${some.totalNoOfSites}`}
+                            >
+                                <ClinicalTrialTimelineWithImage data={some} />
+                            </Section>
+                            <Section heading={"Other sources"}>
+                                <Content>
+                                    <h1>Other Sources</h1>
+
+                                    <div className="trial-table-image-section-strip">
+                                        <Image
+                                            src={`/map_image.svg`}
+                                            alt="Clinical Trial Illustration"
+                                            layout="fill"
+                                            objectFit="contain"
+                                        />
+                                    </div>
+
+                                    <div className="trial-outcome-right-cta-container">
+                                        <div className="trial-outcome-right-cta-btn">
+                                            View Pipeline
+                                        </div>
+                                        <div className="trial-outcome-right-cta-btn">
+                                            Attachments
+                                        </div>
+                                    </div>
+                                </Content>
+                                <Content>
+                                    <TrialPublishMini data={some} />
+                                </Content>
+                                <Content>
+                                    <div>
+                                        <span>21-October-2020: </span>A Phase
+                                        III Study of Safety and Efficacy of
+                                        Pasireotide LAR or Everolimus Alone or
+                                        in Combination in Patients With Well
+                                        Differentiated Neuroendocrine Carcinoma
+                                        of the Lung and Thymus.
+                                    </div>
+                                    <p></p>
+                                </Content>
+                            </Section>
+
+                            <Section heading={"Published Results"}>
+                                <TrialPublishImages data={some} />
+                                <TrialPublishNoHeader />
+                            </Section>
+
+                            <Section heading={"Associated studies"}>
+                                <div className="trialPublish-container">
+                                    <div className="trialPublish-card">
+                                        <div className="trialPublish-header">
+                                            <div>
+                                                <span className="trialPublish-header-label">
+                                                    Date :
+                                                </span>{" "}
+                                                April 2, 2024
+                                            </div>
+                                            <div>
+                                                <span className="trialPublish-header-label">
+                                                    Study Type :
+                                                </span>{" "}
+                                                Follow up study
+                                            </div>
+                                        </div>
+
+                                        <h2 className="trialPublish-title">
+                                            A follow up study on patients who
+                                            were treated on LUNA study to
+                                            evaluate the long term safety of
+                                            patients with Lung/​Thymus NET.
+                                        </h2>
+                                        <div className="trialPublish-content">
+                                            <p className="trialPublish-authors">
+                                                Piero Ferolla, Maria Pia Brizzi,
+                                                Tim Meyer, Wasat Mansoor, Julien
+                                                Mazieres, Christine Do Cao,
+                                                Hervé Léna, Alfredo Berruti
+                                            </p>
+
+                                            <div className="trialPublish-section">
+                                                <h3 className="trialPublish-sectionTitle">
+                                                    Study Overview
+                                                </h3>
+                                                <h3 className="trialPublish-sectionTitle">
+                                                    Brief Summary
+                                                </h3>
+                                                <p className="trialPublish-sectionText">
+                                                    This was a multicenter,
+                                                    randomized, phase III study
+                                                    evaluating Everolimus or
+                                                    Pasireotide LAR alone or in
+                                                    combination in adult
+                                                    patients with advanced
+                                                    (unresectable or metastatic)
+                                                    neuroendocrine carcinoma of
+                                                    the lung and thymus
+                                                </p>
+                                                <h3 className="trialPublish-sectionTitle">
+                                                    Official Title
+                                                </h3>
+                                                <p className="trialPublish-sectionText">
+                                                    A long term follow up study
+                                                    on patients who were treated
+                                                    on LUNA study to evaluate
+                                                    the safety and tolerability
+                                                    of patients with Lung/Thymus
+                                                    NET.
+                                                </p>
+                                                <h3 className="trialPublish-sectionTitle">
+                                                    Description
+                                                </h3>
+
+                                                <p>
+                                                    <span>
+                                                        Ages Eligible for Study
+                                                        :
+                                                    </span>
+                                                    18 Years and Older
+                                                </p>
+
+                                                <p>
+                                                    <span>
+                                                        Sexes Eligible for Study
+                                                        :
+                                                    </span>
+                                                    All
+                                                </p>
+
+                                                <p>
+                                                    <span>
+                                                        Accepts Healthy
+                                                        Volunteers :
+                                                    </span>
+                                                    No
+                                                </p>
+                                            </div>
+                                            <h3 className="trialPublish-sectionTitle">
+                                                Inclusion Criteria
+                                            </h3>
+                                            <div>
+                                                <ul>
+                                                    <li>
+                                                        Histological confirmed
+                                                        advanced well
+                                                        differentiated typical
+                                                        and atypical carcinoid
+                                                        tumors of the lung or
+                                                        thymus
+                                                    </li>
+                                                    <li>
+                                                        Patients of all
+                                                        treatment lines
+                                                        including naive patients
+                                                        could have been enrolled
+                                                    </li>
+                                                    <li>
+                                                        At least one measurable
+                                                        lesion of disease on CT
+                                                        scan or MRI
+                                                    </li>
+                                                    <li>
+                                                        Radiological
+                                                        documentation of disease
+                                                        progression within 12
+                                                        months prior to
+                                                        randomization
+                                                    </li>
+                                                    <li>
+                                                        Adequate liver, renal
+                                                        and bone marrow function
+                                                    </li>
+                                                    <li>
+                                                        WHO Performance Status
+                                                        0-2
+                                                    </li>
+                                                </ul>
+                                            </div>
+
+                                            <h3 className="trialPublish-sectionTitle">
+                                                Exclusion Criteria
+                                            </h3>
+                                            <div>
+                                                <ul>
+                                                    <li>
+                                                        Poorly differentiated
+                                                        neuroendocrine carcinoma
+                                                    </li>
+                                                    <li>
+                                                        Non-neuroendocrine
+                                                        thymoma
+                                                    </li>
+                                                    <li>
+                                                        Patients with severe
+                                                        functional disease who
+                                                        required symptomatic
+                                                        treatment with
+                                                        somatostatin analogs
+                                                    </li>
+                                                    <li>
+                                                        Prior therapy with mTOR
+                                                        inhibitors
+                                                    </li>
+                                                    <li>
+                                                        History of liver disease
+                                                    </li>
+                                                    <li>
+                                                        Baseline QTcF 470 msec
+                                                    </li>
+                                                    <li>
+                                                        Uncontrolled diabetes
+                                                        mellitus despite
+                                                        adequate therapy
+                                                    </li>
+                                                </ul>
+                                            </div>
+
+                                            <p>
+                                                <span>Primary Purpose :</span>
+                                                Treatment
+                                            </p>
+
+                                            <p>
+                                                <span>Allocation :</span>
+                                                Randomized
+                                            </p>
+
+                                            <p>
+                                                <span>
+                                                    Interventional Model :
+                                                </span>
+                                                Single Group Assignment
+                                            </p>
+                                            <p>
+                                                <span>Masking :</span>
+                                                None (Open Label)
+                                            </p>
+
+                                            <h3 className="trialPublish-sectionTitle">
+                                                Primary Outcome Measure
+                                            </h3>
+
+                                            <h3 className="trialPublish-sectionTitle">
+                                                Outcome Measure :
+                                            </h3>
+                                            <p>
+                                                Long term safety of Pasireotide
+                                                and Everolimus
+                                            </p>
+                                            <h3 className="trialPublish-sectionTitle">
+                                                Measure Description :
+                                            </h3>
+                                            <p>
+                                                Patients with Complete Response
+                                                (CR), Partial Response (PR), or
+                                                Stable Disease (SD) at Month 9
+                                                were to be considered as
+                                                "progression-free" based on
+                                                RECIST v1.1.
+                                            </p>
+                                            <h3 className="trialPublish-sectionTitle">
+                                                Time Frame :
+                                            </h3>
+                                            <p>
+                                                <span>Sponsor : </span>
+                                                Novartis Pharmaceuticals
+                                            </p>
+                                            <p>
+                                                <span>Investigators :</span>
+                                                Study Director:Novartis
+                                                Pharmaceuticals,Novartis
+                                                Pharmaceuticals
+                                            </p>
+                                            <p>5 Years</p>
+                                            <div className="trialPublish-footer">
+                                                <button className="trialPublish-button trialPublish-button-primary">
+                                                    View source
+                                                </button>
+                                                <button className="trialPublish-button trialPublish-button-secondary">
+                                                    Full Text
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </Section>
+                        </div>
                     </div>
                 </div>
             </div>
